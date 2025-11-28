@@ -68,3 +68,30 @@ export const users = [
     country: "Ghana",
   },
 ];
+
+export interface Friend {
+  firstName: string;
+  lastName: string;
+  email?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  relationshipStatus?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  bio?: string;
+  
+}
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  relationshipStatus: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  bio?: string;
+}

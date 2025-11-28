@@ -1,32 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
+import type { Friend, User } from '~/data';
 import { fetchBotResponse } from '~/services';
-
-interface Friend {
-  firstName: string;
-  lastName: string;
-  email?: string;
-  dateOfBirth?: string;
-  gender?: string;
-  relationshipStatus?: string;
-  city?: string;
-  state?: string;
-  country?: string;
-  bio?: string;
-  
-}
-
-interface User {
-  firstName: string;
-  lastName: string;
-  email?: string;
-  dateOfBirth?: string;
-  gender?: string;
-  relationshipStatus: string;
-  city?: string;
-  state?: string;
-  country?: string;
-  bio?: string;
-}
 
 interface Message {
   content: string;
