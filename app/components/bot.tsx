@@ -40,14 +40,15 @@ const Bot = ({ user, friends, posts }: Props) => {
   **Recent Posts**:
   ${posts.map((p) => `- ${p}`).join("\n")}
 
-  **Following**:
+  **Friends**:
   ${friends
+    .filter((f) => f.following == true)
     .map(
-      (sp) => `
-  - ${sp.firstName} ${sp.lastName}
-    - Bio: ${sp.bio}
-    - Email: ${sp.email}
-    - City: ${sp.city}, ${sp.state}, ${sp.country}
+      (f) => `
+  - ${f.firstName} ${f.lastName}
+    - Bio: ${f.bio}
+    - Email: ${f.email}
+    - City: ${f.city}, ${f.state}, ${f.country}
 `
     )
     .join("\n")}
