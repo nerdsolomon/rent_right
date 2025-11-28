@@ -1,4 +1,11 @@
-const Postcard = ({ profile, post }) => {
+import type { User } from "~/data";
+
+interface Prop {
+  profile : User
+  post : string
+}
+
+const Postcard = ({ profile, post } : Prop) => {
   return (
     <div className="p-4 flex items-center border mb-2 border-gray-300 rounded-lg">
       <img

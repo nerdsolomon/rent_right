@@ -80,7 +80,7 @@ export interface Friend {
   state?: string;
   country?: string;
   bio?: string;
-  
+  following: boolean
 }
 
 export interface User {
@@ -94,4 +94,5 @@ export interface User {
   state?: string;
   country?: string;
   bio?: string;
+  imageUrl?: string
 }

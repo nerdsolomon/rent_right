@@ -1,13 +1,15 @@
 import { useState } from "react";
-import Bot from "./bot";
-import Postcard from "./postcard";
 import { profile, users } from "~/data";
 import PostForm from "./postform";
+import Friends from "./friends";
+import Postcard from "./postcard";
 import Profilecard from "./profilecard";
+import Bot from "./bot";
 
 const Layout = () => {
   const [posts, setPost] = useState<string[]>([]);
   const [user, setUser] = useState(profile);
+  const [friends, setFriends] = useState(users);
 
   return (
     <>
@@ -17,22 +19,26 @@ const Layout = () => {
           {user.firstName} {user.lastName}
         </a>
       </nav>
+
       <div className="grid grid-cols-3 p-2 gap-4 justify-center items-start w-full">
         <div className="p-2">
           <PostForm setPost={setPost} />
+          <Friends friends={friends} setFriends={setFriends} />
         </div>
+
         <div className="p-4 h-screen overflow-y-auto">
           {posts.map((post, index) => (
             <Postcard key={index} profile={user} post={post} />
           ))}
         </div>
+
         <div className="bg-white rounded-lg shadow-2xl">
-          <Profilecard user={user} setUser={setUser}/>
-          <Bot user={user} friends={users} posts={posts} />
+          <Profilecard user={user} setUser={setUser} />
+          <Bot user={user} friends={friends} posts={posts} />
         </div>
       </div>
     </>
   );
 };
 
-export default Layout;
+export default Layout

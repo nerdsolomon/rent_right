@@ -1,5 +1,11 @@
+import type { User } from "~/data"
 
-const Profilecard = ({user, setUser}) => {
+interface Prop {
+  user : User
+  setUser : (value: any) => void
+}
+
+const Profilecard = ({user, setUser} : Prop) => {
   return (
     <div className="bg-white absolute right-3 w-100 rounded-lg border border-gray-300">
       <div className="p-4 border-b border-gray-300">

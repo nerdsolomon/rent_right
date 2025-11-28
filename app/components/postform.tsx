@@ -1,13 +1,16 @@
 import { useState } from "react";
 
-const PostForm = ({setPost}) => {
-  
+interface Prop {
+  setPost : (value: any) => void
+}
+
+const PostForm = ({setPost} : Prop) => {
   const [input, setInput] = useState("");
 
   const addPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim()) return;
-    setPost((prev: any) => [...prev, input.trim()]);
+    setPost((prev: string) => [...prev, input.trim()]);
     setInput("");
   };
   
