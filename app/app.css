@@ -1,2 +1,6 @@
 @import "tailwindcss";
 
+section {
+    height: 400px;
+    text-align: center;
+}

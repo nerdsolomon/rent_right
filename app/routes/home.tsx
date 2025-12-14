@@ -1,13 +1,10 @@
-import Layout from "~/components/layout";
-import type { Route } from "./+types/home";
+import { usePageTitle } from "~/hooks/usePageTitle"
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "LLM ChatBot App" },
-    { name: "description", content: "ChatBot" },
-  ];
+const Home = () => {
+  usePageTitle("RentRight - Home")
+  return (
+    <div className="text-center">Home</div>
+  )
 }
 
-export default function Home() {
-  return <Layout />;
-}
+export default Home
