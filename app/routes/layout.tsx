@@ -3,14 +3,14 @@ import { Outlet, useLocation } from "react-router";
 import Leftbar from "~/components/layout/leftbar";
 import Navbar from "~/components/layout/navbar";
 import Rightbar from "~/components/layout/rightbar";
-
+import { DataProvider } from "~/data";
 
 const Layout = () => {
   const location = useLocation();
   const [isOpen, onClose] = useState(false);
 
   return (
-    <>
+    <DataProvider>
       {location.pathname == "/" ? (
         <main className="h-screen">
           <Outlet />
@@ -27,7 +27,7 @@ const Layout = () => {
           </div>
         </div>
       )}
-    </>
+    </DataProvider>
   );
 };
 

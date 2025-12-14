@@ -1,27 +1,37 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import type { User } from "~/data";
 import useClickOutside from "~/hooks/useClickOutside";
+import {useData} from "~/data";
 
-interface Prop {
-  users: User[];
-}
-
-const Signin = ({ users }: Prop) => {
+const Signin = () => {
   const [isOpen, onClose] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const modalRef = useClickOutside({ isOpen, onClose });
+  const { users, currentUser, setCurrentUser } = useData();
 
   const authenticate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let isFound = false;
     users.map((user) => {
-      if (user.email != formData.email && user.password != formData.password)
-        setAlert(true);
+      if (user.email == formData.email && user.password == formData.password) {
+        setCurrentUser({
+          ...currentUser,
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          email: user.email,
+          password: user.password,
+          role: "user"
+        });
+        isFound = true;
+        navigate("/home");
+      }
     });
-    if (alert) navigate("/home");
+    if (isFound == false) setAlert(true);
     setFormData({ ...formData, email: "", password: "" });
   };
 

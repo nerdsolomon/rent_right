@@ -1,30 +1,20 @@
 import { useState } from "react";
-import { type User } from "~/data";
 import useClickOutside from "~/hooks/useClickOutside";
+import {useData, user} from "~/data";
 
-interface Prop {
-  users: User[];
-  setUsers : (value : User[]) => void
-}
-
-
-const Signup = ({users, setUsers} : Prop) => {
+const Signup = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({isOpen, onClose})
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    password: "",
-  });
   const [alert, setAlert] = useState(false);
+  const { users, setUsers } = useData()
+  const [formData, setFormData] = useState(user);
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUsers([
       ...users,
       {
+        id: Math.random(),
         firstName: formData.firstName,
         lastName: formData.lastName,
         phone: formData.phone,
@@ -34,6 +24,7 @@ const Signup = ({users, setUsers} : Prop) => {
     ]);
     setFormData({
       ...formData,
+      id: 0,
       firstName: "",
       lastName: "",
       phone: "",

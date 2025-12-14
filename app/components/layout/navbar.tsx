@@ -1,5 +1,6 @@
 import { FaUserCircle } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
+import {useData} from "~/data";
 
 interface Prop {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface Prop {
 }
 
 const Navbar = ({ isOpen, onClose }: Prop) => {
+  const {currentUser, users} = useData()
   return (
     <nav className="border-b border-gray-300 p-4 sticky top-0 z-50 flex justify-between bg-white text-blue-500 font-bold">
       <div className="flex items-center gap-2">
@@ -14,11 +16,12 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
           <MdMenu />
         </button>
         <span className="text-xl ">RentRight</span>
+        
       </div>
       
       <div className="items-center flex gap-2">
         <FaUserCircle size={30} />
-        <span className="hidden lg:block">John Doe</span>
+        <span className="hidden lg:block">{currentUser.firstName} {currentUser.lastName}</span>
       </div>
     </nav>
   );
