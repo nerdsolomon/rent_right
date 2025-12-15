@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 export interface User {
   id: number;
@@ -47,6 +48,8 @@ const getFromStorage = <T,>(key: string, fallback: T): T => {
 };
 
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState<User[]>(() =>
     getFromStorage<User[]>(USERS_KEY, [])
   );
@@ -66,6 +69,7 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     setCurrentUser(emptyUser);
     localStorage.removeItem(CURRENT_USER_KEY);
+    navigate("/");
   };
 
   useEffect(() => {
