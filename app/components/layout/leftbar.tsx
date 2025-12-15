@@ -9,7 +9,6 @@ interface Prop {
 
 const navLinks = [
   { title: "Home", path: "/home", icon: FaHome },
-  { title: "Property", path: "/property", icon: FaHome },
   { title: "Favorites", path: "/favorites", icon: FaHeart },
 ];
 
