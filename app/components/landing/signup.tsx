@@ -1,13 +1,13 @@
 import { useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
-import {useData, user} from "~/data";
+import {useData, emptyUser} from "~/hooks/useData";
 
 const Signup = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({isOpen, onClose})
   const [alert, setAlert] = useState(false);
   const { users, setUsers } = useData()
-  const [formData, setFormData] = useState(user);
+  const [formData, setFormData] = useState(emptyUser);
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ const Signup = () => {
       id: 0,
       firstName: "",
       lastName: "",
-      phone: "",
+      phone: 0,
       email: "",
       password: "",
     });
@@ -92,7 +92,7 @@ const Signup = () => {
                 required
                 value={formData.phone}
                 onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
+                  setFormData({ ...formData, phone: parseInt(e.target.value) })
                 }
               />
               <input

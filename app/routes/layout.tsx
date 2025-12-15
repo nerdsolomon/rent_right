@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router";
 import Leftbar from "~/components/layout/leftbar";
 import Navbar from "~/components/layout/navbar";
 import Rightbar from "~/components/layout/rightbar";
-import { DataProvider } from "~/data";
+import { DataProvider } from "~/hooks/useData";
 
 const Layout = () => {
   const location = useLocation();

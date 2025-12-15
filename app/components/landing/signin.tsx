@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
-import {useData} from "~/data";
+import {useData, emptyUser} from "~/hooks/useData";
 
 const Signin = () => {
   const [isOpen, onClose] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState(emptyUser);
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const modalRef = useClickOutside({ isOpen, onClose });

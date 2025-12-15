@@ -2,7 +2,7 @@ import { FaUserCircle } from "react-icons/fa";
 import Signin from "~/components/landing/signin";
 import Signup from "~/components/landing/signup";
 import { usePageTitle } from "~/hooks/usePageTitle";
-import {useData} from "~/data";
+import {useData} from "~/hooks/useData";
 
 const Landing = () => {
   usePageTitle("RentRight");
@@ -11,7 +11,7 @@ const Landing = () => {
   return (
     <>
       <nav className="border-b border-gray-300 p-4 sticky top-0 z-50 flex justify-between bg-white text-blue-500 font-bold">
-        <div className="text-xl">RentRight {users.length}</div>
+        <div className="text-xl">RentRight</div>
         <div className="flex gap-5 lg:gap-10 items-center">
           <a className="hover:text-black" href="#get-started">
             Get Started
@@ -34,6 +34,8 @@ const Landing = () => {
       </section>
       <section className="bg-gray-200" id="about">
         <p className="font-bold text-lg py-4">About</p>
+        <p className="text-center text-[40px] font-semibold italic text-blue-400">Members</p>
+        <p className="text-center text-[30px] font-semibold">{ users.length }</p>
       </section>
       <section className="bg-gray-300 p-4" id="team">
         <p className="font-bold text-lg py-4">Team</p>
