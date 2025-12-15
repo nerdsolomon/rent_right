@@ -2,8 +2,8 @@ import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 
 const Profile = () => {
-  usePageTitle("RentRight - Profile");
   const { currentUser, logout } = useData();
+  usePageTitle(`RentRight - Profile : ${currentUser.firstName} ${currentUser.lastName}`);
   return (
     <div className="p-4">
       <div className="flex justify-center">
