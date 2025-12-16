@@ -17,6 +17,7 @@ const Signup = () => {
         id: Math.random(),
         firstName: formData.firstName,
         lastName: formData.lastName,
+        company: formData.company,
         phone: formData.phone,
         email: formData.email,
         password: formData.password,
@@ -48,7 +49,11 @@ const Signup = () => {
             ref={modalRef}
             className="bg-white rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center animate-fadeIn"
           >
-            <p className="font-bold text-xl py-2">RentRight</p>
+            <div className="flex justify-between mb-8">
+              <p className="font-bold">RentRight</p>
+              <button onClick={() => onClose(false)} className="text-gray-400 hover:text-black" >✕</button>
+            </div>
+
             <form className="space-y-4" onSubmit={addUser}>
               {alert && (
                 <div className="bg-yellow-100 rounded-lg text-sm text-gray-500 p-2">
@@ -77,6 +82,15 @@ const Signup = () => {
               />
               <input
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="text"
+                placeholder="Company (Optional)"
+                value={formData.company}
+                onChange={(e) =>
+                  setFormData({ ...formData, company: e.target.value })
+                }
+              />
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="email"
                 placeholder="Email"
                 required
@@ -92,7 +106,7 @@ const Signup = () => {
                 required
                 value={formData.phone}
                 onChange={(e) =>
-                  setFormData({ ...formData, phone: parseInt(e.target.value) })
+                  setFormData({ ...formData, phone: Number(e.target.value) })
                 }
               />
               <input

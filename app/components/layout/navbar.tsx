@@ -23,7 +23,7 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
       
       <div className="items-center flex gap-2 hover:bg-gray-100 rounded-full px-2 py-2" onClick={() => navigate("/profile")}>
         <FaUserCircle size={30} />
-        <span className="hidden lg:block">{currentUser.firstName} {currentUser.lastName}</span>
+        <span className="hidden lg:block">{currentUser.company ? currentUser.company : `${currentUser.firstName} ${currentUser.lastName}`}</span>
       </div>
     </nav>
   );

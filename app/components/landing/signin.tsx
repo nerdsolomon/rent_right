@@ -49,7 +49,10 @@ const Signin = () => {
             ref={modalRef}
             className="bg-white rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center animate-fadeIn"
           >
-            <p className="font-bold text-xl py-5 mb-5">RentRight</p>
+            <div className="flex justify-between mb-8">
+              <p className="font-bold">RentRight</p>
+              <button onClick={() => onClose(false)} className="text-gray-400 hover:text-black" >✕</button>
+            </div>
             <form className="space-y-4" onSubmit={authenticate}>
               {alert && (
                 <div className="bg-yellow-100 rounded-lg text-sm text-gray-500 p-2">

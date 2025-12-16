@@ -5,6 +5,7 @@ export interface User {
   id: number;
   firstName: string;
   lastName: string;
+  company: string;
   email: string;
   phone: number;
   password: string;
@@ -17,6 +18,7 @@ export const emptyUser: User = {
   id: 0,
   firstName: "",
   lastName: "",
+  company: "",
   email: "",
   phone: 0,
   password: "",

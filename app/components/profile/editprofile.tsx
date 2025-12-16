@@ -1,0 +1,115 @@
+import { useState } from "react";
+import useClickOutside from "~/hooks/useClickOutside";
+import { useData } from "~/hooks/useData";
+
+export const Editprofile = () => {
+  const [isOpen, onClose] = useState(false);
+  const modalRef = useClickOutside({ isOpen, onClose });
+  const { currentUser, setCurrentUser, users, setUsers } = useData();
+  const [alert, setAlert] = useState(false);
+
+  const editUser = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const updatedUsers = users.map((user) =>
+      user.id === currentUser.id ? { ...currentUser } : user
+    );
+    setUsers(updatedUsers);
+    setCurrentUser({ ...currentUser });
+    setAlert(true);
+  };
+
+  return (
+    <div>
+      <button
+        onClick={() => onClose(true)}
+        className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+      >
+        Edit Profile
+      </button>
+      {isOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div
+            ref={modalRef}
+            className="bg-white rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center animate-fadeIn"
+          >
+            <div className="flex justify-between mb-8">
+              <p className="font-bold">Edit Profile</p>
+              <button
+                onClick={() => onClose(false)}
+                className="text-gray-400 hover:text-black"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form className="space-y-4" onSubmit={editUser}>
+              {alert && (
+                <div className="bg-yellow-100 rounded-lg text-sm text-gray-500 p-2">
+                  Profile updated
+                </div>
+              )}
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="text"
+                placeholder="First Name"
+                required
+                value={currentUser.firstName}
+                onChange={(e) =>
+                  setCurrentUser({ ...currentUser, firstName: e.target.value })
+                }
+              />
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="text"
+                placeholder="Last Name"
+                required
+                value={currentUser.lastName}
+                onChange={(e) =>
+                  setCurrentUser({ ...currentUser, lastName: e.target.value })
+                }
+              />
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="text"
+                placeholder="Company (Optional)"
+                value={currentUser.company}
+                onChange={(e) =>
+                  setCurrentUser({ ...currentUser, company: e.target.value })
+                }
+              />
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="email"
+                placeholder="Email"
+                required
+                value={currentUser.email}
+                onChange={(e) =>
+                  setCurrentUser({ ...currentUser, email: e.target.value })
+                }
+              />
+              <input
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="number"
+                placeholder="Phone Number"
+                required
+                value={currentUser.phone}
+                onChange={(e) =>
+                  setCurrentUser({
+                    ...currentUser,
+                    phone: Number(e.target.value),
+                  })
+                }
+              />
+              <button
+                className="border border-gray-400 bg-blue-500 px-4 py-2 text-white hover:bg-blue-800 rounded-lg"
+                type="submit"
+              >
+                Save
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

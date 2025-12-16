@@ -1,3 +1,4 @@
+import { Editprofile } from "~/components/profile/editprofile";
 import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 
@@ -21,13 +22,12 @@ const Profile = () => {
 
       <div className="items-center text-center">
         <p className="text-[30px] font-bold text-gray-500">
-          {currentUser?.firstName?.trim() || ""}{" "}
-          {currentUser?.lastName?.trim() || ""}
+          {currentUser.company ? currentUser.company : `${currentUser.firstName} ${currentUser.lastName}`}
         </p>
       </div>
 
       <div className="flex justify-center">
-        <button className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold">Edit Profile</button>
+        <Editprofile/>
       </div>
 
       <div className="flex justify-center">
