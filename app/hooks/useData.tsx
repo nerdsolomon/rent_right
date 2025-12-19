@@ -32,6 +32,8 @@ interface DataState {
   setUsers: (users: User[]) => void;
   currentUser: User;
   setCurrentUser: (user: User) => void;
+  updateUser: (updatedUser: User) => void;
+  deleteUser: (userId: number) => void;
   logout: () => void;
 }
 
@@ -65,13 +67,38 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, [users]);
 
   useEffect(() => {
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
+    if (currentUser.id !== 0) {
+      localStorage.setItem(
+        CURRENT_USER_KEY,
+        JSON.stringify(currentUser)
+      );
+    }
   }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser.id) return;
+
+    const freshUser = users.find((u) => u.id === currentUser.id);
+    if (freshUser) {
+      setCurrentUser(freshUser);
+    }
+  }, [users]);
 
   const logout = () => {
     setCurrentUser(emptyUser);
     localStorage.removeItem(CURRENT_USER_KEY);
     navigate("/");
+  };
+
+  const updateUser = (updatedUser: User) => {
+    setUsers((prev) =>
+      prev.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+    );
+  };
+
+  const deleteUser = (userId: number) => {
+    setUsers((prev) => prev.filter((u) => u.id !== userId));
+    if (currentUser.id === userId) logout();
   };
 
   useEffect(() => {
@@ -81,12 +108,15 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       if (event.key === CURRENT_USER_KEY) {
-        setCurrentUser(event.newValue ? JSON.parse(event.newValue) : emptyUser);
+        setCurrentUser(
+          event.newValue ? JSON.parse(event.newValue) : emptyUser
+        );
       }
     };
 
     window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+    return () =>
+      window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   const state: DataState = {
@@ -94,10 +124,16 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     setUsers,
     currentUser,
     setCurrentUser,
+    updateUser,
+    deleteUser,
     logout,
   };
 
-  return <DataContext.Provider value={state}>{children}</DataContext.Provider>;
+  return (
+    <DataContext.Provider value={state}>
+      {children}
+    </DataContext.Provider>
+  );
 };
 
 const useData = () => {

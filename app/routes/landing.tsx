@@ -3,6 +3,7 @@ import Signin from "~/components/landing/signin";
 import Signup from "~/components/landing/signup";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import {useData} from "~/hooks/useData";
+import { Team } from "~/components/landing/team";
 
 const Landing = () => {
   usePageTitle("RentRight");
@@ -34,18 +35,15 @@ const Landing = () => {
       </section>
       <section className="bg-gray-200" id="about">
         <p className="font-bold text-lg py-4">About</p>
-        <p className="text-center text-[40px] font-semibold italic text-blue-400">Members</p>
-        <p className="text-center text-[30px] font-semibold">{ users.length }</p>
+        <p className="text-center font-semibold text-blue-400">Members : { users.length }</p>
       </section>
-      <section className="bg-gray-300 p-4" id="team">
+      <section id="team">
         <p className="font-bold text-lg py-4">Team</p>
-        <div className="flex flex-wrap gap-4 items-center text-gray-400 justify-center">
-          <FaUserCircle size={200} />
-          <FaUserCircle size={200} />
-          <FaUserCircle size={200} />
-          <FaUserCircle size={200} />
+        <div className="flex flex-wrap gap-4 items-center text-green-100 justify-center">
+          <Team/>
         </div>
       </section>
+      <footer className="h-50"></footer>
     </>
   );
 };

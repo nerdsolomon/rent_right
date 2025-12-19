@@ -5,16 +5,12 @@ import { useData } from "~/hooks/useData";
 export const Editprofile = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser, setCurrentUser, users, setUsers } = useData();
+  const { currentUser, updateUser } = useData();
   const [alert, setAlert] = useState(false);
 
   const editUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedUsers = users.map((user) =>
-      user.id === currentUser.id ? { ...currentUser } : user
-    );
-    setUsers(updatedUsers);
-    setCurrentUser({ ...currentUser });
+    updateUser({ ...currentUser });
     setAlert(true);
   };
 
@@ -26,6 +22,7 @@ export const Editprofile = () => {
       >
         Edit Profile
       </button>
+
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div
@@ -48,6 +45,7 @@ export const Editprofile = () => {
                   Profile updated
                 </div>
               )}
+
               <input
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="text"
@@ -55,9 +53,13 @@ export const Editprofile = () => {
                 required
                 value={currentUser.firstName}
                 onChange={(e) =>
-                  setCurrentUser({ ...currentUser, firstName: e.target.value })
+                  updateUser({
+                    ...currentUser,
+                    firstName: e.target.value,
+                  })
                 }
               />
+
               <input
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="text"
@@ -65,18 +67,26 @@ export const Editprofile = () => {
                 required
                 value={currentUser.lastName}
                 onChange={(e) =>
-                  setCurrentUser({ ...currentUser, lastName: e.target.value })
+                  updateUser({
+                    ...currentUser,
+                    lastName: e.target.value,
+                  })
                 }
               />
+
               <input
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="text"
                 placeholder="Company (Optional)"
                 value={currentUser.company}
                 onChange={(e) =>
-                  setCurrentUser({ ...currentUser, company: e.target.value })
+                  updateUser({
+                    ...currentUser,
+                    company: e.target.value,
+                  })
                 }
               />
+
               <input
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="email"
@@ -84,9 +94,13 @@ export const Editprofile = () => {
                 required
                 value={currentUser.email}
                 onChange={(e) =>
-                  setCurrentUser({ ...currentUser, email: e.target.value })
+                  updateUser({
+                    ...currentUser,
+                    email: e.target.value,
+                  })
                 }
               />
+
               <input
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="number"
@@ -94,12 +108,13 @@ export const Editprofile = () => {
                 required
                 value={currentUser.phone}
                 onChange={(e) =>
-                  setCurrentUser({
+                  updateUser({
                     ...currentUser,
                     phone: Number(e.target.value),
                   })
                 }
               />
+
               <button
                 className="border border-gray-400 bg-blue-500 px-4 py-2 text-white hover:bg-blue-800 rounded-lg"
                 type="submit"
