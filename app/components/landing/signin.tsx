@@ -40,7 +40,7 @@ const Signin = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="border border-gray-400 bg-blue-500 px-4 py-2 text-white hover:bg-blue-800 rounded-lg"
+        className="border border-gray-400 bg-blue-500 p-2 text-sm text-white hover:bg-blue-800 rounded-lg"
       >
         Sign In
       </button>

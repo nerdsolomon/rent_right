@@ -1,4 +1,3 @@
-import { FaUserCircle } from "react-icons/fa";
 import Signin from "~/components/landing/signin";
 import Signup from "~/components/landing/signup";
 import { usePageTitle } from "~/hooks/usePageTitle";

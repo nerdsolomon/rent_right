@@ -1,12 +1,12 @@
 import { useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
-import {useData, emptyUser} from "~/hooks/useData";
+import { useData, emptyUser } from "~/hooks/useData";
 
 const Signup = () => {
   const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({isOpen, onClose})
+  const modalRef = useClickOutside({ isOpen, onClose });
   const [alert, setAlert] = useState(false);
-  const { users, setUsers } = useData()
+  const { users, setUsers } = useData();
   const [formData, setFormData] = useState(emptyUser);
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,7 +39,7 @@ const Signup = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="border border-gray-400 bg-green-500 px-4 py-2 text-white hover:bg-green-800 rounded-lg"
+        className="border border-gray-400 text-sm bg-green-500 p-2 text-white hover:bg-green-800 rounded-lg"
       >
         Sign up
       </button>
@@ -51,7 +51,12 @@ const Signup = () => {
           >
             <div className="flex justify-between mb-8">
               <p className="font-bold">RentRight</p>
-              <button onClick={() => onClose(false)} className="text-gray-400 hover:text-black" >✕</button>
+              <button
+                onClick={() => onClose(false)}
+                className="text-gray-400 hover:text-black"
+              >
+                ✕
+              </button>
             </div>
 
             <form className="space-y-4" onSubmit={addUser}>
