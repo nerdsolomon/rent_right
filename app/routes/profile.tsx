@@ -1,3 +1,4 @@
+import { Deleteprofile } from "~/components/profile/deleteprofile";
 import { Editprofile } from "~/components/profile/editprofile";
 import { Logout } from "~/components/profile/logout";
 import { Qrcode } from "~/components/profile/qrcode";
@@ -55,6 +56,7 @@ const Profile = () => {
         <Qrcode/>
         <Editprofile />
         <Logout/>
+        <Deleteprofile/>
       </div>
     </div>
   );

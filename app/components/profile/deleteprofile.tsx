@@ -2,27 +2,27 @@ import { useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 
-export const Logout = () => {
+export const Deleteprofile = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { logout } = useData();
+  const { currentUser, deleteUser } = useData();
   return (
     <div>
       <button
         onClick={() => onClose(true)}
-        className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+        className="p-2 bg-red-400 mt-2 text-xs hover:bg-red-500 text-white rounded-lg font-semibold"
       >
-        Logout
+        Delete account
       </button>
 
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div
             ref={modalRef}
-            className="bg-gray-100 rounded-2xl shadow-lg w-[270px] p-6 text-center animate-fadeIn"
+            className="bg-gray-100 rounded-2xl shadow-lg w-[270px] p-6 animate-fadeIn"
           >
-            <p className="text-center text-gray-400 text-lg">
-              Do you want to exit app?
+            <p className="text-gray-400 text-md">
+              Deleting your account will permanently erase all your data. Are you sure you want to continue?
             </p>
             <div className="grid grid-cols-2 gap-2 items-center mt-4">
               <button
@@ -32,10 +32,10 @@ export const Logout = () => {
                 Cancel
               </button>
               <button
-                onClick={() => logout()}
-                className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+                onClick={() => deleteUser(currentUser.id)}
+                className="p-2 bg-red-400 mt-2 text-xs hover:bg-red-500 text-white rounded-lg font-semibold"
               >
-                Exit
+                Delete
               </button>
             </div>
           </div>
@@ -44,3 +44,4 @@ export const Logout = () => {
     </div>
   );
 };
+
