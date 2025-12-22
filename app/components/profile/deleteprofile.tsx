@@ -12,7 +12,7 @@ export const Deleteprofile = () => {
         onClick={() => onClose(true)}
         className="p-2 bg-red-400 mt-2 text-xs hover:bg-red-500 text-white rounded-lg font-semibold"
       >
-        Delete account
+        Delete Account
       </button>
 
       {isOpen && (
