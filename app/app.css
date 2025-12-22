@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 section {
-    height: 400px;
-    text-align: center;
+  height: 400px;
+  text-align: center;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }

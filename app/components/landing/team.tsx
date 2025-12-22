@@ -9,7 +9,7 @@ export const Team = () => {
   return (
     <>
     {members.map((member, index) => (
-      <div className="w-48 bg-white rounded-lg shadow hover:shadow-md transition p-3 flex-shrink-0">
+      <div key={index} className="w-48 bg-white rounded-lg shadow hover:shadow-md transition p-3 flex-shrink-0">
         <div className="relative w-full h-44 rounded-md bg-gray-300 flex items-center justify-center text-white text-[40px] font-bold capitalize overflow-hidden">
           {member.imageUrl ? (
             <img

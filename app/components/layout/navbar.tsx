@@ -24,7 +24,7 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
         <span className="text-xl ">RentRight</span>
       </div>
 
-      <div className="flex items-center lg:justify-center">
+      <div className="flex items-center justify-center">
         <Searchbar />
       </div>
 
