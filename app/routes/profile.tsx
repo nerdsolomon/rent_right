@@ -10,7 +10,7 @@ const Profile = () => {
     `RentRight - ${currentUser.firstName} ${currentUser.lastName}`
   );
   return (
-    <div className="py-4 px-6">
+    <div className="py-4 px-6 space-y-6">
       <div className="flex justify-center">
         <div className="w-[30%] border-4 mb-2 rounded-full aspect-square bg-gray-300 flex capitalize items-center justify-center text-white text-[40px] lg:text-[50px] font-bold">
           {currentUser?.imageUrl ? (
