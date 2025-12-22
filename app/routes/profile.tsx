@@ -1,12 +1,13 @@
 import { Editprofile } from "~/components/profile/editprofile";
 import { Logout } from "~/components/profile/logout";
+import { Qrcode } from "~/components/profile/qrcode";
 import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 
 const Profile = () => {
   const { currentUser } = useData();
   usePageTitle(
-    `RentRight - Profile : ${currentUser.firstName} ${currentUser.lastName}`
+    `RentRight - ${currentUser.firstName} ${currentUser.lastName}`
   );
   return (
     <div className="py-4 px-6">
@@ -51,6 +52,7 @@ const Profile = () => {
       </div>
 
       <div className="flex justify-end gap-2 mt-4">
+        <Qrcode/>
         <Editprofile />
         <Logout/>
       </div>
