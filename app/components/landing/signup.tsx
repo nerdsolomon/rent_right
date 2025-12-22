@@ -34,7 +34,9 @@ const Signup = () => {
         phone: NaN,
         email: "",
         password: "",
+        company: ""
       });
+      setConfirmPassword("")
       setAlert(true);
     }
   };
