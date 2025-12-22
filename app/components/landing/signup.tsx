@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData, emptyUser } from "~/hooks/useData";
 
@@ -8,32 +8,41 @@ const Signup = () => {
   const [alert, setAlert] = useState(false);
   const { users, setUsers } = useData();
   const [formData, setFormData] = useState(emptyUser);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [notMatch, setNotMatch] = useState(false);
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUsers([
-      ...users,
-      {
-        id: Math.random(),
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        company: formData.company,
-        phone: formData.phone,
-        email: formData.email,
-        password: formData.password,
-      },
-    ]);
-    setFormData({
-      ...formData,
-      id: 0,
-      firstName: "",
-      lastName: "",
-      phone: 0,
-      email: "",
-      password: "",
-    });
-    setAlert(true);
+    if (notMatch === false) {
+      setUsers([
+        ...users,
+        {
+          id: Math.random(),
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          company: formData.company,
+          phone: formData.phone,
+          email: formData.email,
+          password: formData.password,
+        },
+      ]);
+      setFormData({
+        ...formData,
+        id: NaN,
+        firstName: "",
+        lastName: "",
+        phone: NaN,
+        email: "",
+        password: "",
+      });
+      setAlert(true);
+    }
   };
+
+  useEffect(() => {
+    if (confirmPassword !== formData.password) setNotMatch(true);
+    else setNotMatch(false);
+  }, [confirmPassword]);
 
   return (
     <>
@@ -41,7 +50,7 @@ const Signup = () => {
         onClick={() => onClose(true)}
         className="border border-gray-400 text-sm bg-green-500 p-2 text-white hover:bg-green-800 rounded-lg"
       >
-        Sign up
+        Sign Up
       </button>
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -129,11 +138,14 @@ const Signup = () => {
                 type="password"
                 placeholder="Confirm Password"
                 required
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
+              {notMatch && (
+                <p className="text-sm text-red-500 text-start">
+                  Passwords don't match...
+                </p>
+              )}
               <button
                 className="border border-gray-400 bg-blue-500 px-4 py-2 text-white hover:bg-blue-800 rounded-lg"
                 type="submit"

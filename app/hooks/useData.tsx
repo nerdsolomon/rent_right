@@ -15,12 +15,12 @@ export interface User {
 }
 
 export const emptyUser: User = {
-  id: 0,
+  id: NaN,
   firstName: "",
   lastName: "",
   company: "",
   email: "",
-  phone: 0,
+  phone: NaN,
   password: "",
   role: "",
   NIN: "",

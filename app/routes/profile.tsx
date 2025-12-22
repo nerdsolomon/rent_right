@@ -1,10 +1,13 @@
 import { Editprofile } from "~/components/profile/editprofile";
+import { Logout } from "~/components/profile/logout";
 import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 
 const Profile = () => {
-  const { currentUser, logout } = useData();
-  usePageTitle(`RentRight - Profile : ${currentUser.firstName} ${currentUser.lastName}`);
+  const { currentUser } = useData();
+  usePageTitle(
+    `RentRight - Profile : ${currentUser.firstName} ${currentUser.lastName}`
+  );
   return (
     <div className="p-4">
       <div className="flex justify-center">
@@ -20,18 +23,36 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="items-center text-center">
-        <p className="text-[30px] font-bold text-gray-500">
-          {currentUser.company ? currentUser.company : `${currentUser.firstName} ${currentUser.lastName}`}
-        </p>
+      <div className="space-y-2">
+        {currentUser.company && (
+          <div className="flex justify-between items-center text-sm text-gray-500">
+            <div className="text-gray-400">Company</div>
+            <div className="text-gray-400">{currentUser.company}</div>
+          </div>
+        )}
+        <div className="flex justify-between items-center text-sm text-gray-500">
+          <div className="text-gray-400">Name</div>
+          <div className="text-gray-400">
+            {currentUser.firstName} {currentUser.lastName}
+          </div>
+        </div>
+        <div className="flex justify-between items-center text-sm text-gray-500">
+          <div className="text-gray-400">Email</div>
+          <div className="text-gray-400">
+            {currentUser.email}
+          </div>
+        </div>
+        <div className="flex justify-between items-center text-sm text-gray-500">
+          <div className="text-gray-400">Phone</div>
+          <div className="text-gray-400">
+            {currentUser.phone}
+          </div>
+        </div>
       </div>
 
-      <div className="flex justify-center">
-        <Editprofile/>
-      </div>
-
-      <div className="flex justify-center">
-        <button onClick={() => logout()} className="p-2 bg-red-400 mt-2 text-xs hover:bg-red-500 text-white rounded-lg font-semibold">Logout</button>
+      <div className="flex justify-end gap-2 mt-2">
+        <Editprofile />
+        <Logout/>
       </div>
     </div>
   );
