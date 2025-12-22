@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaCopy } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { useQrCode } from "~/hooks/useQRCode";
@@ -19,12 +20,16 @@ export const Qrcode = () => {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex justify-center items-center px-2">
           <div
             ref={modalRef}
-            className="bg-white rounded-2xl shadow-lg w-[300px] p-3 items-center animate-fadeIn"
+            className="bg-white rounded-2xl shadow-lg w-[80%] md:w-[400px] p-6 items-center animate-fadeIn"
           >
             <img src={qrCode || ""} className="w-full h-full object-contain" />
+            <div className="mt-4 bg-gray-100 rounded-md px-3 py-2 flex justify-between items-center text-xs w-full">
+              <span className="truncate">{profileUrl}</span>
+              <FaCopy onClick={async () => await navigator.clipboard.writeText(profileUrl)} className="text-gray-500" />
+            </div>
           </div>
         </div>
       )}
