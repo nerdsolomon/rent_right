@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaCopy } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
-import { useQrCode } from "~/hooks/useQRCode";
+import { useQrCode } from "~/hooks/useQrCode";
 
 export const Qrcode = () => {
   const [isOpen, onClose] = useState(false);
