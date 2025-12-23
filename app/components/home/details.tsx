@@ -23,7 +23,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
           <div
             ref={modalRef}
             className="relative bg-gray-100 rounded-2xl shadow-lg
-                 w-[90%] lg:w-[650px] max-h-[90vh]
+                 w-[90%] lg:w-[650px] h-screen
                  overflow-y-auto animate-fadeIn scrollbar-hidden"
           >
             <div className="flex p-4 justify-between sticky top-0 bg-gray-100 z-10">
