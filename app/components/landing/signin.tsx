@@ -46,7 +46,7 @@ const Signin = () => {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
             className="bg-white rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center"

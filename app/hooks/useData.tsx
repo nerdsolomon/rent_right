@@ -14,6 +14,14 @@ export interface User {
   imageUrl?: string;
 }
 
+export interface Property {
+  id?: number
+  title: string
+  description: string
+  location: string
+  imageUrl: string
+}
+
 export const emptyUser: User = {
   id: NaN,
   firstName: "",

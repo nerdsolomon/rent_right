@@ -20,7 +20,7 @@ export const Qrcode = () => {
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex justify-center items-center px-2">
+        <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
             className="bg-white rounded-2xl shadow-lg w-[80%] md:w-[400px] p-6 items-center animate-fadeIn"
