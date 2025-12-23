@@ -1,52 +1,12 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
-import apartment_1 from "~/assets/apartment_001.jpg";
-import apartment_2 from "~/assets/apartment_002.jpg";
 import { Details } from "./details";
 import { useState } from "react";
-import type { Property } from "~/hooks/useData";
+import { useData, type Property } from "~/hooks/useData";
 
 export const Card = () => {
-  let properties = [
-    {
-      imageUrl: apartment_1,
-      title: "Condo",
-      description: "2 Bedroom",
-      location: "Apapa",
-    },
-    {
-      imageUrl: apartment_2,
-      title: "Office",
-      description: "1 Bedroom",
-      location: "Lekki",
-    },
-    {
-      imageUrl: apartment_1,
-      title: "Hotel",
-      description: "2 Bedroom",
-      location: "Apapa",
-    },
-    {
-      imageUrl: apartment_2,
-      title: "Condo",
-      description: "1 Bedroom",
-      location: "Lekki",
-    },
-    {
-      imageUrl: apartment_1,
-      title: "Condo",
-      description: "2 Bedroom",
-      location: "Apapa",
-    },
-    {
-      imageUrl: apartment_2,
-      title: "Condo",
-      description: "1 Bedroom",
-      location: "Lekki",
-    },
-  ];
-
   const [isOpen, onClose] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property>();
+  const { properties } = useData();
 
   return (
     <>

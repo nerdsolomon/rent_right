@@ -14,14 +14,6 @@ export interface User {
   imageUrl?: string;
 }
 
-export interface Property {
-  id?: number
-  title: string
-  description: string
-  location: string
-  imageUrl: string
-}
-
 export const emptyUser: User = {
   id: NaN,
   firstName: "",
@@ -35,6 +27,22 @@ export const emptyUser: User = {
   imageUrl: "",
 };
 
+export interface Property {
+  id?: number
+  title: string
+  description: string
+  location: string
+  imageUrl?: string
+}
+
+export const emptyProperty: Property = {
+    id: NaN,
+    title: "",
+    location: "",
+    description: "",
+    imageUrl: ""
+};
+
 interface DataState {
   users: User[];
   setUsers: (users: User[]) => void;
@@ -43,17 +51,25 @@ interface DataState {
   updateUser: (updatedUser: User) => void;
   deleteUser: (userId: number) => void;
   logout: () => void;
+  properties: Property[];
+  setProperties: (properties: Property[]) => void;
 }
 
 const DataContext = createContext<DataState | null>(null);
 
 const USERS_KEY = "users";
 const CURRENT_USER_KEY = "currentUser";
+const PROPERTIES_KEY = "properties";
 
 const getFromStorage = <T,>(key: string, fallback: T): T => {
   try {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : fallback;
+    if (!item) return fallback;
+    const parsed = JSON.parse(item);
+    if (Array.isArray(fallback) && !Array.isArray(parsed)) {
+      return fallback;
+    }
+    return parsed;
   } catch {
     return fallback;
   }
@@ -70,6 +86,10 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     getFromStorage<User>(CURRENT_USER_KEY, emptyUser)
   );
 
+  const [properties, setProperties] = useState<Property[]>(() =>
+    getFromStorage<Property[]>(PROPERTIES_KEY, [])
+  );
+
   useEffect(() => {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
   }, [users]);
@@ -82,6 +102,10 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
       );
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    localStorage.setItem(PROPERTIES_KEY, JSON.stringify(properties));
+  }, [properties]);
 
   useEffect(() => {
     if (!currentUser.id) return;
@@ -120,6 +144,10 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
           event.newValue ? JSON.parse(event.newValue) : emptyUser
         );
       }
+
+      if (event.key === PROPERTIES_KEY && event.newValue) {
+        setProperties(JSON.parse(event.newValue));
+      }
     };
 
     window.addEventListener("storage", handleStorageChange);
@@ -135,6 +163,8 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     updateUser,
     deleteUser,
     logout,
+    properties,
+    setProperties,
   };
 
   return (

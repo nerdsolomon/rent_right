@@ -24,9 +24,9 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
         `}
     >
       {navLinks.map((link, index) => (
-        <NavLink to={link.path} onClick={() => onClose(false)}>
+        <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
           {({ isActive }) => (
-            <div key={index} className={`flex gap-2 items-center p-4 ${isActive ? "bg-blue-500 text-white" : "hover:bg-gray-200"}`} >
+            <div className={`flex gap-2 items-center p-4 ${isActive ? "bg-blue-500 text-white" : "hover:bg-gray-200"}`} >
               <link.icon /> <span>{link.title}</span>
             </div>
           )}

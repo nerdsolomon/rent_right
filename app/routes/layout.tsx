@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router";
+import { AddProperty } from "~/components/layout/addproperty";
 import Leftbar from "~/components/layout/leftbar";
 import Navbar from "~/components/layout/navbar";
 import Rightbar from "~/components/layout/rightbar";
@@ -16,16 +17,19 @@ const Layout = () => {
           <Outlet />
         </main>
       ) : (
-        <div className="flex flex-col h-screen">
-          <Navbar isOpen={isOpen} onClose={onClose}/>
-          <div className="flex">
-            <Leftbar isOpen={isOpen} onClose={onClose}/>
-            <main className="h-screen w-full lg:ml-20 lg:mr-20 scrollbar-hide flex-1 overflow-y-auto bg-blue-100">
-              <Outlet />
-            </main>
-            <Rightbar/>
+        <>
+          <div className="flex flex-col h-screen">
+            <Navbar isOpen={isOpen} onClose={onClose} />
+            <div className="flex">
+              <Leftbar isOpen={isOpen} onClose={onClose} />
+              <main className="h-screen w-full lg:ml-20 lg:mr-20 scrollbar-hide flex-1 overflow-y-auto bg-blue-100">
+                <Outlet />
+              </main>
+              <Rightbar />
+            </div>
           </div>
-        </div>
+          <AddProperty/>
+        </>
       )}
     </DataProvider>
   );

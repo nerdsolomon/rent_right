@@ -26,16 +26,7 @@ const Signup = () => {
           password: formData.password,
         },
       ]);
-      setFormData({
-        ...formData,
-        id: NaN,
-        firstName: "",
-        lastName: "",
-        phone: NaN,
-        email: "",
-        password: "",
-        company: ""
-      });
+      setFormData(emptyUser);
       setConfirmPassword("")
       setAlert(true);
     }
