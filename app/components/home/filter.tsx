@@ -26,7 +26,7 @@ export const Filter = () => {
           onSelect={(value) => setState(value)}
         />
       )}
-      {state && (
+      {country && state && (
         <Dropdown
           label="City"
           value={city}
