@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData, emptyUser } from "~/hooks/useData";
+import { useData } from "~/hooks/useData";
+import { emptyUser } from "~/types";
 
 const Signin = () => {
   const [isOpen, onClose] = useState(false);

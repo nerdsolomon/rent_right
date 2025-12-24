@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
-import { emptyProperty, images, useData, type Property } from "~/hooks/useData";
+import { useData } from "~/hooks/useData";
+import { images } from "~/services/asset.services";
+import { emptyProperty, type Property } from "~/types";
 
 export const AddProperty = () => {
   const [isOpen, onClose] = useState(false);

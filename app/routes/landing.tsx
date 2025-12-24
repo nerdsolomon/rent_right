@@ -1,7 +1,7 @@
 import Signin from "~/components/landing/signin";
 import Signup from "~/components/landing/signup";
 import { usePageTitle } from "~/hooks/usePageTitle";
-import {useData} from "~/hooks/useData";
+import { useData } from "~/hooks/useData";
 import { Team } from "~/components/landing/team";
 
 const Landing = () => {
@@ -34,12 +34,14 @@ const Landing = () => {
       </section>
       <section className="bg-gray-200" id="about">
         <p className="font-bold text-lg py-4">About</p>
-        <p className="text-center font-semibold text-blue-400">Members : { users.length }</p>
+        <p className="text-center font-semibold text-blue-400">
+          Members : {users.length}
+        </p>
       </section>
       <section id="team">
         <p className="font-bold text-lg py-4">Team</p>
         <div className="flex flex-wrap gap-4 items-center text-green-100 justify-center">
-          <Team/>
+          <Team />
         </div>
       </section>
       <footer className="h-50"></footer>

@@ -1,1 +1,2 @@
-export * from "./bot.services"
+export * from "./data.services"
+export * from "./location.services"

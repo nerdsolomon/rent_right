@@ -21,7 +21,7 @@ const Dropdown = ({ label, value, list, onSelect }: Prop) => {
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 w-30 origin-top-right h-40 overflow-y-auto scrollbar-hidden rounded-lg bg-white shadow-lg ring-1 ring-gray-200 ring-opacity-5 pointer-events-auto">
+        <div className="absolute z-50 mt-2 w-35 origin-top-right h-40 overflow-y-auto scrollbar-hidden rounded-lg bg-white shadow-lg ring-1 ring-gray-200 ring-opacity-5 pointer-events-auto">
           <div className="py-1 text-xs text-gray-700">
             <button
               key="all"

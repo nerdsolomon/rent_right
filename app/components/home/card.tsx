@@ -1,7 +1,8 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Details } from "./details";
 import { useState } from "react";
-import { useData, type Property } from "~/hooks/useData";
+import { useData } from "~/hooks/useData";
+import type { Property } from "~/types";
 
 export const Card = () => {
   const [isOpen, onClose] = useState(false);

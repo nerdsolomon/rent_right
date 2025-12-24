@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData, emptyUser } from "~/hooks/useData";
+import { useData } from "~/hooks/useData";
+import { emptyUser } from "~/types";
 
 const Signup = () => {
   const [isOpen, onClose] = useState(false);

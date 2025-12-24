@@ -13,15 +13,13 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
   const { currentUser } = useData();
   const navigate = useNavigate();
   return (
-    <nav className="border-b border-gray-300 p-4 sticky top-0 z-50 grid grid-cols-3 bg-white text-blue-500 font-bold">
-      <div className="flex items-center gap-2">
-        <button
+    <nav className="border-b border-gray-300 p-2 sticky top-0 z-50 grid grid-cols-3 bg-white text-blue-500 font-bold">
+      <div className="flex items-center gap-2 text-xl">
+        <MdMenu
           onClick={() => onClose(!isOpen)}
-          className="lg:hidden text-xl cursor-pointer p-2 transition rounded-lg hover:bg-gray-100"
-        >
-          <MdMenu />
-        </button>
-        <span className="text-xl ">RentRight</span>
+          className="lg:hidden cursor-pointer hover:text-blue-700"
+        />
+        <span className="lg:px-2">RentRight</span>
       </div>
 
       <div className="flex items-center justify-center">

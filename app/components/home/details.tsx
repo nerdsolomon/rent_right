@@ -1,7 +1,9 @@
 import useClickOutside from "~/hooks/useClickOutside";
 import { FaMapMarkerAlt, FaTrash } from "react-icons/fa";
 import { Review } from "./review";
-import { images, useData, type Property } from "~/hooks/useData";
+import { useData } from "~/hooks/useData";
+import type { Property } from "~/types";
+import { images } from "~/services/asset.services";
 
 interface Props {
   isOpen: boolean;
