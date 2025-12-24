@@ -10,7 +10,7 @@ export const Review = () => {
         </button>
       </div>
       <div className="px-4">
-        <div className="p-2 flex items-center text-sm mb-2 border-gray-300">
+        <div className="p-2 flex items-center text-sm mb-2 border-gray-300 shadow hover:shadow-md transition">
           <img
             src={profileImg}
             className="w-10 h-10 rounded-full object-cover mr-3"
@@ -21,7 +21,7 @@ export const Review = () => {
           </div>
         </div>
 
-        <div className="p-2 flex items-center text-sm mb-2 border-gray-300">
+        <div className="p-2 flex items-center text-sm mb-2 border-gray-300 shadow hover:shadow-lg transition">
           <img
             src={profileImg}
             className="w-10 h-10 rounded-full object-cover mr-3"
