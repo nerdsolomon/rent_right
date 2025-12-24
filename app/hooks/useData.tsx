@@ -1,5 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import apartment_1 from "~/assets/apartment_001.jpg";
+import apartment_2 from "~/assets/apartment_002.jpg";
+
+export const images = [apartment_1, apartment_2];
 
 export interface User {
   id: number;
@@ -28,7 +32,7 @@ export const emptyUser: User = {
 };
 
 export interface Property {
-  id?: number
+  id: number
   title: string
   description: string
   location: string
@@ -53,6 +57,7 @@ interface DataState {
   logout: () => void;
   properties: Property[];
   setProperties: (properties: Property[]) => void;
+  deleteProperty: (propertyId: number) => void
 }
 
 const DataContext = createContext<DataState | null>(null);
@@ -133,6 +138,10 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     if (currentUser.id === userId) logout();
   };
 
+  const deleteProperty = (propertyId: number) => {
+    setProperties((prev) => prev.filter((p) => p.id !== propertyId));
+  };
+
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === USERS_KEY && event.newValue) {
@@ -165,6 +174,7 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
     logout,
     properties,
     setProperties,
+    deleteProperty,
   };
 
   return (

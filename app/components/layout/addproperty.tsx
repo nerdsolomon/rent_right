@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
-import { emptyProperty, useData, type Property } from "~/hooks/useData";
-import apartment_1 from "~/assets/apartment_001.jpg";
-import apartment_2 from "~/assets/apartment_002.jpg";
+import { emptyProperty, images, useData, type Property } from "~/hooks/useData";
 
 export const AddProperty = () => {
   const [isOpen, onClose] = useState(false);
@@ -13,7 +11,6 @@ export const AddProperty = () => {
 
   const addProperty = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const img = [apartment_1, apartment_2];
     setProperties([
       ...properties,
       {
@@ -21,7 +18,7 @@ export const AddProperty = () => {
         location: formData.location,
         title: formData.title,
         description: formData.description,
-        imageUrl: img[Math.floor(Math.random() * 2)],
+        imageUrl: images[Math.floor(Math.random() * 2)],
       },
     ]);
     setFormData(emptyProperty);

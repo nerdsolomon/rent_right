@@ -1,9 +1,7 @@
 import useClickOutside from "~/hooks/useClickOutside";
-import apartment_1 from "~/assets/apartment_001.jpg";
-import apartment_2 from "~/assets/apartment_002.jpg";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaMapMarkerAlt, FaTrash } from "react-icons/fa";
 import { Review } from "./review";
-import type { Property } from "~/hooks/useData";
+import { images, useData, type Property } from "~/hooks/useData";
 
 interface Props {
   isOpen: boolean;
@@ -13,9 +11,7 @@ interface Props {
 
 export const Details = ({ isOpen, onClose, property }: Props) => {
   const modalRef = useClickOutside({ isOpen, onClose });
-
-  const images = [apartment_1, apartment_2];
-
+  const { deleteProperty } = useData();
   return (
     <>
       {isOpen && (
@@ -27,7 +23,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
                  overflow-y-auto animate-fadeIn scrollbar-hidden"
           >
             <div className="flex p-4 justify-between sticky top-0 bg-gray-100 z-10">
-              <p className="font-bold text-lg">{property.title}</p>
+              <p className="font-bold text-lg">Details</p>
               <button
                 onClick={() => onClose(false)}
                 className="text-gray-400 hover:text-black"
@@ -42,14 +38,29 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
               ))}
             </div>
 
+            <div className="flex justify-between text-lg font-bold px-4">
+              <p className="capitalize">{property.title}</p>
+              <p className="text-green-500">$300/month</p>
+            </div>
+
             <p className="text-gray-500 px-4 mt-1 capitalize">
               {property.description}
             </p>
 
-            <p className="flex px-4 gap-2 items-center text-gray-500 mt-1 capitalize">
-              <FaMapMarkerAlt />
-              {property.location}
-            </p>
+            <div className="flex justify-between px-4 text-sm ">
+              <p className="flex gap-1 items-center text-gray-500 capitalize">
+                <FaMapMarkerAlt />
+                {property.location}
+              </p>
+
+              <FaTrash
+                onClick={() => {
+                  deleteProperty(property.id);
+                  onClose(false);
+                }}
+                className="text-red-400 hover:text-red-700"
+              />
+            </div>
 
             <Review />
           </div>
