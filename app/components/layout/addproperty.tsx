@@ -53,7 +53,7 @@ export const AddProperty = () => {
 
             <form className="space-y-4" onSubmit={addProperty}>
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="text"
                 placeholder="Title"
                 required
@@ -64,7 +64,7 @@ export const AddProperty = () => {
               />
 
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="text"
                 placeholder="Location"
                 required
@@ -76,7 +76,7 @@ export const AddProperty = () => {
 
               <textarea
                 required
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Description"
                 value={formData.description}
                 onChange={(e) =>
