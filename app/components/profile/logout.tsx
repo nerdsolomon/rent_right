@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaSignOutAlt } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 
@@ -8,12 +9,13 @@ export const Logout = () => {
   const { logout } = useData();
   return (
     <div>
-      <button
+      <div
+        className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer"
         onClick={() => onClose(true)}
-        className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
       >
-        Logout
-      </button>
+        <FaSignOutAlt size={18} />
+        <p>Logout</p>
+      </div>
 
       {isOpen && (
         <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">

@@ -1,19 +1,21 @@
 import { useState } from "react";
+import { FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 
-export const Deleteprofile = () => {
+export const Delete = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { currentUser, deleteUser } = useData();
   return (
     <div>
-      <button
+      <div
+        className="flex items-center gap-5 text-red-400 hover:text-red-900 cursor-pointer"
         onClick={() => onClose(true)}
-        className="p-2 bg-red-400 mt-2 text-xs hover:bg-red-500 text-white rounded-lg font-semibold"
       >
-        Delete Account
-      </button>
+        <FaTrash size={18} />
+        <p>Delete account</p>
+      </div>
 
       {isOpen && (
         <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -22,7 +24,8 @@ export const Deleteprofile = () => {
             className="bg-gray-100 rounded-2xl shadow-lg w-[270px] p-6 animate-fadeIn"
           >
             <p className="text-gray-400 text-md">
-              Deleting your account will permanently erase all your data. Are you sure you want to continue?
+              Deleting your account will permanently erase all your data. Are
+              you sure you want to continue?
             </p>
             <div className="grid grid-cols-2 gap-2 items-center mt-4">
               <button
@@ -44,4 +47,3 @@ export const Deleteprofile = () => {
     </div>
   );
 };
-

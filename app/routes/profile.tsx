@@ -1,5 +1,7 @@
-import { Deleteprofile } from "~/components/profile/deleteprofile";
-import { Editprofile } from "~/components/profile/editprofile";
+import { FaEnvelope, FaPhoneAlt, FaSuitcase, FaUser } from "react-icons/fa";
+import { ChangePassword } from "~/components/profile/changepassword";
+import { Delete } from "~/components/profile/delete";
+import { Edit } from "~/components/profile/edit";
 import { Logout } from "~/components/profile/logout";
 import { Qrcode } from "~/components/profile/qrcode";
 import { useData } from "~/hooks/useData";
@@ -7,13 +9,11 @@ import { usePageTitle } from "~/hooks/usePageTitle";
 
 const Profile = () => {
   const { currentUser } = useData();
-  usePageTitle(
-    `RentRight - ${currentUser.firstName} ${currentUser.lastName}`
-  );
+  usePageTitle(`RentRight - ${currentUser.firstName} ${currentUser.lastName}`);
   return (
-    <div className="py-4 px-6 space-y-6">
+    <div className="py-4 px-6 space-y-4">
       <div className="flex justify-center">
-        <div className="w-[30%] border-4 mb-2 rounded-full aspect-square bg-gray-300 flex capitalize items-center justify-center text-white text-[40px] lg:text-[50px] font-bold">
+        <div className="w-[30%] border-4 rounded-full aspect-square bg-gray-300 flex capitalize items-center justify-center text-white text-[40px] lg:text-[50px] font-bold">
           {currentUser?.imageUrl ? (
             <img
               src={currentUser.imageUrl}
@@ -25,38 +25,48 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="space-y-2">
+      <Edit />
+
+      <div className="space-y-2 text-gray-400 border-b border-gray-300 pb-2 mb-6">
         {currentUser.company && (
-          <div className="flex justify-between items-center text-gray-500">
-            <div className="text-gray-400 font-bold">Company</div>
-            <div className="text-gray-400">{currentUser.company}</div>
+          <div className="flex items-center gap-5 mb-2">
+            <FaSuitcase size={18} />
+            <div className="items-center">
+              <span className="font-bold text-xs">Company</span>
+              <p>{currentUser.company}</p>
+            </div>
           </div>
         )}
-        <div className="flex justify-between items-center text-gray-500">
-          <div className="text-gray-400 font-bold">Name</div>
-          <div className="text-gray-400">
-            {currentUser.firstName} {currentUser.lastName}
+        <div className="flex items-center gap-5 mb-2">
+          <FaUser size={18} />
+          <div className="items-center">
+            <span className="font-bold text-xs">Name</span>
+            <p>
+              {currentUser.firstName} {currentUser.lastName}
+            </p>
           </div>
         </div>
-        <div className="flex justify-between items-center text-gray-500">
-          <div className="text-gray-400 font-bold">Email</div>
-          <div className="text-gray-400">
-            {currentUser.email}
+        <div className="flex items-center gap-5 mb-2">
+          <FaEnvelope size={18} />
+          <div className="items-center">
+            <span className="font-bold text-xs">Email</span>
+            <p>{currentUser.email}</p>
           </div>
         </div>
-        <div className="flex justify-between items-center text-gray-500">
-          <div className="text-gray-400 font-bold">Phone</div>
-          <div className="text-gray-400">
-            {currentUser.phone}
+        <div className="flex items-center gap-5 mb-2">
+          <FaPhoneAlt size={18} />
+          <div className="items-center">
+            <span className="font-bold text-xs">Phone</span>
+            <p>{currentUser.phone}</p>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-end gap-2 mt-4">
-        <Qrcode/>
-        <Editprofile />
-        <Logout/>
-        <Deleteprofile/>
+      <div className="space-y-4">
+        <Qrcode />
+        <ChangePassword/>
+        <Logout />
+        <Delete />
       </div>
     </div>
   );

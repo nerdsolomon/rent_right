@@ -2,7 +2,7 @@ import { useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 
-export const Editprofile = () => {
+export const Edit = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { currentUser, updateUser } = useData();
@@ -15,12 +15,12 @@ export const Editprofile = () => {
   };
 
   return (
-    <div>
+    <div className="flex justify-center">
       <button
         onClick={() => onClose(true)}
-        className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+        className="px-2 py-1 border border-gray-400 text-xs hover:bg-gray-400 text-gray-400 hover:text-white rounded-lg font-semibold"
       >
-        Edit Profile
+        Edit
       </button>
 
       {isOpen && (
