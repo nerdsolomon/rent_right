@@ -24,15 +24,23 @@ export const emptyUser: User = {
 export interface Property {
   id: number;
   title: string;
+  price: number;
   description: string;
-  location: string;
+  country: string;
+  state: string;
+  city: string;
   imageUrl?: string;
+  owner: number
 }
 
 export const emptyProperty: Property = { 
   id: NaN, 
-  title: "", 
-  location: "", 
+  title: "",
+  price: NaN,
+  country: "", 
+  state: "",
+  city: "",
   description: "", 
-  imageUrl: "", 
+  imageUrl: "",
+  owner: NaN
 };

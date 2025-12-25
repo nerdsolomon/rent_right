@@ -42,7 +42,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
 
             <div className="flex justify-between text-lg font-bold px-4">
               <p className="capitalize">{property.title}</p>
-              <p className="text-green-500">$300/month</p>
+              <p className="text-green-500">${property.price}/month</p>
             </div>
 
             <p className="text-gray-500 px-4 mt-1 capitalize">
@@ -52,7 +52,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
             <div className="flex justify-between px-4 text-sm ">
               <p className="flex gap-1 items-center text-gray-500 capitalize">
                 <FaMapMarkerAlt />
-                {property.location}
+                {`${property.city}, ${property.state}, ${property.country}.`}
               </p>
 
               <FaTrash

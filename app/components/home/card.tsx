@@ -18,7 +18,7 @@ export const Card = () => {
             setSelectedProperty(property);
             onClose(true);
           }}
-          className="w-full lg:w-50 bg-white rounded-lg shadow hover:shadow-md transition cursor-pointer"
+          className="w-full lg:w-[48%] bg-white rounded-lg shadow hover:shadow-md transition cursor-pointer"
         >
           <div className="relative w-full h-44 rounded-t-lg overflow-hidden">
             <img
@@ -34,7 +34,7 @@ export const Card = () => {
             </p>
             <p className="text-sm flex gap-2 items-center text-gray-500 mt-1 capitalize">
               <FaMapMarkerAlt />
-              {property.location}
+              {`${property.city}, ${property.state}, ${property.country}.`}
             </p>
           </div>
         </div>

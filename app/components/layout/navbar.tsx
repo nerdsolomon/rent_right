@@ -14,12 +14,13 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
   const navigate = useNavigate();
   return (
     <nav className="border-b border-gray-300 p-2 sticky top-0 z-50 grid grid-cols-3 bg-white text-blue-500 font-bold">
-      <div className="flex items-center gap-2 text-xl">
+      <div className="flex items-center gap-4">
         <MdMenu
+          size={25}
           onClick={() => onClose(!isOpen)}
-          className="lg:hidden cursor-pointer hover:text-blue-700"
+          className="lg:hidden ml-2 cursor-pointer hover:text-blue-700"
         />
-        <span className="lg:px-2">RentRight</span>
+        <span className="lg:px-2 text-xl">RentRight</span>
       </div>
 
       <div className="flex items-center justify-center">

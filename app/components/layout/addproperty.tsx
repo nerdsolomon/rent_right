@@ -4,12 +4,17 @@ import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { images } from "~/services/asset.services";
 import { emptyProperty, type Property } from "~/types";
+import { location } from "~/services";
 
 export const AddProperty = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const [formData, setFormData] = useState<Property>(emptyProperty);
-  const { properties, setProperties } = useData();
+  const { properties, setProperties, currentUser } = useData();
+
+  const countries = Object.keys(location);
+  const states = formData.country ? Object.keys(location[formData.country] || {}) : [];
+  const cities = formData.country && formData.state ? location[formData.country]?.[formData.state] || [] : [];
 
   const addProperty = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,10 +22,14 @@ export const AddProperty = () => {
       ...properties,
       {
         id: Math.random(),
-        location: formData.location,
+        country: formData.country,
+        state: formData.state,
+        city: formData.city,
         title: formData.title,
+        price: formData.price,
         description: formData.description,
         imageUrl: images[Math.floor(Math.random() * 2)],
+        owner: currentUser.id,
       },
     ]);
     setFormData(emptyProperty);
@@ -64,18 +73,53 @@ export const AddProperty = () => {
                   setFormData({ ...formData, title: e.target.value })
                 }
               />
-
               <input
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                type="text"
-                placeholder="Location"
+                type="number"
+                placeholder="Price"
                 required
-                value={formData.location}
+                value={formData.price}
                 onChange={(e) =>
-                  setFormData({ ...formData, location: e.target.value })
+                  setFormData({ ...formData, price: Number(e.target.value) })
                 }
               />
-
+              <select
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+                value={formData.country}
+                onChange={(e) =>
+                  setFormData({ ...formData, country: e.target.value })
+                }
+              >
+                <option>Country</option>
+                {countries.map((country, index) => <option key={index} value={country}>{country}</option>)}
+              </select>
+              {formData.country && (
+                <select
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                  value={formData.state}
+                  onChange={(e) =>
+                    setFormData({ ...formData, state: e.target.value })
+                  }
+                >
+                  <option>State</option>
+                  {states.map((state, index) => <option key={index} value={state}>{state}</option>)}
+                </select>
+              )}
+              {formData.country && formData.state && (
+                <select
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                  value={formData.city}
+                  onChange={(e) =>
+                    setFormData({ ...formData, city: e.target.value })
+                  }
+                >
+                  <option>City</option>
+                  {cities.map((city: string, index: number) => <option key={index} value={city}>{city}</option>)}
+                </select>
+              )}
               <textarea
                 required
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -85,7 +129,6 @@ export const AddProperty = () => {
                   setFormData({ ...formData, description: e.target.value })
                 }
               />
-
               <button
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

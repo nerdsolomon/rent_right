@@ -1,4 +1,4 @@
-import { FaHeart, FaHome } from "react-icons/fa";
+import { FaBell, FaHome } from "react-icons/fa";
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 
@@ -9,7 +9,7 @@ interface Prop {
 
 const navLinks = [
   { title: "Home", path: "/home", icon: FaHome },
-  { title: "Favorites", path: "/favorites", icon: FaHeart },
+  { title: "Notifications", path: "/notifications", icon: FaBell },
 ];
 
 const Leftbar = ({ isOpen, onClose }: Prop) => {
