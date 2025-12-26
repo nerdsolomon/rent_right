@@ -40,7 +40,7 @@ export const AddProperty = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="fixed bottom-8 right-8 border border-white bg-blue-400 text-white hover:bg-blue-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
+        className="fixed bottom-8 right-8 border-4 border-white bg-blue-400 text-white hover:bg-blue-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
       >
         <FaPlus className="text-md" />
         <span className="hidden lg:inline font-medium">Add Property</span>

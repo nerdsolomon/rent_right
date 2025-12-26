@@ -42,7 +42,7 @@ export const ChangePassword = () => {
         <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
-            className="bg-gray-100 rounded-2xl shadow-lg w-[70%] md:w-[400px] p-6 text-center animate-fadeIn"
+            className="bg-gray-100 rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center animate-fadeIn"
           >
             <p className="font-bold mb-4">Change Password</p>
 
