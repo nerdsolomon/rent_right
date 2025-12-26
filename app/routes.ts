@@ -6,5 +6,6 @@ export default [
     route("/home", "./routes/home.tsx"),
     route("/profile", "./routes/profile.tsx"),
     route("/notifications", "./routes/notifications.tsx"),
+    route("/dashboard", "./routes/dashboard.tsx")
   ]),
 ] satisfies RouteConfig;

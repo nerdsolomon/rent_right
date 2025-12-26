@@ -1,4 +1,4 @@
-import { FaBell, FaHome } from "react-icons/fa";
+import { FaBell, FaChartBar, FaHome } from "react-icons/fa";
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 
@@ -10,6 +10,7 @@ interface Prop {
 const navLinks = [
   { title: "Home", path: "/home", icon: FaHome },
   { title: "Notifications", path: "/notifications", icon: FaBell },
+  { title: "Dashboard", path: "/dashboard", icon: FaChartBar }
 ];
 
 const Leftbar = ({ isOpen, onClose }: Prop) => {
@@ -19,7 +20,7 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
       ref={modalRef}
       className={`
           fixed top-[70px] left-0 overflow-y-auto transition-transform duration-300 ease-in-out
-          w-[250px] h-screen border-r border-gray-200 bg-gray-100 z-40 font-semibold
+          w-[250px] h-screen border-r border-gray-200 bg-gray-100 z-40 font-semibold text-blue-500
           ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:static lg:translate-x-0 lg:block
         `}
     >

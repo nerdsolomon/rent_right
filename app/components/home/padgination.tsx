@@ -1,6 +1,6 @@
 export const Padgination = () => {
   return (
-    <div className="flex justify-between items-center py-6 text-gray-400 text-sm font-semibold">
+    <div className="flex justify-center gap-4 items-center py-6 text-gray-400 text-sm font-semibold">
       <button className="px-2 py-1 border border-gray-400 hover:bg-gray-400 hover:text-white rounded-lg">
         Back
       </button>
