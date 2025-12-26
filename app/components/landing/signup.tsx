@@ -25,6 +25,7 @@ const Signup = () => {
           phone: formData.phone,
           email: formData.email,
           password: formData.password,
+          role: "user"
         },
       ]);
       setFormData(emptyUser);

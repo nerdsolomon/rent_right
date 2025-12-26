@@ -6,7 +6,7 @@ export interface User {
   email: string;
   phone: number;
   password: string;
-  role?: string;
+  role: string;
   NIN?: string;
   imageUrl?: string;
 }
@@ -19,6 +19,7 @@ export const emptyUser: User = {
   email: "",
   phone: NaN,
   password: "",
+  role: ""
 };
 
 export interface Property {
@@ -30,6 +31,7 @@ export interface Property {
   state: string;
   city: string;
   imageUrl?: string;
+  type: string
   owner: number
 }
 
@@ -42,5 +44,6 @@ export const emptyProperty: Property = {
   city: "",
   description: "", 
   imageUrl: "",
+  type: "",
   owner: NaN
 };

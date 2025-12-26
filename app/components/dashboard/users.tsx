@@ -3,7 +3,12 @@ import { FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 
-export const Users = () => {
+interface Props {
+  label: string
+  role: string
+}
+
+export const Users = ({ role, label }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { users, deleteUser } = useData();
@@ -13,8 +18,8 @@ export const Users = () => {
         onClick={() => onClose(true)}
         className="p-4 text-gray-500 text-center font-semibold border border-gray-300 shadow hover:shadow-md transition rounded-lg h-30"
       >
-        Users
-        <p>{ users.length }</p>
+        { label }
+        <p>{ users.filter(user => user.role === role).length }</p>
       </button>
 
       {isOpen && (
@@ -26,7 +31,7 @@ export const Users = () => {
                  overflow-y-auto animate-fadeIn scrollbar-hidden"
           >
             <div className="flex py-2 px-4 justify-between border-b border-gray-300 sticky top-0 bg-gray-100 z-10">
-              <p className="font-bold text-lg">Users</p>
+              <p className="font-bold text-lg">{ label }</p>
               <button
                 onClick={() => onClose(false)}
                 className="text-gray-400 hover:text-black"
@@ -43,7 +48,7 @@ export const Users = () => {
                   <th align="left" className="px-1 py-2">Phone</th>
                 </thead>
                 <tbody>
-                  {users.map((user, index) => (
+                  {users.filter(user => user.role === role).map((user, index) => (
                     <tr key={index} className="hover:bg-gray-200">
                       <td className="px-1 py-2">{`${user.firstName} ${user.lastName}`}</td>
                       <td className="px-1 py-2">{user.email}</td>

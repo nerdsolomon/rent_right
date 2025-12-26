@@ -3,7 +3,12 @@ import { FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 
-export const Lands = () => {
+interface Props {
+  label: string
+  type: string
+}
+
+export const Properties = ({ label, type } : Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { deleteProperty, properties } = useData();
@@ -13,8 +18,8 @@ export const Lands = () => {
         onClick={() => onClose(true)}
         className="p-4 text-gray-500 text-center font-semibold border border-gray-300 shadow hover:shadow-md transition rounded-lg h-30"
       >
-        Lands
-        <p>{ properties.length }</p>
+        { label }
+        <p>{ properties.filter(property => property.type === type).length }</p>
       </button>
 
       {isOpen && (
@@ -26,7 +31,7 @@ export const Lands = () => {
                  overflow-y-auto animate-fadeIn scrollbar-hidden"
           >
             <div className="flex py-2 px-4 justify-between border-b border-gray-300 sticky top-0 bg-gray-100 z-10">
-              <p className="font-bold text-lg">Lands</p>
+              <p className="font-bold text-lg">{ label }</p>
               <button
                 onClick={() => onClose(false)}
                 className="text-gray-400 hover:text-black"
@@ -41,13 +46,13 @@ export const Lands = () => {
                   <th align="left" className="px-1 py-2">Owner</th>
                 </thead>
                 <tbody>
-                  {properties.map((land, index) => (
+                  {properties.filter(property => property.type === type).map((property, index) => (
                     <tr key={index} className="hover:bg-gray-200">
-                      <td className="px-1 py-2">{land.title}</td>
-                      <td className="px-1 py-2">{land.owner}</td>
+                      <td className="px-1 py-2">{property.title}</td>
+                      <td className="px-1 py-2">{property.owner}</td>
                       <td>
                         <FaTrash
-                          onClick={() => deleteProperty(land.id)}
+                          onClick={() => deleteProperty(property.id)}
                           className="text-red-400 text-sm hover:text-red-700"
                         />
                       </td>
@@ -62,4 +67,3 @@ export const Lands = () => {
     </>
   );
 };
-

@@ -29,6 +29,7 @@ export const AddProperty = () => {
         price: formData.price,
         description: formData.description,
         imageUrl: images[Math.floor(Math.random() * 2)],
+        type: formData.type,
         owner: currentUser.id,
       },
     ]);
@@ -83,6 +84,18 @@ export const AddProperty = () => {
                   setFormData({ ...formData, price: Number(e.target.value) })
                 }
               />
+              <select
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+                value={formData.type}
+                onChange={(e) =>
+                  setFormData({ ...formData, type: e.target.value })
+                }
+              >
+                <option>Type</option>
+                <option value="apartment">Apartment</option>
+                <option value="land">Land</option>
+              </select>
               <select
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
