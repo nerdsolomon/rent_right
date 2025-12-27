@@ -6,10 +6,12 @@ export const Filter = () => {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
-
+  const [type, setType] = useState("");
+  
   const countries = Object.keys(location);
   const states = country ? Object.keys(location[country] || {}) : [];
   const cities = country && state ? location[country]?.[state] || [] : [];
+  const types = ["land", "apartment"];
   return (
     <div className="flex pb-4 gap-2">
       <Dropdown
@@ -34,6 +36,12 @@ export const Filter = () => {
           onSelect={(value) => setCity(value)}
         />
       )}
+      <Dropdown
+        label="Type"
+        value={type}
+        list={types}
+        onSelect={(value) => setType(value)}
+      />
     </div>
   );
 };
