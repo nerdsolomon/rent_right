@@ -1,15 +1,16 @@
-import { FaEnvelope, FaPhoneAlt, FaSuitcase, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaFile, FaPhoneAlt, FaQuestionCircle, FaSuitcase, FaUser } from "react-icons/fa";
 import { ChangePassword } from "~/components/profile/changepassword";
 import { Delete } from "~/components/profile/delete";
 import { Edit } from "~/components/profile/edit";
 import { Logout } from "~/components/profile/logout";
 import { Qrcode } from "~/components/profile/qrcode";
+import { Feedback } from "~/components/profile/feedback";
 import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { useRequireAuth } from "~/hooks/useRequireAuth";
 
 const Profile = () => {
-  useRequireAuth()
+  useRequireAuth();
   const { currentUser } = useData();
   usePageTitle(`RentRight - ${currentUser.firstName} ${currentUser.lastName}`);
   return (
@@ -29,7 +30,7 @@ const Profile = () => {
 
       <Edit />
 
-      <div className="space-y-2 text-gray-400 border-b border-gray-300 pb-2 mb-6">
+      <div className="space-y-2 text-gray-400 border-b border-gray-300 pb-2 mb-4">
         {currentUser.company && (
           <div className="flex items-center gap-5 mb-2">
             <FaSuitcase size={18} />
@@ -64,11 +65,23 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 border-b border-gray-300 pb-4 mb-4">
         <Qrcode />
-        <ChangePassword/>
+        <ChangePassword />
         <Logout />
         <Delete />
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
+          <FaQuestionCircle size={18} />
+          <p>Help center</p>
+        </div>
+        <Feedback/>
+        <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
+          <FaFile size={18} />
+          <p>Terms and Privacy Policy</p>
+        </div>
       </div>
     </div>
   );

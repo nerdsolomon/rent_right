@@ -1,13 +1,12 @@
 import profileImg from "~/assets/profile.png";
+import { SendReview } from "./sendreview";
 
 export const Review = () => {
   return (
     <>
       <div className="flex justify-between p-4 mt-4 border-t border-gray-300 text-gray-400">
         <p className="font-bold text-sm">Reviews</p>
-        <button className="border border-gray-300 text-xs px-2 py-1 rounded-full hover:bg-gray-400 hover:text-white">
-          Send Review
-        </button>
+        <SendReview />
       </div>
       <div className="px-4">
         <div className="p-2 flex items-center text-sm mb-2 border-gray-300 shadow hover:shadow-md transition">
