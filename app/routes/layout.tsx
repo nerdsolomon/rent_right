@@ -5,6 +5,7 @@ import Leftbar from "~/components/layout/leftbar";
 import Navbar from "~/components/layout/navbar";
 import Rightbar from "~/components/layout/rightbar";
 import { DataProvider } from "~/hooks/useData";
+import { RequireAuth } from "~/hooks/useRequireAuth";
 
 const Layout = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const Layout = () => {
           <Outlet />
         </main>
       ) : (
-        <>
+        <RequireAuth>
           <div className="flex flex-col h-screen">
             <Navbar isOpen={isOpen} onClose={onClose} />
             <div className="flex">
@@ -29,7 +30,7 @@ const Layout = () => {
             </div>
           </div>
           <AddProperty/>
-        </>
+        </RequireAuth>
       )}
     </DataProvider>
   );

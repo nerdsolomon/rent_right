@@ -14,6 +14,7 @@ import { emptyUser, type Property, type User } from "~/types";
 
 interface DataState {
   isAuthenticated: boolean;
+  isLoading: boolean;
   users: User[];
   setUsers: (users: User[]) => void;
   currentUser: User;
@@ -32,7 +33,7 @@ const DataContext = createContext<DataState | null>(null);
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true);
 
   const [users, setUsers] = useState<User[]>(() =>
     getFromStorage(USERS_KEY, [])
@@ -46,13 +47,18 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     getFromStorage(PROPERTIES_KEY, [])
   );
 
+  const isAuthenticated = Boolean(currentUser?.id);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   useEffect(() => {
     saveToStorage(USERS_KEY, users);
   }, [users]);
 
   useEffect(() => {
-    if (currentUser.id) {
+    if (currentUser?.id) {
       saveToStorage(CURRENT_USER_KEY, currentUser);
     }
   }, [currentUser]);
@@ -61,27 +67,26 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     saveToStorage(PROPERTIES_KEY, properties);
   }, [properties]);
 
+  
   useEffect(() => {
-    setCurrentUser(syncCurrentUser(users, currentUser));
+    setCurrentUser((prev) => syncCurrentUser(users, prev));
   }, [users]);
 
 
   const login = (loginUser: User) => {
     const foundUser = users.find(
       (user) =>
-        user.email === loginUser.email && user.password === loginUser.password
+        user.email === loginUser.email &&
+        user.password === loginUser.password
     );
-    if (foundUser) {
-      setCurrentUser(foundUser);
-      setIsAuthenticated(true)
-      navigate("/home");
-    }
-    return false;
+    if (!foundUser) return false;
+    setCurrentUser(foundUser);
+    navigate("/home");
+    return true;
   };
 
   const logout = () => {
     setCurrentUser(emptyUser);
-    setIsAuthenticated(false)
     removeFromStorage(CURRENT_USER_KEY);
     navigate("/");
   };
@@ -124,6 +129,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     <DataContext.Provider
       value={{
         isAuthenticated,
+        isLoading,
         users,
         setUsers,
         currentUser,
