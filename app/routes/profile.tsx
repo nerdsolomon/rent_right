@@ -6,8 +6,10 @@ import { Logout } from "~/components/profile/logout";
 import { Qrcode } from "~/components/profile/qrcode";
 import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
+import { useRequireAuth } from "~/hooks/useRequireAuth";
 
 const Profile = () => {
+  useRequireAuth()
   const { currentUser } = useData();
   usePageTitle(`RentRight - ${currentUser.firstName} ${currentUser.lastName}`);
   return (

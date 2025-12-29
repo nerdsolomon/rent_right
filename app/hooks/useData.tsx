@@ -1,15 +1,26 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { CURRENT_USER_KEY, deleteById, getFromStorage, PROPERTIES_KEY, removeFromStorage, saveToStorage, syncCurrentUser, USERS_KEY } from "~/services";
+import {
+  CURRENT_USER_KEY,
+  deleteById,
+  getFromStorage,
+  PROPERTIES_KEY,
+  removeFromStorage,
+  saveToStorage,
+  syncCurrentUser,
+  USERS_KEY,
+} from "~/services";
 import { emptyUser, type Property, type User } from "~/types";
 
 interface DataState {
+  isAuthenticated: boolean;
   users: User[];
   setUsers: (users: User[]) => void;
   currentUser: User;
   setCurrentUser: (user: User) => void;
   updateUser: (user: User) => void;
   deleteUser: (id: number) => void;
+  login: (user: User) => boolean;
   logout: () => void;
   properties: Property[];
   setProperties: (properties: Property[]) => void;
@@ -20,6 +31,8 @@ const DataContext = createContext<DataState | null>(null);
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const [users, setUsers] = useState<User[]>(() =>
     getFromStorage(USERS_KEY, [])
@@ -48,14 +61,27 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     saveToStorage(PROPERTIES_KEY, properties);
   }, [properties]);
 
-
   useEffect(() => {
     setCurrentUser(syncCurrentUser(users, currentUser));
   }, [users]);
 
 
+  const login = (loginUser: User) => {
+    const foundUser = users.find(
+      (user) =>
+        user.email === loginUser.email && user.password === loginUser.password
+    );
+    if (foundUser) {
+      setCurrentUser(foundUser);
+      setIsAuthenticated(true)
+      navigate("/home");
+    }
+    return false;
+  };
+
   const logout = () => {
     setCurrentUser(emptyUser);
+    setIsAuthenticated(false)
     removeFromStorage(CURRENT_USER_KEY);
     navigate("/");
   };
@@ -75,7 +101,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     setProperties((prev) => deleteById(prev, id));
   };
 
-
   useEffect(() => {
     const handler = (event: StorageEvent) => {
       if (event.key === USERS_KEY && event.newValue) {
@@ -83,9 +108,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       if (event.key === CURRENT_USER_KEY) {
-        setCurrentUser(
-          event.newValue ? JSON.parse(event.newValue) : emptyUser
-        );
+        setCurrentUser(event.newValue ? JSON.parse(event.newValue) : emptyUser);
       }
 
       if (event.key === PROPERTIES_KEY && event.newValue) {
@@ -100,12 +123,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <DataContext.Provider
       value={{
+        isAuthenticated,
         users,
         setUsers,
         currentUser,
         setCurrentUser,
         updateUser,
         deleteUser,
+        login,
         logout,
         properties,
         setProperties,

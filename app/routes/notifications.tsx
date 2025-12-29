@@ -1,7 +1,9 @@
 import { FaBell } from "react-icons/fa";
 import { usePageTitle } from "~/hooks/usePageTitle";
+import { useRequireAuth } from "~/hooks/useRequireAuth";
 
 const Notifications = () => {
+  useRequireAuth()
   usePageTitle("RentRight - Notifications");
 
   return (

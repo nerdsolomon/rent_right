@@ -1,7 +1,9 @@
 import { Properties } from "~/components/dashboard/properties";
 import { Users } from "~/components/dashboard/users";
+import { useRequireAuth } from "~/hooks/useRequireAuth";
 
 const Dashboard = () => {
+  useRequireAuth()
   const usersFilter = [
     { label: "Admins", role: "admin" },
     { label: "Owners", role: "owner" },
