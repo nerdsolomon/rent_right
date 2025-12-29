@@ -2,13 +2,15 @@ import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
+import type { IconType } from "react-icons";
 
 interface Props {
-  label: string
-  role: string
+  label: string;
+  role: string;
+  icon: IconType;
 }
 
-export const Users = ({ role, label }: Props) => {
+export const Users = ({ role, label, icon: Icon }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { users, deleteUser } = useData();
@@ -16,10 +18,11 @@ export const Users = ({ role, label }: Props) => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="p-4 text-gray-500 text-center font-semibold border border-gray-300 shadow hover:shadow-md transition rounded-lg h-30"
+        className="p-4 text-gray-500 text-sm text-start font-semibold border border-gray-300 shadow hover:shadow-md transition rounded-lg h-30"
       >
-        { label }
-        <p>{ users.filter(user => user.role === role).length }</p>
+        <Icon className="text-xl"  />
+        <p className="text-xl font-bold">{users.filter((user) => user.role === role).length}</p>
+        {label}
       </button>
 
       {isOpen && (
@@ -31,7 +34,8 @@ export const Users = ({ role, label }: Props) => {
                  overflow-y-auto animate-fadeIn scrollbar-hidden"
           >
             <div className="flex py-2 px-4 justify-between border-b border-gray-300 sticky top-0 bg-gray-100 z-10">
-              <p className="font-bold text-lg">{ label }</p>
+              
+              <p className="font-bold text-lg">{label}</p>
               <button
                 onClick={() => onClose(false)}
                 className="text-gray-400 hover:text-black"
@@ -40,30 +44,23 @@ export const Users = ({ role, label }: Props) => {
               </button>
             </div>
 
-            <div className="flex m-2 overflow-x-auto">
-              <table className="w-full">
-                <thead className="text-xs sticky top-0">
-                  <th align="left" className="px-1 py-2">Name</th>
-                  <th align="left" className="px-1 py-2">Email</th>
-                  <th align="left" className="px-1 py-2">Phone</th>
-                </thead>
-                <tbody>
-                  {users.filter(user => user.role === role).map((user, index) => (
-                    <tr key={index} className="hover:bg-gray-200">
-                      <td className="px-1 py-2">{`${user.firstName} ${user.lastName}`}</td>
-                      <td className="px-1 py-2">{user.email}</td>
-                      <td className="px-1 py-2">{user.phone}</td>
-                      <td>
-                        <FaTrash
-                          onClick={() => deleteUser(user.id)}
-                          className="text-red-400 text-sm hover:text-red-700"
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {users
+              .filter((user) => user.role === role)
+              .map((user, index) => (
+                <div
+                  key={index}
+                  className="w-full flex items-center px-4 justify-between hover:bg-gray-200"
+                >
+                  <div className="py-1 capitalize">{`${user.firstName} ${user.lastName}`}</div>
+                  <button className="text-gray-400 text-sm hover:text-gray-700">
+                    Make admin
+                  </button>
+                  <FaTrash
+                    onClick={() => deleteUser(user.id)}
+                    className="text-red-400 text-sm hover:text-red-700"
+                  />
+                </div>
+              ))}
           </div>
         </div>
       )}

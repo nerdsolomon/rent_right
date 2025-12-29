@@ -2,13 +2,15 @@ import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
+import { type IconType } from "react-icons";
 
 interface Props {
-  label: string
-  type: string
+  label: string;
+  type: string;
+  icon: IconType;
 }
 
-export const Properties = ({ label, type } : Props) => {
+export const Properties = ({ label, type, icon: Icon } : Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { deleteProperty, properties } = useData();
@@ -16,10 +18,11 @@ export const Properties = ({ label, type } : Props) => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="p-4 text-gray-500 text-center font-semibold border border-gray-300 shadow hover:shadow-md transition rounded-lg h-30"
+        className="p-4 text-gray-500 text-sm text-start font-semibold border border-gray-300 shadow hover:shadow-md transition rounded-lg h-30"
       >
+        <Icon className="text-xl" />
+        <p className="text-xl font-bold">{ properties.filter(property => property.type === type).length }</p>
         { label }
-        <p>{ properties.filter(property => property.type === type).length }</p>
       </button>
 
       {isOpen && (

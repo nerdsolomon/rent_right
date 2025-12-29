@@ -1,28 +1,34 @@
+import { FaUsers, FaUserShield, FaUserTie } from "react-icons/fa";
+import { MdApartment, MdLandscape } from "react-icons/md";
+import { Chart } from "~/components/dashboard/chart";
 import { Properties } from "~/components/dashboard/properties";
 import { Users } from "~/components/dashboard/users";
 import { useRequireAuth } from "~/hooks/useRequireAuth";
 
 const Dashboard = () => {
-  useRequireAuth()
+  useRequireAuth();
   const usersFilter = [
-    { label: "Admins", role: "admin" },
-    { label: "Owners", role: "owner" },
-    { label: "Users", role: "user" },
+    { label: "Admins", role: "admin", icon: FaUserShield },
+    { label: "Owners", role: "owner", icon: FaUserTie },
+    { label: "Users", role: "user", icon: FaUsers },
   ];
   const propertiesFilter = [
-    { label: "Apartments", type: "apartment" },
-    { label: "Lands", type: "land" },
+    { label: "Apartments", type: "apartment", icon: MdApartment },
+    { label: "Lands", type: "land", icon: MdLandscape },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {usersFilter.map((user, index) => (
-        <Users key={index} role={user.role} label={user.label} />
-      ))}
-      {propertiesFilter.map((property, index) => (
-        <Properties key={index} label={property.label} type={property.type} />
-      ))}
-    </div>
+    <>
+      <Chart />
+      <div className="grid grid-cols-2 gap-4 p-4">
+        {usersFilter.map((user, index) => (
+          <Users key={index} role={user.role} label={user.label} icon={user.icon} />
+        ))}
+        {propertiesFilter.map((property, index) => (
+          <Properties key={index} label={property.label} type={property.type} icon={property.icon} />
+        ))}
+      </div>
+    </>
   );
 };
 
