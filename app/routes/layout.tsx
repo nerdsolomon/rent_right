@@ -10,7 +10,6 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 const Layout = () => {
   const location = useLocation();
   const [isOpen, onClose] = useState(false);
-  const { currentUser } = useData()
 
   return (
     <DataProvider>
@@ -30,7 +29,7 @@ const Layout = () => {
               <Rightbar />
             </div>
           </div>
-          {currentUser.role === "owner" && <AddProperty/>}
+          <AddProperty/>
         </RequireAuth>
       )}
     </DataProvider>

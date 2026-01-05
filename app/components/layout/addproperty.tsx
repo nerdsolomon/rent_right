@@ -13,8 +13,13 @@ export const AddProperty = () => {
   const { properties, setProperties, currentUser } = useData();
 
   const countries = Object.keys(location);
-  const states = formData.country ? Object.keys(location[formData.country] || {}) : [];
-  const cities = formData.country && formData.state ? location[formData.country]?.[formData.state] || [] : [];
+  const states = formData.country
+    ? Object.keys(location[formData.country] || {})
+    : [];
+  const cities =
+    formData.country && formData.state
+      ? location[formData.country]?.[formData.state] || []
+      : [];
 
   const addProperty = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,13 +44,15 @@ export const AddProperty = () => {
 
   return (
     <>
-      <button
-        onClick={() => onClose(true)}
-        className="fixed bottom-8 right-8 border-4 border-white bg-blue-400 text-white hover:bg-blue-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
-      >
-        <FaPlus className="text-md" />
-        <span className="hidden lg:inline font-medium">Add Property</span>
-      </button>
+      {currentUser.role === "owner" && (
+        <button
+          onClick={() => onClose(true)}
+          className="fixed bottom-8 right-8 border-4 border-white bg-blue-400 text-white hover:bg-blue-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
+        >
+          <FaPlus className="text-md" />
+          <span className="hidden lg:inline font-medium">Add Property</span>
+        </button>
+      )}
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
@@ -105,7 +112,11 @@ export const AddProperty = () => {
                 }
               >
                 <option>Country</option>
-                {countries.map((country, index) => <option key={index} value={country}>{country}</option>)}
+                {countries.map((country, index) => (
+                  <option key={index} value={country}>
+                    {country}
+                  </option>
+                ))}
               </select>
               {formData.country && (
                 <select
@@ -117,7 +128,11 @@ export const AddProperty = () => {
                   }
                 >
                   <option>State</option>
-                  {states.map((state, index) => <option key={index} value={state}>{state}</option>)}
+                  {states.map((state, index) => (
+                    <option key={index} value={state}>
+                      {state}
+                    </option>
+                  ))}
                 </select>
               )}
               {formData.country && formData.state && (
@@ -130,7 +145,11 @@ export const AddProperty = () => {
                   }
                 >
                   <option>City</option>
-                  {cities.map((city: string, index: number) => <option key={index} value={city}>{city}</option>)}
+                  {cities.map((city: string, index: number) => (
+                    <option key={index} value={city}>
+                      {city}
+                    </option>
+                  ))}
                 </select>
               )}
               <textarea
