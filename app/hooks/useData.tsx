@@ -23,6 +23,8 @@ interface DataState {
   deleteUser: (id: number) => void;
   login: (user: User) => boolean;
   logout: () => void;
+  toggleRole: (id: number) => void;
+  makeOwner: (id: number) => void;
   properties: Property[];
   setProperties: (properties: Property[]) => void;
   deleteProperty: (id: number) => void;
@@ -67,17 +69,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     saveToStorage(PROPERTIES_KEY, properties);
   }, [properties]);
 
-  
   useEffect(() => {
     setCurrentUser((prev) => syncCurrentUser(users, prev));
   }, [users]);
 
-
   const login = (loginUser: User) => {
     const foundUser = users.find(
       (user) =>
-        user.email === loginUser.email &&
-        user.password === loginUser.password
+        user.email === loginUser.email && user.password === loginUser.password
     );
     if (!foundUser) return false;
     setCurrentUser(foundUser);
@@ -100,6 +99,22 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteUser = (id: number) => {
     setUsers((prev) => deleteById(prev, id));
     if (currentUser.id === id) logout();
+  };
+
+  const toggleRole = (id: number) => {
+    setUsers((prev) =>
+      prev.map((user) =>
+        user.id === id
+          ? { ...user, role: user.role === "admin" ? "user" : "admin" }
+          : user
+      )
+    );
+  };
+
+  const makeOwner = (id: number) => {
+    setUsers((prev) =>
+      prev.map((user) => (user.id === id ? { ...user, role: "owner" } : user))
+    );
   };
 
   const deleteProperty = (id: number) => {
@@ -138,6 +153,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         deleteUser,
         login,
         logout,
+        toggleRole,
+        makeOwner,
         properties,
         setProperties,
         deleteProperty,
