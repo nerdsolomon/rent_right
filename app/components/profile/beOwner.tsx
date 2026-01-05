@@ -10,7 +10,13 @@ export const BeOwner = () => {
 
   const becomeOwner = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateUser({ ...currentUser });
+    const formData = new FormData(e.currentTarget);
+    const nin = formData.get("nin");
+    updateUser({
+      ...currentUser,
+      NIN: Number(nin),
+      role: "owner",
+    });
     setAlert(true);
   };
 
@@ -59,19 +65,12 @@ export const BeOwner = () => {
                   Verification complete, you're now an owner!
                 </div>
               )}
-
               <input
                 className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="text"
                 placeholder="NIN"
+                name="nin"
                 required
-                onChange={(e) =>
-                  updateUser({
-                    ...currentUser,
-                    NIN: Number(e.target.value),
-                    role: "owner",
-                  })
-                }
               />
               <div className="flex justify-end">
                 <button
