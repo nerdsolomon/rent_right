@@ -13,7 +13,7 @@ interface Props {
 
 export const Details = ({ isOpen, onClose, property }: Props) => {
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { deleteProperty } = useData();
+  const { deleteProperty, currentUser } = useData();
   return (
     <>
       {isOpen && (
@@ -55,13 +55,15 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
                 {`${property.city}, ${property.state}, ${property.country}.`}
               </p>
 
-              <FaTrash
-                onClick={() => {
-                  deleteProperty(property.id);
-                  onClose(false);
-                }}
-                className="text-red-400 hover:text-red-700"
-              />
+              {currentUser.role === "owner" && (
+                <FaTrash
+                  onClick={() => {
+                    deleteProperty(property.id);
+                    onClose(false);
+                  }}
+                  className="text-red-400 hover:text-red-700"
+                />
+              )}
             </div>
 
             <Review />

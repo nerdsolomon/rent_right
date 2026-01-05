@@ -4,12 +4,13 @@ import { AddProperty } from "~/components/layout/addproperty";
 import Leftbar from "~/components/layout/leftbar";
 import Navbar from "~/components/layout/navbar";
 import Rightbar from "~/components/layout/rightbar";
-import { DataProvider } from "~/hooks/useData";
+import { DataProvider, useData } from "~/hooks/useData";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 
 const Layout = () => {
   const location = useLocation();
   const [isOpen, onClose] = useState(false);
+  const { currentUser } = useData()
 
   return (
     <DataProvider>
@@ -29,7 +30,7 @@ const Layout = () => {
               <Rightbar />
             </div>
           </div>
-          <AddProperty/>
+          {currentUser.role === "owner" && <AddProperty/>}
         </RequireAuth>
       )}
     </DataProvider>
