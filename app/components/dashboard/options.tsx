@@ -4,7 +4,11 @@ import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import type { User } from "~/types";
 
-export const Options = (user: User) => {
+interface Prop {
+  user : User
+}
+
+export const Options = ({ user } : Prop ) => {
   const [isOpen, setIsOpen] = useState(false);
   const { deleteUser, toggleRole } = useData();
   const modalRef = useClickOutside({ isOpen, onClose: setIsOpen });

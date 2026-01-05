@@ -53,7 +53,7 @@ export const Users = ({ role, label, icon: Icon }: Props) => {
                   className="w-full flex items-center px-4 rounded-lg justify-between hover:bg-gray-200"
                 >
                   <div className="py-1 capitalize">{`${user.firstName} ${user.lastName}`}</div>
-                  <Options userId={user.id}/>
+                  <Options user={user}/>
                 </div>
               ))}
           </div>
