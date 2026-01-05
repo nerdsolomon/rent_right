@@ -7,7 +7,7 @@ export interface User {
   phone: number;
   password: string;
   role: string;
-  NIN?: string;
+  NIN?: number;
   imageUrl?: string;
 }
 
@@ -19,7 +19,8 @@ export const emptyUser: User = {
   email: "",
   phone: NaN,
   password: "",
-  role: ""
+  role: "",
+  NIN: NaN
 };
 
 export interface Property {

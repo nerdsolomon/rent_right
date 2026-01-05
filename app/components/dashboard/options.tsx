@@ -40,9 +40,9 @@ export const Options = ({ user } : Prop ) => {
                 deleteUser(user.id);
                 setIsOpen(false);
               }}
-              className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100 text-red-600"
+              className="block w-full px-4 capitalize py-2 text-left rounded-lg hover:bg-gray-100 text-red-600"
             >
-              Delete user
+              {`Delete ${user.firstName}`}
             </button>
           </div>
         </div>

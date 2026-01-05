@@ -24,7 +24,7 @@ interface DataState {
   login: (user: User) => boolean;
   logout: () => void;
   toggleRole: (id: number) => void;
-  makeOwner: (id: number) => void;
+  makeOwner: (id: number, NIN: number) => void;
   properties: Property[];
   setProperties: (properties: Property[]) => void;
   deleteProperty: (id: number) => void;
@@ -111,9 +111,9 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-  const makeOwner = (id: number) => {
+  const makeOwner = (id: number, NIN: number) => {
     setUsers((prev) =>
-      prev.map((user) => (user.id === id ? { ...user, role: "owner" } : user))
+      prev.map((user) => (user.id === id ? { ...user, role: "owner", NIN: NIN } : user))
     );
   };
 
