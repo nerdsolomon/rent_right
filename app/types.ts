@@ -48,3 +48,33 @@ export const emptyProperty: Property = {
   type: "",
   owner: NaN
 };
+
+export interface Review {
+  id: number
+  text: string
+  user: string
+  propertyId: number
+}
+
+export const emptyReview: Review = {
+  id: NaN,
+  text: "",
+  user: "",
+  propertyId: NaN
+}
+
+export interface Feedback {
+  id: number
+  text: string
+  userId: number
+  imageUrl?: string
+  isViewed: boolean
+}
+
+export const emptyFeedback: Feedback = {
+  id: NaN,
+  text: "",
+  userId: NaN,
+  imageUrl: "",
+  isViewed: false
+}

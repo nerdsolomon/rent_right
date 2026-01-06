@@ -1,35 +1,45 @@
 import profileImg from "~/assets/profile.png";
 import { SendReview } from "./sendreview";
+import { useData } from "~/hooks/useData";
 
-export const Review = () => {
+interface Prop {
+  propertyId: number;
+}
+
+export const Review = ({ propertyId }: Prop) => {
+  const { reviews } = useData();
   return (
     <>
       <div className="flex justify-between p-4 mt-4 border-t border-gray-300 text-gray-400">
         <p className="font-bold text-sm">Reviews</p>
-        <SendReview />
+        <SendReview propertyId={propertyId} />
       </div>
       <div className="px-4">
-        <div className="p-2 flex items-center text-sm mb-2 border-gray-300 shadow hover:shadow-md transition">
-          <img
-            src={profileImg}
-            className="w-10 h-10 rounded-full object-cover mr-3"
-          />
-          <div className="items-center">
-            <span className="font-bold mr-2">John Doe</span>
-            <p>Hello</p>
+        {reviews.length > 0 ? (
+          reviews
+            .filter((r) => r.propertyId === propertyId)
+            .map((review, index) => (
+              <div
+                key={index}
+                className="p-2 flex items-center text-sm mb-2 border-b border-gray-300"
+              >
+                <img
+                  src={profileImg}
+                  className="w-10 h-10 rounded-full object-cover mr-3"
+                />
+                <div className="items-center">
+                  <span className="font-bold mr-2 capitalize">{review.user}</span>
+                  <p>{review.text}</p>
+                </div>
+              </div>
+            ))
+        ) : (
+          <div className="mt-5 mb-10">
+            <p className="text-center font-semibold text-[18px] text-gray-300">
+              No reviews
+            </p>
           </div>
-        </div>
-
-        <div className="p-2 flex items-center text-sm mb-2 border-gray-300 shadow hover:shadow-lg transition">
-          <img
-            src={profileImg}
-            className="w-10 h-10 rounded-full object-cover mr-3"
-          />
-          <div className="items-center">
-            <span className="font-bold mr-2">John Doe</span>
-            <p>Hello</p>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

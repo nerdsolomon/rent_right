@@ -23,7 +23,7 @@ const Profile = () => {
     <RequireAuth>
       <div className="py-4 px-6 space-y-4">
         <div className="flex justify-center">
-          <div className="w-[30%] border-4 rounded-full aspect-square bg-gray-300 flex capitalize items-center justify-center text-white text-[40px] lg:text-[50px] font-bold">
+          <div className="w-[30%] border-4 border-blue-300 rounded-full aspect-square flex capitalize items-center justify-center text-blue-300 text-[40px] lg:text-[50px] font-bold">
             {currentUser?.imageUrl ? (
               <img
                 src={currentUser.imageUrl}
@@ -51,7 +51,7 @@ const Profile = () => {
             <FaUser size={18} />
             <div className="items-center">
               <span className="font-bold text-xs">Name</span>
-              <p>
+              <p className="capitalize">
                 {currentUser.firstName} {currentUser.lastName}
               </p>
             </div>

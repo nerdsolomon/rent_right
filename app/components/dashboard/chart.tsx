@@ -34,7 +34,7 @@ export function Chart() {
           <Line
             type="monotone"
             dataKey="value"
-            stroke="#4f46e5"
+            stroke="#2b7fff"
             strokeWidth={3}
             dot={{ r: 4 }}
             activeDot={{ r: 6 }}

@@ -3,14 +3,16 @@ import { useNavigate } from "react-router";
 import {
   CURRENT_USER_KEY,
   deleteById,
+  FEEDBACKS_KEY,
   getFromStorage,
   PROPERTIES_KEY,
   removeFromStorage,
+  REVIEWS_KEY,
   saveToStorage,
   syncCurrentUser,
   USERS_KEY,
 } from "~/services";
-import { emptyUser, type Property, type User } from "~/types";
+import { emptyUser, type Feedback, type Property, type Review, type User } from "~/types";
 
 interface DataState {
   isAuthenticated: boolean;
@@ -27,6 +29,10 @@ interface DataState {
   properties: Property[];
   setProperties: (properties: Property[]) => void;
   deleteProperty: (id: number) => void;
+  reviews: Review[];
+  setReviews: (reviews: Review[]) => void;
+  feedbacks: Feedback[];
+  setFeedbacks: (feedbacks: Feedback[]) => void;
 }
 
 const DataContext = createContext<DataState | null>(null);
@@ -47,6 +53,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [properties, setProperties] = useState<Property[]>(() =>
     getFromStorage(PROPERTIES_KEY, [])
   );
+
+  const [reviews, setReviews] = useState<Review[]>(() =>
+    getFromStorage(REVIEWS_KEY, [])
+  );
+
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>(() =>
+    getFromStorage(FEEDBACKS_KEY, [])
+  )
 
   const isAuthenticated = Boolean(currentUser?.id);
 
@@ -71,6 +85,15 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setCurrentUser((prev) => syncCurrentUser(users, prev));
   }, [users]);
+
+  useEffect(() => {
+    saveToStorage(REVIEWS_KEY, reviews);
+  }, [reviews]);
+
+  useEffect(() => {
+    saveToStorage(FEEDBACKS_KEY, feedbacks);
+  }, [feedbacks]);
+
 
   const login = (loginUser: User) => {
     const foundUser = users.find(
@@ -127,6 +150,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       if (event.key === PROPERTIES_KEY && event.newValue) {
         setProperties(JSON.parse(event.newValue));
       }
+
+      if (event.key === REVIEWS_KEY && event.newValue) {
+        setProperties(JSON.parse(event.newValue));
+      }
+
+      if (event.key === FEEDBACKS_KEY && event.newValue) {
+        setProperties(JSON.parse(event.newValue));
+      }
     };
 
     window.addEventListener("storage", handler);
@@ -150,6 +181,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         properties,
         setProperties,
         deleteProperty,
+        reviews,
+        setReviews,
+        feedbacks,
+        setFeedbacks
       }}
     >
       {children}

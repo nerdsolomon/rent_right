@@ -23,7 +23,7 @@ const Layout = () => {
             <Navbar isOpen={isOpen} onClose={onClose} />
             <div className="flex">
               <Leftbar isOpen={isOpen} onClose={onClose} />
-              <main className="h-screen w-full lg:ml-20 lg:mr-20 lg:pb-20 flex-1 overflow-y-auto scrollbar-hidden bg-blue-100">
+              <main className="h-screen w-full lg:ml-20 lg:mr-20 lg:pb-20 flex-1 overflow-y-auto scrollbar-hidden">
                 <Outlet />
               </main>
               <Rightbar />
