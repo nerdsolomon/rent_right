@@ -3,6 +3,7 @@ import Signup from "~/components/landing/signup";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { useData } from "~/hooks/useData";
 import { Team } from "~/components/landing/team";
+import { Carousel } from "~/components/landing/carousel";
 
 const Landing = () => {
   usePageTitle("RentRight");
@@ -24,7 +25,7 @@ const Landing = () => {
           </a>
         </div>
       </nav>
-
+      <Carousel/>
       <section className="bg-gray-100" id="get-started">
         <p className="font-bold text-lg py-4">Get Started</p>
         <div className="flex items-center justify-center gap-4">
