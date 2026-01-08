@@ -17,6 +17,7 @@ export const SendReview = ({ propertyId }: Prop) => {
     e.preventDefault();
     setReviews([...reviews, formData]);
     setFormData(emptyReview)
+    onClose(false)
   };
 
   return (

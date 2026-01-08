@@ -1,4 +1,4 @@
-import { FaBell, FaChartBar, FaHome } from "react-icons/fa";
+import { FaBell, FaChartBar, FaExclamationCircle, FaHome } from "react-icons/fa";
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 
@@ -9,8 +9,9 @@ interface Prop {
 
 const navLinks = [
   { title: "Home", path: "/home", icon: FaHome },
+  { title: "Dashboard", path: "/dashboard", icon: FaChartBar },
+  { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle },
   { title: "Notifications", path: "/notifications", icon: FaBell },
-  { title: "Dashboard", path: "/dashboard", icon: FaChartBar }
 ];
 
 const Leftbar = ({ isOpen, onClose }: Prop) => {

@@ -1,10 +1,22 @@
 import { useState } from "react";
 import { FaBug } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
+import { useData } from "~/hooks/useData";
+import { emptyFeedback } from "~/types";
 
 export const Feedback = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
+  const { feedbacks, setFeedbacks, currentUser } = useData();
+  const [formData, setFormData] = useState(emptyFeedback);
+
+  const sendFeedback = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFeedbacks([...feedbacks, formData]);
+    setFormData(emptyFeedback);
+    onClose(false);
+  };
+
   return (
     <div>
       <div
@@ -36,12 +48,21 @@ export const Feedback = () => {
               </button>
             </div>
 
-            <form className="space-y-2">
+            <form className="space-y-2" onSubmit={sendFeedback}>
               <textarea
                 required
                 rows={3}
                 className="w-full p-2 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Describe the technical issue"
+                value={formData.text}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    id: Math.random(),
+                    text: e.target.value,
+                    userId: currentUser.id,
+                  })
+                }
               />
               <button
                 type="submit"

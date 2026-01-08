@@ -10,7 +10,7 @@ const Notifications = () => {
       <div className="flex justify-center">
         <div className="mt-40">
           <div className="flex justify-center">
-            <FaBell size={40} className="text-gray-300" />
+            <FaBell size={40} className="text-gray-300 mb-5" />
           </div>
           <p className="text-center font-bold text-[22px] text-gray-300">
             No notifications

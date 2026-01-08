@@ -66,7 +66,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
               )}
             </div>
 
-            <Review />
+            <Review propertyId={property.id} />
           </div>
         </div>
       )}
