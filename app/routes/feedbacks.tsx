@@ -3,17 +3,25 @@ import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 
-const Notifications = () => {
+const Feedbacks = () => {
   usePageTitle("RentRight - Feedbacks");
   const { feedbacks } = useData();
 
   return (
     <RequireAuth>
-      <div className="flex justify-center"> 
+      <div className="space-y-2">
         {feedbacks.length > 0 ? (
-          feedbacks.map(((f, index) => (
-            <div key={index}></div>
-          )))
+          feedbacks.map((f, index) => (
+            <div
+              key={index}
+              className="p-2 flex items-center w-full text-sm mb-2 border-b border-gray-300"
+            >
+              <div className="items-center">
+                <span className="font-bold mr-2 capitalize">{f.userId}</span>
+                <p>{f.text}</p>
+              </div>
+            </div>
+          ))
         ) : (
           <div className="mt-40">
             <div className="flex justify-center">
@@ -29,4 +37,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default Feedbacks;
