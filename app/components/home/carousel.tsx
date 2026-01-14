@@ -43,6 +43,8 @@ export const Carousel = () => {
     touchStartX.current = null;
   };
 
+  if (properties.length == 0) return
+
   return (
     <div
       className="relative w-full h-[250px] overflow-hidden mb-4"

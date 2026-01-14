@@ -34,6 +34,7 @@ export interface Property {
   imageUrl?: string;
   type: string
   owner: number
+  rating?: number
 }
 
 export const emptyProperty: Property = { 
@@ -46,7 +47,8 @@ export const emptyProperty: Property = {
   description: "", 
   imageUrl: "",
   type: "",
-  owner: NaN
+  owner: NaN,
+  rating: NaN
 };
 
 export interface Review {

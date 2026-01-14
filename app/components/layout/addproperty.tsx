@@ -47,7 +47,7 @@ export const AddProperty = () => {
       {currentUser.role === "owner" && (
         <button
           onClick={() => onClose(true)}
-          className="fixed bottom-8 right-8 border-4 border-white bg-blue-400 text-white hover:bg-blue-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
+          className="fixed bottom-8 right-8 border-4 border-white bg-purple-600 text-white hover:bg-purple-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
         >
           <FaPlus className="text-md" />
           <span className="hidden lg:inline font-medium">Add Property</span>
@@ -72,7 +72,7 @@ export const AddProperty = () => {
 
             <form className="space-y-4" onSubmit={addProperty}>
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="text"
                 placeholder="Title"
                 required
@@ -82,7 +82,7 @@ export const AddProperty = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="number"
                 placeholder="Price"
                 required
@@ -92,7 +92,7 @@ export const AddProperty = () => {
                 }
               />
               <select
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
                 value={formData.type}
                 onChange={(e) =>
@@ -104,7 +104,7 @@ export const AddProperty = () => {
                 <option value="land">Land</option>
               </select>
               <select
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
                 value={formData.country}
                 onChange={(e) =>
@@ -120,7 +120,7 @@ export const AddProperty = () => {
               </select>
               {formData.country && (
                 <select
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                   required
                   value={formData.state}
                   onChange={(e) =>
@@ -137,7 +137,7 @@ export const AddProperty = () => {
               )}
               {formData.country && formData.state && (
                 <select
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                   required
                   value={formData.city}
                   onChange={(e) =>
@@ -154,7 +154,7 @@ export const AddProperty = () => {
               )}
               <textarea
                 required
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 placeholder="Description"
                 value={formData.description}
                 onChange={(e) =>
@@ -163,7 +163,7 @@ export const AddProperty = () => {
               />
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
               >
                 Add
               </button>

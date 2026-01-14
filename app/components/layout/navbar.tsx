@@ -13,10 +13,10 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
   const { currentUser } = useData();
   const navigate = useNavigate();
   return (
-    <nav className="border-b border-gray-300 p-2 sticky top-0 z-50 grid grid-cols-3 bg-white text-blue-500 font-bold">
+    <nav className="border-b border-gray-300 p-2 sticky top-0 z-50 grid grid-cols-3 bg-white text-purple-600 font-bold">
       <div className="flex items-center gap-4">
         <button
-          className="lg:hidden ml-2 cursor-pointer hover:text-blue-700 text-lg"
+          className="lg:hidden ml-2 cursor-pointer hover:text-purple-800 text-lg"
           onClick={() => onClose(!isOpen)}
         >
           <MdMenu />

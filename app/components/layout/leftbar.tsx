@@ -21,14 +21,14 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
       ref={modalRef}
       className={`
           fixed top-[70px] left-0 overflow-y-auto transition-transform duration-300 ease-in-out
-          w-[250px] h-screen border-r border-gray-200 bg-gray-100 z-40 font-semibold text-blue-500
+          w-[250px] h-screen border-r border-gray-200 bg-gray-100 z-40 font-semibold text-purple-600
           ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:static lg:translate-x-0 lg:block
         `}
     >
       {navLinks.map((link, index) => (
         <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
           {({ isActive }) => (
-            <div className={`flex gap-2 items-center p-4 ${isActive ? "bg-blue-500 text-white" : "hover:bg-gray-200"}`} >
+            <div className={`flex gap-2 items-center p-4 ${isActive ? "bg-purple-600 text-white" : "hover:bg-gray-200"}`} >
               <link.icon /> <span>{link.title}</span>
             </div>
           )}
