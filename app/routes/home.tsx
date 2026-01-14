@@ -15,8 +15,8 @@ const Home = () => {
       <div className="p-2">
         <Carousel />
         <Filter />
-        <div className="flex flex-wrap gap-4 justify-center">
-          { properties.map((property, index) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {properties.map((property, index) => (
             <PropertyCard property={property} key={index} />
           ))}
         </div>
