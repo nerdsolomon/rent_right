@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet, useLocation } from "react-router";
 import { AddProperty } from "~/components/layout/addproperty";
 import Leftbar from "~/components/layout/leftbar";
-import Navbar from "~/components/layout/navbar";
+import { Navbar } from "~/components/layout/navbar";
 import Rightbar from "~/components/layout/rightbar";
 import { DataProvider, useData } from "~/hooks/useData";
 import { RequireAuth } from "~/hooks/useRequireAuth";

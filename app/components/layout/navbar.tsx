@@ -9,7 +9,7 @@ interface Prop {
   onClose: (value: boolean) => void;
 }
 
-const Navbar = ({ isOpen, onClose }: Prop) => {
+export const Navbar = ({ isOpen, onClose }: Prop) => {
   const { currentUser } = useData();
   const navigate = useNavigate();
   return (
@@ -52,5 +52,3 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
     </nav>
   );
 };
-
-export default Navbar;

@@ -1,8 +1,7 @@
 import Signin from "./signin";
-import Signup from "./signup";
 import { FaHome } from "react-icons/fa";
 
-export default function Navbar() {
+export const Nav = () => {
   return (
     <nav className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 md:py-4 bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="flex items-center gap-2 flex-shrink-0">

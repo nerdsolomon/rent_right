@@ -1,11 +1,11 @@
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { useData } from "~/hooks/useData";
-import Navbar from "~/components/landing/navbar";
 import Footer from "~/components/landing/footer";
 import FeaturedProperties from "~/components/landing/featuredproperties";
 import Features from "~/components/landing/features";
 import CTACards from "~/components/landing/ctacards";
 import HowItWorks from "~/components/landing/howitworks";
+import { Nav } from "~/components/landing/nav";
 
 const Landing = () => {
   usePageTitle("RentRight");
@@ -13,7 +13,7 @@ const Landing = () => {
 
   return (
     <>
-      <Navbar/>
+      <Nav/>
       <FeaturedProperties />
       <Features />
       <HowItWorks/>
