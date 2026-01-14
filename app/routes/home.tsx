@@ -1,4 +1,5 @@
 import { Card } from "~/components/home/card";
+import { Carousel } from "~/components/home/carousel";
 import { Filter } from "~/components/home/filter";
 import { Padgination } from "~/components/home/padgination";
 import { BeOwner } from "~/components/profile/beOwner";
@@ -12,10 +13,8 @@ const Home = () => {
 
   return (
     <RequireAuth>
-      <div className="p-4">
-        <div className="lg:hidden mb-5">
-          {currentUser.role !== "owner" && <BeOwner />}
-        </div>
+      <div className="p-2">
+        <Carousel />
         <Filter />
         <div className="flex flex-wrap gap-4 justify-center">
           <Card />

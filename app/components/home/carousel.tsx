@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { images } from "~/services/asset.services";
+import { useData } from "~/hooks/useData";
 
 const AUTO_SLIDE_DELAY = 4000;
 
@@ -8,8 +8,9 @@ export const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartX = useRef<number | null>(null);
+  const { properties } = useData();
 
-  const total = images.length;
+  const total = properties.length;
 
   const next = () => {
     if (isAnimating) return;
@@ -44,30 +45,37 @@ export const Carousel = () => {
 
   return (
     <div
-      className="relative w-full h-[400px] overflow-hidden"
+      className="relative w-full h-[250px] overflow-hidden mb-4"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       <div
         className="flex h-full transition-transform duration-500 ease-in-out"
-        style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
-        }}
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         onTransitionEnd={() => setIsAnimating(false)}
       >
-        {images.map((img, i) => (
-          <div key={i} className="min-w-full h-full">
+        {properties.map((property, i) => (
+          <div key={i} className="relative min-w-full h-full">
             <img
-              src={img}
+              src={property.imageUrl}
               alt={`slide-${i}`}
               className="w-full h-full object-cover"
             />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+            <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
+              <h2 className="text-xl md:text-2xl font-bold leading-tight">
+                {property.title}
+              </h2>
+              <p className="text-sm md:text-base opacity-90">{property.country}</p>
+            </div>
           </div>
         ))}
       </div>
 
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
-        {images.map((_, i) => (
+        {properties.map((_, i) => (
           <div
             key={i}
             className={`h-2 rounded-full transition-all duration-300 ${
@@ -80,8 +88,7 @@ export const Carousel = () => {
       <button
         onClick={prev}
         className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 z-20
-                   p-3 bg-blue-500/70 text-white rounded-full
-                   hover:bg-blue-700"
+                   text-white hover:text-blue-400"
       >
         <FaArrowLeft />
       </button>
@@ -89,8 +96,7 @@ export const Carousel = () => {
       <button
         onClick={next}
         className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-20
-                   p-3 bg-blue-500/70 text-white rounded-full
-                   hover:bg-blue-700"
+                   text-white hover:text-blue-400"
       >
         <FaArrowRight />
       </button>

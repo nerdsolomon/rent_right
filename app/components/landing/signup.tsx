@@ -43,7 +43,7 @@ const Signup = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="border border-gray-400 text-sm bg-green-500 p-2 text-white hover:bg-green-800 rounded-lg"
+        className="px-6 py-2 rounded-full text-sm font-semibold bg-white text-purple-700 shadow"
       >
         Sign Up
       </button>
@@ -142,7 +142,7 @@ const Signup = () => {
                 </p>
               )}
               <button
-                className="border border-gray-400 bg-blue-500 px-4 py-2 text-white hover:bg-blue-800 rounded-lg"
+                className="border border-gray-400 bg-purple-600 px-4 py-2 text-white hover:bg-purple-800 rounded-lg"
                 type="submit"
               >
                 Sign up

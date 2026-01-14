@@ -26,7 +26,7 @@ const Signin = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="border border-gray-400 bg-blue-500 p-2 text-sm text-white hover:bg-blue-800 rounded-lg"
+        className="text-gray-700 border border-purple-600 px-3 py-2 rounded-full text-sm font-medium hover:bg-purple-50 hover:text-purple-600 transition flex items-center gap-2"
       >
         Sign In
       </button>
@@ -87,7 +87,7 @@ const Signin = () => {
               </div>
 
               <button
-                className="border border-gray-400 bg-blue-500 px-4 py-2 text-white hover:bg-blue-800 rounded-lg"
+                className="border border-gray-400 bg-purple-600 px-4 py-2 text-white hover:bg-purple-800 rounded-lg"
                 type="submit"
               >
                 Sign in
