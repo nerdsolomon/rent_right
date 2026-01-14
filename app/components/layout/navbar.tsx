@@ -23,7 +23,7 @@ const Navbar = ({ isOpen, onClose }: Prop) => {
         </button>
 
         <div className="flex items-center gap-2 flex-shrink-0">
-          <div className="bg-purple-600 text-white w-8 md:w-10 h-8 md:h-10 rounded-lg flex items-center justify-center md:flex-shrink-0 hidden">
+          <div className="hidden lg:flex bg-purple-600 text-white w-8 md:w-10 h-8 md:h-10 rounded-lg items-center justify-center flex-shrink-0">
             <FaHome size={20} />
           </div>
           <span className="text-lg text-xl font-bold text-purple-600 sm:inline">
