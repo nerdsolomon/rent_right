@@ -9,7 +9,7 @@ export default function Navbar() {
         <div className="bg-purple-600 text-white w-8 md:w-10 h-8 md:h-10 rounded-lg flex items-center justify-center flex-shrink-0">
           <FaHome size={20} />
         </div>
-        <span className="text-lg md:text-xl font-bold text-gray-800 hidden sm:inline">
+        <span className="text-lg text-xl font-bold text-purple-600 sm:inline">
           RentRight
         </span>
       </div>

@@ -1,6 +1,6 @@
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { useData } from "~/hooks/useData";
-import Navbar from "~/components/landing/Navbar";
+import Navbar from "~/components/landing/navbar";
 import Footer from "~/components/landing/footer";
 import FeaturedProperties from "~/components/landing/featuredproperties";
 import Features from "~/components/landing/features";
