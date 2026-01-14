@@ -15,7 +15,7 @@ const Dropdown = ({ label, value, list, onSelect }: Prop) => {
     <div ref={modalRef} className="relative inline-block text-left">
       <button
         onClick={() => onClose(true)}
-        className="border text-xs capitalize px-2 py-1 rounded-full text-gray-400 hover:bg-blue-400 hover:text-white"
+        className="border text-xs capitalize px-2 py-1 rounded-full text-gray-400 hover:bg-purple-400 hover:text-white"
       >
         {value || label}
       </button>

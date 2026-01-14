@@ -44,7 +44,7 @@ export const ChangePassword = () => {
             ref={modalRef}
             className="bg-gray-100 rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center animate-fadeIn"
           >
-            <p className="font-bold mb-4">Change Password</p>
+            <p className="font-bold mb-4 text-purple-600">Change Password</p>
 
             <form className="space-y-4" onSubmit={changePassword}>
               {alert && (
@@ -53,7 +53,7 @@ export const ChangePassword = () => {
                 </div>
               )}
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="password"
                 placeholder="Old Password"
                 required
@@ -63,7 +63,7 @@ export const ChangePassword = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="password"
                 placeholder="New Password"
                 required
@@ -73,7 +73,7 @@ export const ChangePassword = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="password"
                 placeholder="Confirm Password"
                 required
@@ -90,13 +90,13 @@ export const ChangePassword = () => {
               <div className="grid grid-cols-2 gap-2 items-center">
                 <button
                   onClick={() => onClose(false)}
-                  className="p-2 bg-gray-400 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+                  className="p-2 border border-purple-400 text-xs hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="p-2 bg-gray-400 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+                  className="p-2 bg-purple-600 text-xs hover:bg-purple-800 text-white rounded-lg font-semibold"
                 >
                   Save
                 </button>

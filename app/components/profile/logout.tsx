@@ -23,19 +23,19 @@ export const Logout = () => {
             ref={modalRef}
             className="bg-gray-100 rounded-2xl shadow-lg w-[270px] p-6 text-center animate-fadeIn"
           >
-            <p className="text-center text-gray-400 text-lg">
+            <p className="text-center text-gray-600 text-lg">
               Do you want to exit app?
             </p>
             <div className="grid grid-cols-2 gap-2 items-center mt-4">
               <button
                 onClick={() => onClose(false)}
-                className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+                className="p-2 border border-purple-400 text-xs hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold"
               >
                 Cancel
               </button>
               <button
                 onClick={() => logout()}
-                className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+                className="p-2 bg-purple-600 text-xs hover:bg-purple-800 text-white rounded-lg font-semibold"
               >
                 Exit
               </button>

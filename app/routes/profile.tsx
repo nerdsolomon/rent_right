@@ -15,6 +15,7 @@ import { Feedback } from "~/components/profile/feedback";
 import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
+import { Owner } from "~/components/profile/owner";
 
 const Profile = () => {
   const { currentUser } = useData();
@@ -23,7 +24,7 @@ const Profile = () => {
     <RequireAuth>
       <div className="py-4 px-6 space-y-4">
         <div className="flex justify-center">
-          <div className="w-[30%] border-4 border-blue-300 rounded-full aspect-square flex capitalize items-center justify-center text-blue-300 text-[40px] lg:text-[50px] font-bold">
+          <div className="w-[30%] border-4 border-purple-300 rounded-full aspect-square flex capitalize items-center justify-center text-purple-300 text-[40px] lg:text-[50px] font-bold">
             {currentUser?.imageUrl ? (
               <img
                 src={currentUser.imageUrl}
@@ -73,6 +74,7 @@ const Profile = () => {
         </div>
 
         <div className="space-y-4 border-b border-gray-300 pb-4 mb-4">
+          <Owner />
           <Qrcode />
           <ChangePassword />
           <Logout />

@@ -47,7 +47,7 @@ export const Edit = () => {
               )}
 
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="text"
                 placeholder="First Name"
                 required
@@ -61,7 +61,7 @@ export const Edit = () => {
               />
 
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="text"
                 placeholder="Last Name"
                 required
@@ -75,7 +75,7 @@ export const Edit = () => {
               />
 
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="text"
                 placeholder="Company (Optional)"
                 value={currentUser.company}
@@ -88,7 +88,7 @@ export const Edit = () => {
               />
 
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="email"
                 placeholder="Email"
                 required
@@ -102,7 +102,7 @@ export const Edit = () => {
               />
 
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="number"
                 placeholder="Phone Number"
                 required
@@ -116,7 +116,7 @@ export const Edit = () => {
               />
 
               <button
-                className="border border-gray-400 bg-blue-500 px-4 py-2 text-white hover:bg-blue-800 rounded-lg"
+                className="border border-gray-400 bg-purple-600 px-4 py-2 text-white hover:bg-purple-800 rounded-lg"
                 type="submit"
               >
                 Save

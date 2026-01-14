@@ -1,4 +1,9 @@
-import { FaBell, FaChartBar, FaExclamationCircle, FaHome } from "react-icons/fa";
+import {
+  FaBell,
+  FaChartBar,
+  FaExclamationCircle,
+  FaHome,
+} from "react-icons/fa";
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 
@@ -28,7 +33,9 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
       {navLinks.map((link, index) => (
         <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
           {({ isActive }) => (
-            <div className={`flex gap-2 items-center p-4 ${isActive ? "bg-purple-600 text-white" : "hover:bg-gray-200"}`} >
+            <div
+              className={`flex gap-2 items-center p-4 ${isActive ? "bg-purple-600 text-white" : "hover:bg-gray-200"}`}
+            >
               <link.icon /> <span>{link.title}</span>
             </div>
           )}
