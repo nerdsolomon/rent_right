@@ -28,7 +28,7 @@ export default function HeroSection() {
           <div className="flex flex-wrap gap-8 max-w-7xl mx-auto">
             {[
               { value: properties.length, label: "Properties", suffix: "+" },
-              { value: users.filter((u) => u.role === "user").length, label: "Happy Tenants", suffix: "+" },
+              { value: users.length, label: "Members", suffix: "+" },
               { value: users.filter((u) => u.role === "owner").length, label: "Landlords", suffix: "+" },
             ].map((stat, i) => (
               <div key={i}>
