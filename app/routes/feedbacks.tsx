@@ -17,7 +17,7 @@ const Feedbacks = () => {
               className="p-2 flex items-center w-full text-sm mb-2 border-b border-gray-300"
             >
               <div className="items-center">
-                <span className="font-bold mr-2 capitalize">{f.userId}</span>
+                <span className="font-bold mr-2 capitalize">{f.user.firstName} {f.user.lastName}</span>
                 <p>{f.text}</p>
               </div>
             </div>

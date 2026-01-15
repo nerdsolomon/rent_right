@@ -60,7 +60,7 @@ export const Feedback = () => {
                     ...formData,
                     id: Math.random(),
                     text: e.target.value,
-                    userId: currentUser.id,
+                    user: currentUser,
                   })
                 }
               />

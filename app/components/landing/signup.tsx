@@ -43,7 +43,7 @@ const Signup = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="px-6 py-2 rounded-full text-sm font-semibold bg-white text-purple-700 shadow"
+        className="px-6 py-2 rounded-full text-sm font-semibold bg-white text-purple-700 hover:bg-purple-600 hover:text-white shadow"
       >
         Sign Up
       </button>

@@ -35,7 +35,7 @@ export const AddProperty = () => {
         description: formData.description,
         imageUrl: images[Math.floor(Math.random() * 2)],
         type: formData.type,
-        owner: currentUser.id,
+        owner: currentUser,
       },
     ]);
     setFormData(emptyProperty);

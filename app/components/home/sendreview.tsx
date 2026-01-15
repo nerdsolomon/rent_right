@@ -57,7 +57,7 @@ export const SendReview = ({ propertyId }: Prop) => {
                     ...formData,
                     id: Math.random(),
                     text: e.target.value,
-                    user: `${currentUser.firstName} ${currentUser.lastName}`,
+                    user: currentUser,
                     propertyId: propertyId,
                   })
                 }

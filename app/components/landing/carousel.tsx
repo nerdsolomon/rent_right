@@ -1,77 +1,52 @@
-import { useState, useEffect } from 'react';
-import { images } from '~/services/asset.services';
+import { useState, useEffect } from "react";
+import { images } from "~/services/asset.services";
+
+const AUTO_SLIDE_DELAY = 4000;
 
 export default function ImageCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const total = images.length;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-
+      setCurrentIndex((prev) => (prev + 1) % total);
+    }, AUTO_SLIDE_DELAY);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, [total]);
 
-  const getVisibleImages = () => {
-    return [
-      images[currentIndex],
-      images[(currentIndex + 1) % images.length],
-      images[(currentIndex + 2) % images.length],
-    ];
-  };
+  const getVisibleImages = () => [
+    images[currentIndex],
+    images[(currentIndex + 1) % total],
+    images[(currentIndex + 2) % total],
+  ];
 
   const visibleImages = getVisibleImages();
 
   return (
-    <div className="relative w-full">
-      {/* Mobile View - Single Column */}
-      <div className="md:hidden space-y-4">
-        <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-lg h-48 sm:h-64">
-          <img 
-            src={visibleImages[0]} 
-            alt="Featured property" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-lg h-48 sm:h-64">
-          <img 
-            src={visibleImages[1]} 
-            alt="Property 2" 
-            className="w-full h-full object-cover"
-          />
-        </div>
+    <div className="relative w-full grid grid-cols-1 md:grid-cols-3 gap-4 h-[384px] md:h-96">
+      <div className="rounded-2xl md:col-span-1 md:row-span-2 overflow-hidden shadow-lg h-48 sm:h-64 md:h-full">
+        <img
+          src={visibleImages[0]}
+          alt="Featured property"
+          className="w-full h-full object-cover"
+        />
       </div>
 
-      {/* Desktop View - Grid Layout */}
-      <div className="hidden md:grid grid-cols-3 gap-4 h-96">
-        {/* Large image - left side, spans 2 rows */}
-        <div className="col-span-1 row-span-2 rounded-3xl overflow-hidden shadow-lg">
-          <img 
-            src={visibleImages[0]} 
-            alt="Featured property" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Top right image */}
-        <div className="col-span-2 rounded-3xl overflow-hidden shadow-lg h-44">
-          <img 
-            src={visibleImages[1]} 
-            alt="Property 2" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Bottom right image */}
-        <div className="col-span-2 rounded-3xl overflow-hidden shadow-lg h-44">
-          <img 
-            src={visibleImages[2]} 
-            alt="Property 3" 
-            className="w-full h-full object-cover"
-          />
-        </div>
+      <div className="rounded-2xl overflow-hidden shadow-lg h-48 sm:h-64 md:h-46 md:col-span-2">
+        <img
+          src={visibleImages[1]}
+          alt="Property 2"
+          className="w-full h-full object-cover"
+        />
       </div>
 
+      <div className="rounded-2xl overflow-hidden shadow-lg h-48 sm:h-64 md:h-46 md:col-span-2">
+        <img
+          src={visibleImages[2]}
+          alt="Property 3"
+          className="w-full h-full object-cover"
+        />
+      </div>
     </div>
   );
 }

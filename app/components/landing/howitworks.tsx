@@ -2,72 +2,44 @@ import {
   FaSearch,
   FaComments,
   FaFileAlt,
-  FaKey,
   FaUpload,
   FaUsers,
-  FaClipboardCheck,
   FaHome,
 } from "react-icons/fa";
-import { useState } from "react";
 import Signup from "./signup";
 
 export default function HowItWorks() {
-  const [activeTab, setActiveTab] = useState("tenants");
-
-  const tenantSteps = [
+  const steps = [
     {
-      number: 1,
       icon: FaSearch,
       title: "Search Properties",
       description:
         "Browse thousands of verified listings with advanced filters to find your perfect home.",
     },
     {
-      number: 2,
       icon: FaComments,
       title: "Contact Landlord",
       description:
         "Message landlords directly through our secure platform and schedule viewings.",
     },
     {
-      number: 3,
       icon: FaFileAlt,
       title: "Apply Online",
       description:
         "Submit your rental application with all required documents in just a few clicks.",
     },
     {
-      number: 4,
-      icon: FaKey,
-      title: "Move In",
-      description:
-        "Sign your lease digitally, pay your deposit, and get ready to move into your new home!",
-    },
-  ];
-
-  const landlordSteps = [
-    {
-      number: 1,
       icon: FaUpload,
       title: "List Property",
       description:
         "Create and publish your property listing in minutes with ease.",
     },
     {
-      number: 2,
       icon: FaUsers,
       title: "Receive Applications",
       description: "Get applications from interested and verified tenants.",
     },
     {
-      number: 3,
-      icon: FaClipboardCheck,
-      title: "Review & Approve",
-      description:
-        "Screen tenants and approve applications from your dashboard.",
-    },
-    {
-      number: 4,
       icon: FaHome,
       title: "Rent Out",
       description:
@@ -75,10 +47,8 @@ export default function HowItWorks() {
     },
   ];
 
-  const steps = activeTab === "tenants" ? tenantSteps : landlordSteps;
-
   return (
-    <section className="bg-white py-20 px-4">
+    <section className="bg-white py-20 px-4" id="get-started">
       <div className="max-w-7xl mx-auto text-center">
         <p className="text-purple-600 font-semibold text-xs tracking-widest uppercase mb-3">
           How It Works
@@ -97,12 +67,12 @@ export default function HowItWorks() {
         </p>
 
         <div className="inline-flex bg-purple-50 rounded-full p-1 mb-16">
-          <Signup/>
+          <Signup />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-12 relative">
           {steps.map((step, index) => (
-            <div key={step.number} className="relative text-center">
+            <div key={index} className="relative text-center">
               {index !== steps.length - 1 && (
                 <div className="hidden md:block absolute top-7 left-[60%] w-full h-px bg-purple-200" />
               )}
@@ -111,7 +81,7 @@ export default function HowItWorks() {
                 <step.icon size={24} />
 
                 <span className="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-purple-100 text-purple-700 text-sm font-bold flex items-center justify-center">
-                  {step.number}
+                  {index + 1}
                 </span>
               </div>
 

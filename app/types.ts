@@ -33,8 +33,8 @@ export interface Property {
   city: string;
   imageUrl?: string;
   type: string
-  owner: number
-  rating?: number
+  owner: User
+  isAvailable?: boolean
 }
 
 export const emptyProperty: Property = { 
@@ -47,28 +47,28 @@ export const emptyProperty: Property = {
   description: "", 
   imageUrl: "",
   type: "",
-  owner: NaN,
-  rating: NaN
+  owner: emptyUser,
+  isAvailable: true
 };
 
 export interface Review {
   id: number
   text: string
-  user: string
+  user: User
   propertyId: number
 }
 
 export const emptyReview: Review = {
   id: NaN,
   text: "",
-  user: "",
+  user: emptyUser,
   propertyId: NaN
 }
 
 export interface Feedback {
   id: number
   text: string
-  userId: number
+  user: User
   imageUrl?: string
   isViewed: boolean
 }
@@ -76,7 +76,7 @@ export interface Feedback {
 export const emptyFeedback: Feedback = {
   id: NaN,
   text: "",
-  userId: NaN,
+  user: emptyUser,
   imageUrl: "",
   isViewed: false
 }

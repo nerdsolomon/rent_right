@@ -74,7 +74,7 @@ const Profile = () => {
         </div>
 
         <div className="space-y-4 border-b border-gray-300 pb-4 mb-4">
-          <Owner />
+          {currentUser.role !== "owner" && <Owner />}
           <Qrcode />
           <ChangePassword />
           <Logout />

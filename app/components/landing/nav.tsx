@@ -15,9 +15,9 @@ export const Nav = () => {
 
       <div className="flex items-center gap-3 lg:gap-4">
         <Signin />
-        <button className="text-purple-600 border border-purple-600 px-3 py-2 rounded-full text-sm font-semibold hover:bg-purple-50 transition">
+        <a href="#get-started" className="text-purple-600 border border-purple-600 px-3 py-2 rounded-full text-sm font-semibold hover:bg-purple-50 transition">
           Get Started
-        </button>
+        </a>
       </div>
     </nav>
   );

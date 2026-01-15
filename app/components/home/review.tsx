@@ -28,7 +28,7 @@ export const Review = ({ propertyId }: Prop) => {
                   className="w-10 h-10 rounded-full object-cover mr-3"
                 />
                 <div className="items-center">
-                  <span className="font-bold mr-2 capitalize">{review.user}</span>
+                  <span className="font-bold mr-2 capitalize">{review.user.firstName}</span>
                   <p>{review.text}</p>
                 </div>
               </div>

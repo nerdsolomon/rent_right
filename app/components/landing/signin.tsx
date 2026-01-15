@@ -26,7 +26,7 @@ const Signin = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="text-gray-700 border border-purple-600 px-3 py-2 rounded-full text-sm font-medium hover:bg-purple-50 hover:text-purple-600 transition flex items-center gap-2"
+        className="text-gray-700 border border-purple-600 px-3 py-2 rounded-full text-sm font-medium hover:bg-purple-500 hover:text-white transition flex items-center gap-2"
       >
         Sign In
       </button>

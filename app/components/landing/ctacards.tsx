@@ -8,11 +8,11 @@ export default function CTACards() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-14">
           <div className="relative rounded-[28px] border border-white/30 bg-white/15 hover:bg-white/20 transition p-8 md:p-10">
             <div className="w-12 h-12 text-white rounded-xl bg-white/25 flex items-center justify-center mb-5">
-              <MdLandscape size={30}/>
+              <MdApartment size={30}/>
             </div>
 
             <h3 className="text-2xl font-semibold text-white mb-3">
-              Own a Land?
+              Looking for a Home?
             </h3>
 
             <p className="text-white/90 text-sm leading-relaxed mb-8 max-w-sm">
@@ -22,17 +22,17 @@ export default function CTACards() {
             </p>
 
             <button className="inline-flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-semibold text-sm hover:bg-gray-100 transition">
-              List Property <span className="text-lg">→</span>
+              Find Rentals List <span className="text-lg">→</span>
             </button>
           </div>
 
           <div className="relative rounded-[28px] border border-white/30 bg-white/15 hover:bg-white/20 transition p-8 md:p-10">
             <div className="w-12 h-12 text-white rounded-xl bg-white/25 flex items-center justify-center mb-5">
-              <MdApartment size={30}/>
+              <MdLandscape size={30}/>
             </div>
 
             <h3 className="text-2xl font-semibold text-white mb-3">
-              Looking for a Home?
+              Own a Property?
             </h3>
 
             <p className="text-white/90 text-sm leading-relaxed mb-8 max-w-sm">
@@ -42,7 +42,7 @@ export default function CTACards() {
             </p>
 
             <button className="inline-flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-semibold text-sm hover:bg-gray-100 transition">
-              Find Rentals <span className="text-lg">→</span>
+              Property <span className="text-lg">→</span>
             </button>
           </div>
         </div>

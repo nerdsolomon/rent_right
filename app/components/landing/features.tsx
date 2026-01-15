@@ -11,38 +11,32 @@ import {
 export default function Features() {
   const features = [
   {
-    id: 1,
     icon: FaSearch,
     title: 'Smart Search',
     description:
       'Find properties with advanced filters for location, price, amenities, and more.',
   },
   {
-    id: 2,
     icon: FaComments,
     title: 'Direct Messaging',
     description: 'Chat directly with landlords and tenants in real time.',
   },
   {
-    id: 3,
     icon: FaCreditCard,
     title: 'Easy Payments',
     description: 'Pay rent securely with multiple payment options.',
   },
   {
-    id: 4,
     icon: FaCheck,
     title: 'Verified Listings',
     description: 'All properties are verified to ensure authenticity and safety.',
   },
   {
-    id: 5,
     icon: FaUserCheck,
     title: 'Tenant Screening',
     description: 'Comprehensive screening to protect both tenants and landlords.',
   },
   {
-    id: 6,
     icon: FaBell,
     title: 'Smart Alerts',
     description:
@@ -54,7 +48,6 @@ export default function Features() {
   return (
     <section className="bg-[#f7f3fb] px-4 sm:px-6 md:px-8 py-16 md:py-24">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <p className="text-purple-600 font-semibold text-xs tracking-widest uppercase mb-3">
             Features
@@ -69,29 +62,25 @@ export default function Features() {
 
           <p className="text-gray-600 text-sm sm:text-base md:text-lg">
             RentRight provides all the tools you need for a seamless rental
-            experience, whether you’re a tenant or a landlord.
+            experience, whether you're a tenant or a landlord.
           </p>
         </div>
 
-        {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {features.map((feature) => (
+          {features.map((feature, index) => (
             <div
-              key={feature.id}
+              key={index}
               className="group bg-white rounded-2xl p-6 md:p-8 shadow-sm
                          hover:bg-purple-200 hover:shadow-md transition duration-300"
             >
-              {/* Icon (NO hover effect) */}
               <div className="w-12 h-12 rounded-xl bg-gray-100 text-purple-600 flex items-center justify-center mb-5">
                 <feature.icon size={22} />
               </div>
 
-              {/* Title */}
               <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
                 {feature.title}
               </h3>
 
-              {/* Description */}
               <p className="text-gray-600 text-sm md:text-base leading-relaxed">
                 {feature.description}
               </p>
