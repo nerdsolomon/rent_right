@@ -23,7 +23,7 @@ export default function ImageCarousel() {
   const visibleImages = getVisibleImages();
 
   return (
-    <div className="relative w-full grid grid-cols-1 md:grid-cols-3 gap-4 h-[384px] md:h-96">
+    <div className="relative w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:h-96">
       <div className="rounded-2xl md:col-span-1 md:row-span-2 overflow-hidden shadow-lg h-48 sm:h-64 md:h-full">
         <img
           src={visibleImages[0]}

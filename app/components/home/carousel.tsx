@@ -67,7 +67,7 @@ export const Carousel = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
             <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
-              <h2 className="text-xl md:text-2xl font-bold leading-tight">
+              <h2 className="text-xl capitalize md:text-2xl font-bold leading-tight">
                 {property.title}
               </h2>
               <p className="text-sm md:text-base opacity-90">{property.country}</p>
@@ -81,7 +81,7 @@ export const Carousel = () => {
           <div
             key={i}
             className={`h-2 rounded-full transition-all duration-300 ${
-              i === currentIndex ? "w-4 bg-blue-500" : "w-2 bg-white/60"
+              i === currentIndex ? "w-4 bg-purple-600" : "w-2 bg-white/60"
             }`}
           />
         ))}
@@ -90,7 +90,7 @@ export const Carousel = () => {
       <button
         onClick={prev}
         className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 z-20
-                   text-white hover:text-blue-400"
+                   text-white hover:text-purple-600"
       >
         <FaArrowLeft />
       </button>
@@ -98,7 +98,7 @@ export const Carousel = () => {
       <button
         onClick={next}
         className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-20
-                   text-white hover:text-blue-400"
+                   text-white hover:text-purple-600"
       >
         <FaArrowRight />
       </button>
