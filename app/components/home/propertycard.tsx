@@ -5,6 +5,7 @@ import profileImg from "~/assets/profile.png";
 import type { Property } from "~/types";
 import { Actions } from "./actions";
 import { useData } from "~/hooks/useData";
+import { ProfileInfo } from "./profileinfo";
 
 interface Prop {
   property: Property;
@@ -25,12 +26,7 @@ export const PropertyCard = ({ property }: Prop) => {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
 
-          <span className="absolute top-3 left-3 w-8 h-8 border-2 border-purple-600 rounded-full">
-            <img
-              src={profileImg}
-              className="w-full rounded-full object-cover"
-            />
-          </span>
+          <ProfileInfo user={property.owner} />
 
           {currentUser.role === "owner" && isAuthenticated && (
             <div className="absolute top-3 right-3">

@@ -24,12 +24,14 @@ const Profile = () => {
     <RequireAuth>
       <div className="py-4 px-6 space-y-4">
         <div className="flex justify-center">
-          <div className="w-[30%] border-4 border-purple-300 rounded-full aspect-square flex capitalize items-center justify-center text-purple-300 text-[40px] lg:text-[50px] font-bold">
+          <div className="w-[30%] bg-gray-400 border-4 border-purple-600 rounded-full aspect-square flex capitalize items-center justify-center text-purple-600 text-[40px] lg:text-[50px] font-bold">
             {currentUser?.imageUrl ? (
               <img
                 src={currentUser.imageUrl}
                 className="absolute inset-0 w-full h-full object-cover"
               />
+            ) : currentUser.company ? (
+              currentUser.company.charAt(0)
             ) : (
               `${currentUser.firstName.charAt(0)} ${currentUser.lastName.charAt(0)}`
             )}
@@ -74,11 +76,11 @@ const Profile = () => {
         </div>
 
         <div className="space-y-4 border-b border-gray-300 pb-4 mb-4">
-          {currentUser.role !== "owner" && <Owner />}
+          {currentUser.role === "user" && <Owner />}
           <Qrcode />
           <ChangePassword />
           <Logout />
-          <Delete />
+          {currentUser.role !== "admin" && <Delete />}
         </div>
 
         <div className="space-y-4">
