@@ -11,6 +11,18 @@ export interface User {
   imageUrl?: string;
 }
 
+export const adminUser: User = {
+  id: Math.random(),
+  firstName: "Admin",
+  lastName: "RentRight",
+  company: "RentRight",
+  email: "admin@rentright.com",
+  phone: 9876543210,
+  password: "admin123",
+  role: "admin",
+  imageUrl: ""
+};
+
 export const emptyUser: User = {
   id: NaN,
   firstName: "",

@@ -70,7 +70,7 @@ const Signup = () => {
                 </div>
               )}
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="text"
                 placeholder="First Name"
                 required
@@ -80,7 +80,7 @@ const Signup = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="text"
                 placeholder="Last Name"
                 required
@@ -90,7 +90,7 @@ const Signup = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="text"
                 placeholder="Company (Optional)"
                 value={formData.company}
@@ -99,7 +99,7 @@ const Signup = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="email"
                 placeholder="Email"
                 required
@@ -109,7 +109,7 @@ const Signup = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="number"
                 placeholder="Phone Number"
                 required
@@ -119,7 +119,7 @@ const Signup = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="password"
                 placeholder="Password"
                 required
@@ -129,7 +129,7 @@ const Signup = () => {
                 }
               />
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="password"
                 placeholder="Confirm Password"
                 required

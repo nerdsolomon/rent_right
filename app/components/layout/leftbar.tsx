@@ -1,11 +1,7 @@
-import {
-  FaBell,
-  FaChartBar,
-  FaExclamationCircle,
-  FaHome,
-} from "react-icons/fa";
+import { FaBell, FaChartBar, FaExclamationCircle, FaHome } from "react-icons/fa";
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
+import { useData } from "~/hooks/useData";
 
 interface Prop {
   isOpen: boolean;
@@ -13,14 +9,15 @@ interface Prop {
 }
 
 const navLinks = [
-  { title: "Home", path: "/home", icon: FaHome },
-  { title: "Dashboard", path: "/dashboard", icon: FaChartBar },
-  { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle },
-  { title: "Notifications", path: "/notifications", icon: FaBell },
+  { title: "Home", path: "/home", icon: FaHome, restricted: false },
+  { title: "Dashboard", path: "/dashboard", icon: FaChartBar, restricted: true },
+  { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle, restricted: true },
+  { title: "Notifications", path: "/notifications", icon: FaBell, restricted: false },
 ];
 
 const Leftbar = ({ isOpen, onClose }: Prop) => {
   const modalRef = useClickOutside({ isOpen, onClose });
+  const { currentUser } = useData();
   return (
     <aside
       ref={modalRef}
@@ -30,17 +27,22 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
           ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:static lg:translate-x-0 lg:block
         `}
     >
-      {navLinks.map((link, index) => (
-        <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
-          {({ isActive }) => (
-            <div
-              className={`flex gap-2 items-center p-4 ${isActive ? "bg-purple-600 text-white" : "hover:bg-gray-200"}`}
-            >
-              <link.icon /> <span>{link.title}</span>
-            </div>
-          )}
-        </NavLink>
-      ))}
+      {navLinks
+        .filter((link) => !link.restricted || currentUser.role === "admin")
+        .map((link, index) => (
+          <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
+            {({ isActive }) => (
+              <div
+                className={`flex gap-2 items-center p-4 ${
+                  isActive ? "bg-purple-600 text-white" : "hover:bg-gray-200"
+                }`}
+              >
+                <link.icon />
+                <span>{link.title}</span>
+              </div>
+            )}
+          </NavLink>
+        ))}
     </aside>
   );
 };

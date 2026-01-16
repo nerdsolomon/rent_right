@@ -12,7 +12,14 @@ import {
   syncCurrentUser,
   USERS_KEY,
 } from "~/services";
-import { emptyUser, type Feedback, type Property, type Review, type User } from "~/types";
+import {
+  adminUser,
+  emptyUser,
+  type Feedback,
+  type Property,
+  type Review,
+  type User,
+} from "~/types";
 
 interface DataState {
   isAuthenticated: boolean;
@@ -33,6 +40,7 @@ interface DataState {
   setReviews: (reviews: Review[]) => void;
   feedbacks: Feedback[];
   setFeedbacks: (feedbacks: Feedback[]) => void;
+  clearStorage: () => void;
 }
 
 const DataContext = createContext<DataState | null>(null);
@@ -60,13 +68,19 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>(() =>
     getFromStorage(FEEDBACKS_KEY, [])
-  )
+  );
 
   const isAuthenticated = Boolean(currentUser?.id);
 
   useEffect(() => {
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (users.length === 0) {
+      setUsers([adminUser]);
+    }
+  }, [users]);
 
   useEffect(() => {
     saveToStorage(USERS_KEY, users);
@@ -94,6 +108,21 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     saveToStorage(FEEDBACKS_KEY, feedbacks);
   }, [feedbacks]);
 
+  const clearStorage = () => {
+    removeFromStorage(USERS_KEY);
+    removeFromStorage(CURRENT_USER_KEY);
+    removeFromStorage(PROPERTIES_KEY);
+    removeFromStorage(REVIEWS_KEY);
+    removeFromStorage(FEEDBACKS_KEY);
+
+    setUsers([]);
+    setCurrentUser(emptyUser);
+    setProperties([]);
+    setReviews([]);
+    setFeedbacks([]);
+
+    navigate("/");
+  };
 
   const login = (loginUser: User) => {
     const foundUser = users.find(
@@ -184,7 +213,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         reviews,
         setReviews,
         feedbacks,
-        setFeedbacks
+        setFeedbacks,
+        clearStorage,
       }}
     >
       {children}

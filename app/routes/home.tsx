@@ -14,7 +14,9 @@ const Home = () => {
     <RequireAuth>
       <div className="p-2">
         <Carousel />
-        <Filter />
+        <div className="lg:hidden">
+          <Filter />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {properties.map((property, index) => (
             <PropertyCard property={property} key={index} />

@@ -52,7 +52,7 @@ export const Properties = ({ label, type, icon: Icon } : Props) => {
                   {properties.filter(property => property.type === type).map((property, index) => (
                     <tr key={index} className="hover:bg-gray-200">
                       <td className="px-1 py-2">{property.title}</td>
-                      <td className="px-1 py-2">{property.owner}</td>
+                      <td className="px-1 py-2">{property.owner.company ? property.owner.company : `${property.owner.firstName} ${property.owner.lastName}`}</td>
                       <td>
                         <FaTrash
                           onClick={() => deleteProperty(property.id)}
