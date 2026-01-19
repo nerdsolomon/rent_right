@@ -21,7 +21,7 @@ export const Review = ({ propertyId }: Prop) => {
             .map((review, index) => (
               <div
                 key={index}
-                className="p-2 flex items-center text-sm mb-2 border-b border-gray-300"
+                className="p-2 flex items-center text-sm mt-4 border-t border-gray-300"
               >
                 <img
                   src={profileImg}
@@ -30,6 +30,7 @@ export const Review = ({ propertyId }: Prop) => {
                 <div className="items-center">
                   <span className="font-bold mr-2 capitalize">{review.user.firstName}</span>
                   <p>{review.text}</p>
+                  <span className="text-xs text-gray-400">Delete</span>
                 </div>
               </div>
             ))

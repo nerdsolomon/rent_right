@@ -49,7 +49,7 @@ export const SendReview = ({ propertyId }: Prop) => {
               <textarea
                 required
                 rows={3}
-                className="w-full p-2 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 placeholder="Write your review"
                 value={formData.text}
                 onChange={(e) =>
@@ -64,7 +64,7 @@ export const SendReview = ({ propertyId }: Prop) => {
               />
               <button
                 type="submit"
-                className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 text-sm rounded-lg"
+                className="bg-purple-500 w-full hover:bg-purple-700 text-white font-bold py-2 text-sm rounded-lg"
               >
                 Send
               </button>

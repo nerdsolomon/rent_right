@@ -5,12 +5,12 @@ import { useData } from "~/hooks/useData";
 import type { User } from "~/types";
 
 interface Prop {
-  user : User
+  user: User;
 }
 
-export const Options = ({ user } : Prop ) => {
+export const Options = ({ user }: Prop) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { deleteUser, toggleRole } = useData();
+  const { deleteUser, toggleRole, currentUser } = useData();
   const modalRef = useClickOutside({ isOpen, onClose: setIsOpen });
 
   return (
@@ -25,15 +25,17 @@ export const Options = ({ user } : Prop ) => {
       {isOpen && (
         <div className="absolute right-0 top-0 z-[9999] w-40 rounded-lg bg-white shadow-md">
           <div className="py-1 text-xs text-gray-700">
-            <button
-              onClick={() => {
-                toggleRole(user.id)
-                setIsOpen(false)
-              }}
-              className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100"
-            >
-              {user.role === "admin" ? "Remove admin" : "Make admin"}
-            </button>
+            {user.id !== currentUser.id && (
+              <button
+                onClick={() => {
+                  toggleRole(user.id);
+                  setIsOpen(false);
+                }}
+                className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100"
+              >
+                {user.role === "admin" ? "Remove admin" : "Make admin"}
+              </button>
+            )}
 
             <button
               onClick={() => {

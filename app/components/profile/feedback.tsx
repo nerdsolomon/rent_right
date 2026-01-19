@@ -61,6 +61,7 @@ export const Feedback = () => {
                     id: Math.random(),
                     text: e.target.value,
                     user: currentUser,
+                    isViewed: false
                   })
                 }
               />
