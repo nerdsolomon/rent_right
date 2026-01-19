@@ -21,7 +21,7 @@ export const Review = ({ propertyId }: Prop) => {
             .map((review, index) => (
               <div
                 key={index}
-                className="p-2 flex items-center text-sm mt-2 border-t border-gray-300"
+                className="p-2 flex items-center text-sm border-t border-gray-300"
               >
                 <img
                   src={profileImg}

@@ -9,8 +9,7 @@ export const Carousel = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const { properties } = useData();
-
-  const total = properties.length;
+  const [total, setTotal] = useState(0);
 
   const next = () => {
     if (isAnimating) return;
@@ -23,6 +22,10 @@ export const Carousel = () => {
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
+  
+  useEffect(() => {
+    setTotal(properties.length);
+  }, [properties.length]);
 
   useEffect(() => {
     const interval = setInterval(next, AUTO_SLIDE_DELAY);
@@ -43,7 +46,7 @@ export const Carousel = () => {
     touchStartX.current = null;
   };
 
-  if (properties.length == 0) return
+  if (properties.length == 0) return;
 
   return (
     <div
@@ -70,7 +73,9 @@ export const Carousel = () => {
               <h2 className="text-xl capitalize md:text-2xl font-bold leading-tight">
                 {property.title}
               </h2>
-              <p className="text-sm md:text-base opacity-90">{property.country}</p>
+              <p className="text-sm md:text-base opacity-90">
+                {property.country}
+              </p>
             </div>
           </div>
         ))}
