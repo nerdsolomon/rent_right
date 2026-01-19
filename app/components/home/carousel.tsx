@@ -9,29 +9,34 @@ export const Carousel = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const { properties } = useData();
-  const [total, setTotal] = useState(0);
+
+  const total = properties.length;
 
   const next = () => {
-    if (isAnimating) return;
+    if (isAnimating || total === 0) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev + 1) % total);
   };
 
   const prev = () => {
-    if (isAnimating) return;
+    if (isAnimating || total === 0) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
-  
-  useEffect(() => {
-    setTotal(properties.length);
-  }, [properties.length]);
 
   useEffect(() => {
-    const interval = setInterval(next, AUTO_SLIDE_DELAY);
+    if (currentIndex >= total && total > 0) {
+      setCurrentIndex(0);
+    }
+  }, [total, currentIndex]);
+
+  useEffect(() => {
+    if (total === 0) return;
+    const interval = setInterval(() => {
+      next();
+    }, AUTO_SLIDE_DELAY);
     return () => clearInterval(interval);
-  }, []);
-
+  }, [total, isAnimating]);
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -39,14 +44,13 @@ export const Carousel = () => {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!touchStartX.current) return;
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
-
     if (Math.abs(deltaX) > 60) {
       deltaX > 0 ? prev() : next();
     }
     touchStartX.current = null;
   };
 
-  if (properties.length == 0) return;
+  if (total === 0) return null;
 
   return (
     <div
@@ -70,7 +74,7 @@ export const Carousel = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
             <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
-              <h2 className="text-xl capitalize md:text-2xl font-bold leading-tight">
+              <h2 className="text-xl capitalize md:text-2xl font-bold">
                 {property.title}
               </h2>
               <p className="text-sm md:text-base opacity-90">
