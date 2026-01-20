@@ -8,26 +8,37 @@ export const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartX = useRef<number | null>(null);
-  const { properties } = useData();
 
+  const { properties } = useData();
   const total = properties.length;
 
   const next = () => {
-    if (isAnimating) return;
+    if (isAnimating || total === 0) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev + 1) % total);
   };
 
   const prev = () => {
-    if (isAnimating) return;
+    if (isAnimating || total === 0) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
   useEffect(() => {
-    const interval = setInterval(next, AUTO_SLIDE_DELAY);
+    if (total === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % total);
+    }, AUTO_SLIDE_DELAY);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [total]);
+
+  useEffect(() => {
+    if (currentIndex >= total) {
+      setCurrentIndex(0);
+    }
+  }, [total]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -40,10 +51,11 @@ export const Carousel = () => {
     if (Math.abs(deltaX) > 60) {
       deltaX > 0 ? prev() : next();
     }
+
     touchStartX.current = null;
   };
 
-  if (properties.length == 0) return
+  if (total === 0) return null;
 
   return (
     <div
@@ -70,7 +82,9 @@ export const Carousel = () => {
               <h2 className="text-xl capitalize md:text-2xl font-bold leading-tight">
                 {property.title}
               </h2>
-              <p className="text-sm md:text-base opacity-90">{property.country}</p>
+              <p className="text-sm md:text-base opacity-90">
+                {property.country}
+              </p>
             </div>
           </div>
         ))}
