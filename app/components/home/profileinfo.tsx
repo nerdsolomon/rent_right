@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { type User } from "~/types";
@@ -11,6 +12,7 @@ export const ProfileInfo = ({ user }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { isAuthenticated } = useData();
+  const navigate = useNavigate()
 
   return (
     <>
@@ -72,7 +74,7 @@ export const ProfileInfo = ({ user }: Prop) => {
               <button className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
                 Report
               </button>
-              <button className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
+              <button onClick={() => navigate("/messages")} className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
                 Message
               </button>
             </div>

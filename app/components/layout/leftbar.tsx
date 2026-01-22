@@ -1,4 +1,4 @@
-import { FaBell, FaChartBar, FaExclamationCircle, FaHome } from "react-icons/fa";
+import { FaBell, FaChartBar, FaComments, FaExclamationCircle, FaHome } from "react-icons/fa";
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
@@ -12,6 +12,7 @@ const navLinks = [
   { title: "Home", path: "/home", icon: FaHome, restricted: false },
   { title: "Dashboard", path: "/dashboard", icon: FaChartBar, restricted: true },
   { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle, restricted: true },
+  { title: "Messages", path: "/messages", icon: FaComments, restricted: false },
   { title: "Notifications", path: "/notifications", icon: FaBell, restricted: false },
 ];
 

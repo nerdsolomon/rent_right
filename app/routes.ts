@@ -7,6 +7,7 @@ export default [
     route("/profile", "./routes/profile.tsx"),
     route("/notifications", "./routes/notifications.tsx"),
     route("/dashboard", "./routes/dashboard.tsx"),
-    route("/feedbacks", "./routes/feedbacks.tsx")
+    route("/feedbacks", "./routes/feedbacks.tsx"),
+    route("/messages", "./routes/messages.tsx")
   ]),
 ] satisfies RouteConfig;
