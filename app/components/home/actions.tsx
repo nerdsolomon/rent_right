@@ -10,7 +10,7 @@ interface Prop {
 
 export const Actions = ({ property }: Prop) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { deleteProperty } = useData();
+  const { deleteProperty, updateProperty } = useData();
   const modalRef = useClickOutside({ isOpen, onClose: setIsOpen });
 
   return (
@@ -28,7 +28,10 @@ export const Actions = ({ property }: Prop) => {
             <button className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100">
               Edit
             </button>
-            <button className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100">
+            <button
+              onClick={() => updateProperty({...property, isAvailable: !property.isAvailable }) }
+              className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100"
+            >
               {property.isAvailable ? "Make Unavailable" : "Make Available"}
             </button>
 

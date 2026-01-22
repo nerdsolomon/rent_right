@@ -18,7 +18,7 @@ export const Edit = () => {
     <div className="flex justify-center">
       <button
         onClick={() => onClose(true)}
-        className="px-2 py-1 border border-gray-400 text-xs hover:bg-gray-400 text-gray-400 hover:text-white rounded-lg font-semibold"
+        className="px-4 py-1 border border-purple-600 text-xs hover:bg-purple-600 text-purple-600 hover:text-white rounded-lg font-semibold"
       >
         Edit
       </button>

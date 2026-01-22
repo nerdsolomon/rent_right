@@ -1,4 +1,3 @@
-import profileImg from "~/assets/profile.png";
 import { SendReview } from "./sendreview";
 import { useData } from "~/hooks/useData";
 
@@ -10,7 +9,7 @@ export const Review = ({ propertyId }: Prop) => {
   const { reviews } = useData();
   return (
     <>
-      <div className="flex justify-between p-4 mt-4 border-t border-gray-300 text-gray-400">
+      <div className="flex justify-between p-4 mt-4 border-t border-gray-300">
         <p className="font-bold text-sm">Reviews</p>
         <SendReview propertyId={propertyId} />
       </div>
@@ -21,16 +20,25 @@ export const Review = ({ propertyId }: Prop) => {
             .map((review, index) => (
               <div
                 key={index}
-                className="p-2 flex items-center text-sm border-t border-gray-300"
+                className="p-2 flex items-center text-sm border-t gap-4 border-gray-300"
               >
-                <img
-                  src={profileImg}
-                  className="w-10 h-10 rounded-full object-cover mr-3"
-                />
+                <span className="w-10 h-10 aspect-square bg-gray-400 flex capitalize items-center justify-center border-2 border-purple-600 rounded-full font-bold text-purple-600">
+                  {review.user?.imageUrl ? (
+                    <img
+                      src={review.user.imageUrl}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : review.user.company ? (
+                    review.user.company.charAt(0)
+                  ) : (
+                    `${review.user.firstName.charAt(0)} ${review.user.lastName.charAt(0)}`
+                  )}
+                </span>
                 <div className="items-center">
-                  <span className="font-bold mr-2 capitalize">{review.user.firstName}</span>
+                  <span className="font-bold mr-2 capitalize">
+                    {review.user.firstName}
+                  </span>
                   <p>{review.text}</p>
-                  <span className="text-xs text-gray-400">Delete</span>
                 </div>
               </div>
             ))

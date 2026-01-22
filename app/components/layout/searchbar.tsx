@@ -36,7 +36,7 @@ export const Searchbar = () => {
             type="text"
             placeholder="Search"
             onBlur={() => setIsExpanded(false)}
-            className="w-full pl-10 pr-3 py-2 text-sm font-normal rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-300"
+            className="w-full pl-10 pr-3 py-2 text-sm font-normal rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-600"
           />
         </div>
       </div>

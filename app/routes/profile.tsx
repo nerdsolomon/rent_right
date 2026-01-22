@@ -1,10 +1,11 @@
 import {
   FaEnvelope,
-  FaFile,
+  FaFileContract,
   FaPhoneAlt,
   FaQuestionCircle,
   FaSuitcase,
   FaUser,
+  FaUserShield,
 } from "react-icons/fa";
 import { ChangePassword } from "~/components/profile/changepassword";
 import { Delete } from "~/components/profile/delete";
@@ -84,14 +85,18 @@ const Profile = () => {
         </div>
 
         <div className="space-y-4">
+          <Feedback />
           <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
             <FaQuestionCircle size={18} />
             <p>Help center</p>
           </div>
-          <Feedback />
           <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
-            <FaFile size={18} />
-            <p>Terms and Privacy Policy</p>
+            <FaUserShield size={18} />
+            <p>Privacy Policy</p>
+          </div>
+          <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
+            <FaFileContract size={18} />
+            <p>Terms of Service</p>
           </div>
         </div>
       </div>

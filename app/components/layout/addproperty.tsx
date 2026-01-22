@@ -36,7 +36,7 @@ export const AddProperty = () => {
         imageUrl: images[Math.floor(Math.random() * 2)],
         type: formData.type,
         owner: currentUser,
-        isAvailable: true
+        isAvailable: true,
       },
     ]);
     setFormData(emptyProperty);
@@ -162,12 +162,14 @@ export const AddProperty = () => {
                   setFormData({ ...formData, description: e.target.value })
                 }
               />
-              <button
-                type="submit"
-                className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Add
-              </button>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg"
+                >
+                  Add
+                </button>
+              </div>
             </form>
           </div>
         </div>

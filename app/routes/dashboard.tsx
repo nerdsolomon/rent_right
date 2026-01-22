@@ -1,4 +1,4 @@
-import { FaUsers, FaUserShield, FaUserTie } from "react-icons/fa";
+import { FaUserCog, FaUsers, FaUserTie } from "react-icons/fa";
 import { MdApartment, MdLandscape } from "react-icons/md";
 import { Chart } from "~/components/dashboard/chart";
 import { ClearStorage } from "~/components/dashboard/clearstorage";
@@ -8,7 +8,7 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 
 const Dashboard = () => {
   const usersFilter = [
-    { label: "Admins", role: "admin", icon: FaUserShield },
+    { label: "Admins", role: "admin", icon: FaUserCog },
     { label: "Owners", role: "owner", icon: FaUserTie },
     { label: "Users", role: "user", icon: FaUsers },
   ];

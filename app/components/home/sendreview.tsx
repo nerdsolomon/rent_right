@@ -24,7 +24,7 @@ export const SendReview = ({ propertyId }: Prop) => {
     <div>
       <button
         onClick={() => onClose(true)}
-        className="border border-gray-300 text-xs px-2 py-1 rounded-full hover:bg-gray-400 hover:text-white"
+        className="border border-purple-600 text-xs text-purple-600 px-2 py-1 rounded-full hover:bg-purple-600 hover:text-white"
       >
         Send Review
       </button>

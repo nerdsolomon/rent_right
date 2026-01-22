@@ -35,6 +35,7 @@ interface DataState {
   toggleRole: (id: number) => void;
   properties: Property[];
   setProperties: (properties: Property[]) => void;
+  updateProperty: (property: Property) => void;
   deleteProperty: (id: number) => void;
   reviews: Review[];
   setReviews: (reviews: Review[]) => void;
@@ -147,6 +148,12 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  const updateProperty = (updatedProperty: Property) => {
+    setProperties((prev) =>
+      prev.map((p) => (p.id === updatedProperty.id ? updatedProperty : p))
+    );
+  };
+
   const deleteUser = (id: number) => {
     setUsers((prev) => deleteById(prev, id));
     if (currentUser.id === id) logout();
@@ -209,6 +216,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         toggleRole,
         properties,
         setProperties,
+        updateProperty,
         deleteProperty,
         reviews,
         setReviews,

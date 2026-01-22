@@ -20,7 +20,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
             ref={modalRef}
             className="relative bg-gray-100 rounded-2xl shadow-lg w-[98%] lg:w-[650px] max-h-[90vh] overflow-y-auto scrollbar-hidden animate-fadeIn"
           >
-            <div className="flex px-4 pt-4 justify-between sticky top-0 bg-gray-100 z-10">
+            <div className="flex px-4 pt-4 pb-2 justify-between sticky top-0 bg-gray-100 z-10">
               <p className="font-bold text-lg">Details</p>
               <button
                 onClick={() => onClose(false)}
