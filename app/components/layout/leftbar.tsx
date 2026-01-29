@@ -9,7 +9,7 @@ interface Prop {
 }
 
 const navLinks = [
-  { title: "Home", path: "/home", icon: FaHome, restricted: false },
+  { title: "Home", path: "/home", icon: FaHome, restricted: null },
   { title: "Dashboard", path: "/dashboard", icon: FaChartBar, restricted: true },
   { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle, restricted: true },
   { title: "Messages", path: "/messages", icon: FaComments, restricted: false },
@@ -29,7 +29,7 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
         `}
     >
       {navLinks
-        .filter((link) => !link.restricted || currentUser.role === "admin")
+        .filter((link) => currentUser.role === "admin" ? link.restricted || link.restricted === null : !link.restricted)
         .map((link, index) => (
           <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
             {({ isActive }) => (
