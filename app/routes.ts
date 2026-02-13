@@ -8,6 +8,8 @@ export default [
     route("/notifications", "./routes/notifications.tsx"),
     route("/dashboard", "./routes/dashboard.tsx"),
     route("/feedbacks", "./routes/feedbacks.tsx"),
-    route("/messages", "./routes/messages.tsx")
+    route("/messages", "./routes/messages.tsx"),
+    route("/portfolio/:id", "./routes/portfolio.tsx")
+
   ]),
 ] satisfies RouteConfig;

@@ -1,7 +1,6 @@
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Details } from "./details";
 import { useState } from "react";
-import profileImg from "~/assets/profile.png";
 import type { Property } from "~/types";
 import { Actions } from "./actions";
 import { useData } from "~/hooks/useData";
@@ -28,7 +27,7 @@ export const PropertyCard = ({ property }: Prop) => {
 
           <ProfileInfo user={property.owner} />
 
-          {currentUser.role === "owner" && isAuthenticated && (
+          {currentUser.id === property.owner.id && isAuthenticated && (
             <div className="absolute top-3 right-3">
               <Actions property={property} />
             </div>

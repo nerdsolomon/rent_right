@@ -71,8 +71,8 @@ export const ProfileInfo = ({ user }: Prop) => {
             </span>
 
             <div className="grid grid-cols-2 gap-2 items-center mt-4">
-              <button className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
-                Report
+              <button onClick={() => navigate(`/portfolio/${user.id}`)} className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
+                Portfolio
               </button>
               <button onClick={() => navigate("/messages")} className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
                 Message

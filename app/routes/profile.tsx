@@ -78,14 +78,14 @@ const Profile = () => {
 
         <div className="space-y-4 border-b border-gray-300 pb-4 mb-4">
           {currentUser.role === "user" && <Owner />}
-          <Qrcode />
+          {currentUser.role === "owner" && <Qrcode />}
           <ChangePassword />
           <Logout />
           {currentUser.role !== "admin" && <Delete />}
         </div>
 
         <div className="space-y-4">
-          <Feedback />
+          {currentUser.role !== "admin" && <Feedback />}
           <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
             <FaQuestionCircle size={18} />
             <p>Help center</p>

@@ -8,7 +8,7 @@ export const Qrcode = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { currentUser } = useData();
-  const profileUrl = `${window.location.origin}/profile/${currentUser.id}`;
+  const profileUrl = `${window.location.origin}/portfolio/${currentUser.id}`;
   const qrCode = useQrCode(profileUrl);
   return (
     <>
@@ -17,7 +17,7 @@ export const Qrcode = () => {
         onClick={() => onClose(true)}
       >
         <FaQrcode size={18} />
-        <p>Share link</p>
+        <p>Share portfolio</p>
       </div>
 
       {isOpen && (
