@@ -49,7 +49,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
                 </p>
                 <p className="text-xs text-gray-400">/year</p>
               </div>
-              <Booking />
+              <Booking property={property} />
               <p className="text-gray-500 mt-2">{property.description}</p>
             </div>
 

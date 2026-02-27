@@ -92,3 +92,19 @@ export const emptyFeedback: Feedback = {
   imageUrl: "",
   isViewed: false
 }
+
+export interface Booking {
+  id: number
+  day: string
+  time: string
+  property: Property
+  user: User
+};
+
+export const emptyBooking: Booking = {
+  id: NaN,
+  day: "",
+  time: "",
+  property: emptyProperty,
+  user: emptyUser
+};

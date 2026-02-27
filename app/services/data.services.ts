@@ -5,6 +5,7 @@ export const CURRENT_USER_KEY = "currentUser";
 export const PROPERTIES_KEY = "properties";
 export const REVIEWS_KEY = "reviews"
 export const FEEDBACKS_KEY = "feedbacks"
+export const BOOKINGS_KEY = "bookings"
 
 export const getFromStorage = <T>(key: string, fallback: T): T => {
   try {

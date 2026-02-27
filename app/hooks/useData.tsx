@@ -11,10 +11,12 @@ import {
   saveToStorage,
   syncCurrentUser,
   USERS_KEY,
+  BOOKINGS_KEY,
 } from "~/services";
 import {
   adminUser,
   emptyUser,
+  type Booking,
   type Feedback,
   type Property,
   type Review,
@@ -42,6 +44,8 @@ interface DataState {
   feedbacks: Feedback[];
   setFeedbacks: (feedbacks: Feedback[]) => void;
   clearStorage: () => void;
+  bookings: Booking[];
+  setBookings: (bookings: Booking[]) => void;
 }
 
 const DataContext = createContext<DataState | null>(null);
@@ -69,6 +73,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>(() =>
     getFromStorage(FEEDBACKS_KEY, [])
+  );
+
+  const [bookings, setBookings] = useState<Booking[]>(() =>
+    getFromStorage(BOOKINGS_KEY, [])
   );
 
   const isAuthenticated = Boolean(currentUser?.id);
@@ -109,18 +117,24 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     saveToStorage(FEEDBACKS_KEY, feedbacks);
   }, [feedbacks]);
 
+  useEffect(() => {
+    saveToStorage(BOOKINGS_KEY, bookings);
+  }, [bookings]);
+
   const clearStorage = () => {
     removeFromStorage(USERS_KEY);
     removeFromStorage(CURRENT_USER_KEY);
     removeFromStorage(PROPERTIES_KEY);
     removeFromStorage(REVIEWS_KEY);
     removeFromStorage(FEEDBACKS_KEY);
+    removeFromStorage(BOOKINGS_KEY);
 
     setUsers([]);
     setCurrentUser(emptyUser);
     setProperties([]);
     setReviews([]);
     setFeedbacks([]);
+    setBookings([])
 
     navigate("/");
   };
@@ -223,6 +237,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         feedbacks,
         setFeedbacks,
         clearStorage,
+        bookings,
+        setBookings,
       }}
     >
       {children}
