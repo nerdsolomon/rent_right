@@ -51,6 +51,11 @@ export const Booking = ({ property }: Props) => {
       return;
     }
 
+    if (isTimeBooked(formData.day, formData.time)) {
+      alert("This time is already booked");
+      return;
+    }
+
     const bookingData = {
       ...formData,
       id: Math.random(),
@@ -62,6 +67,21 @@ export const Booking = ({ property }: Props) => {
     alert("Booking successful");
     setFormData(emptyBooking);
     onClose(false);
+  };
+
+  const today = new Date().toISOString().split("T")[0];
+
+  const isPastDay = (date: string) => {
+    return date < today;
+  };
+
+  const isTimeBooked = (day: string, time: string) => {
+    return bookings.some(
+      (booking) =>
+        booking.property.id === property.id &&
+        booking.day === day &&
+        booking.time === time,
+    );
   };
 
   return (
@@ -93,49 +113,68 @@ export const Booking = ({ property }: Props) => {
               <p className="text-gray-400 p-2">Day</p>
 
               <div className="grid grid-cols-3">
-                {daysOfWeek.map((day, index) => (
-                  <button
-                    key={index}
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        day: day.formatted,
-                      }))
-                    }
-                    className={`m-2 w-20 h-10 text-sm rounded-lg ${
-                      formData.day === day.formatted
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-200 hover:bg-purple-600 hover:text-white"
-                    }`}
-                  >
-                    <div>
+                {daysOfWeek.map((day, index) => {
+                  const disabled = isPastDay(day.formatted);
+
+                  return (
+                    <button
+                      key={index}
+                      disabled={disabled}
+                      onClick={() =>
+                        !disabled &&
+                        setFormData((prev) => ({
+                          ...prev,
+                          day: day.formatted,
+                        }))
+                      }
+                      className={`m-2 w-20 h-10 text-sm rounded-lg
+        ${
+          disabled
+            ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+            : formData.day === day.formatted
+              ? "bg-purple-600 text-white"
+              : "bg-gray-200 hover:bg-purple-600 hover:text-white"
+        }
+      `}
+                    >
                       {day.label} - {day.dayNumber}
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
 
               <p className="text-gray-400 p-2">Time</p>
 
               <div className="grid grid-cols-3">
-                {workHours.map((hour, index) => (
-                  <button
-                    key={index}
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        time: hour,
-                      }))
-                    }
-                    className={`m-2 w-20 h-10 text-sm rounded-lg ${
-                      formData.time === hour
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-200 hover:bg-purple-600 hover:text-white"
-                    }`}
-                  >
-                    {hour}
-                  </button>
-                ))}
+                {workHours.map((hour, index) => {
+                  const disabled =
+                    !formData.day || isTimeBooked(formData.day, hour);
+
+                  return (
+                    <button
+                      key={index}
+                      disabled={disabled}
+                      onClick={() =>
+                        !disabled &&
+                        setFormData((prev) => ({
+                          ...prev,
+                          time: hour,
+                        }))
+                      }
+                      className={`m-2 w-20 h-10 text-sm rounded-lg
+        ${
+          disabled
+            ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+            : formData.time === hour
+              ? "bg-purple-600 text-white"
+              : "bg-gray-200 hover:bg-purple-600 hover:text-white"
+        }
+      `}
+                    >
+                      {hour}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
