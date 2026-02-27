@@ -2,8 +2,8 @@ import { FaComments } from "react-icons/fa";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 
-const Messages = () => {
-  usePageTitle("RentRight - Messages");
+const Bookings = () => {
+  usePageTitle("RentRight - Bookings");
 
   return (
     <RequireAuth>
@@ -21,4 +21,4 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default Bookings;

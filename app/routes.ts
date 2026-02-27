@@ -8,7 +8,7 @@ export default [
     route("/notifications", "./routes/notifications.tsx"),
     route("/dashboard", "./routes/dashboard.tsx"),
     route("/feedbacks", "./routes/feedbacks.tsx"),
-    route("/messages", "./routes/messages.tsx"),
+    route("/bookings", "./routes/bookings.tsx"),
     route("/portfolio/:id", "./routes/portfolio.tsx")
 
   ]),

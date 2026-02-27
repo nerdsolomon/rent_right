@@ -3,6 +3,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { Review } from "./review";
 import type { Property } from "~/types";
 import { images } from "~/services/asset.services";
+import { Booking } from "./booking";
 
 interface Props {
   isOpen: boolean;
@@ -48,6 +49,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
                 </p>
                 <p className="text-xs text-gray-400">/year</p>
               </div>
+              <Booking />
               <p className="text-gray-500 mt-2">{property.description}</p>
             </div>
 
