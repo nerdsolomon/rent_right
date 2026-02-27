@@ -128,14 +128,14 @@ export const Booking = ({ property }: Props) => {
                         }))
                       }
                       className={`m-2 w-20 h-10 text-sm rounded-lg
-        ${
-          disabled
-            ? "bg-gray-300 text-gray-400 cursor-not-allowed"
-            : formData.day === day.formatted
-              ? "bg-purple-600 text-white"
-              : "bg-gray-200 hover:bg-purple-600 hover:text-white"
-        }
-      `}
+                        ${
+                          disabled
+                            ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+                            : formData.day === day.formatted
+                              ? "bg-purple-600 text-white"
+                              : "bg-gray-200 hover:bg-purple-600 hover:text-white"
+                        }
+                      `}
                     >
                       {day.label} - {day.dayNumber}
                     </button>
@@ -162,14 +162,14 @@ export const Booking = ({ property }: Props) => {
                         }))
                       }
                       className={`m-2 w-20 h-10 text-sm rounded-lg
-        ${
-          disabled
-            ? "bg-gray-300 text-gray-400 cursor-not-allowed"
-            : formData.time === hour
-              ? "bg-purple-600 text-white"
-              : "bg-gray-200 hover:bg-purple-600 hover:text-white"
-        }
-      `}
+                        ${
+                          disabled
+                            ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+                            : formData.time === hour
+                              ? "bg-purple-600 text-white"
+                              : "bg-gray-200 hover:bg-purple-600 hover:text-white"
+                        }
+                      `}
                     >
                       {hour}
                     </button>
