@@ -117,17 +117,18 @@ export const Booking = ({ property }: Props) => {
                   const disabled = isPastDay(day.formatted);
 
                   return (
-                    <button
-                      key={index}
-                      disabled={disabled}
-                      onClick={() =>
-                        !disabled &&
-                        setFormData((prev) => ({
-                          ...prev,
-                          day: day.formatted,
-                        }))
-                      }
-                      className={`m-2 w-20 h-10 text-sm rounded-lg
+                    <div className="flex justify-center">
+                      <button
+                        key={index}
+                        disabled={disabled}
+                        onClick={() =>
+                          !disabled &&
+                          setFormData((prev) => ({
+                            ...prev,
+                            day: day.formatted,
+                          }))
+                        }
+                        className={`m-2 w-20 h-10 text-sm rounded-lg
                         ${
                           disabled
                             ? "bg-gray-300 text-gray-400 cursor-not-allowed"
@@ -136,9 +137,10 @@ export const Booking = ({ property }: Props) => {
                               : "bg-gray-200 hover:bg-purple-600 hover:text-white"
                         }
                       `}
-                    >
-                      {day.label} - {day.dayNumber}
-                    </button>
+                      >
+                        {day.label} - {day.dayNumber}
+                      </button>
+                    </div>
                   );
                 })}
               </div>
@@ -151,17 +153,18 @@ export const Booking = ({ property }: Props) => {
                     !formData.day || isTimeBooked(formData.day, hour);
 
                   return (
-                    <button
-                      key={index}
-                      disabled={disabled}
-                      onClick={() =>
-                        !disabled &&
-                        setFormData((prev) => ({
-                          ...prev,
-                          time: hour,
-                        }))
-                      }
-                      className={`m-2 w-20 h-10 text-sm rounded-lg
+                    <div className="flex justify-center">
+                      <button
+                        key={index}
+                        disabled={disabled}
+                        onClick={() =>
+                          !disabled &&
+                          setFormData((prev) => ({
+                            ...prev,
+                            time: hour,
+                          }))
+                        }
+                        className={`m-2 w-20 h-10 text-sm rounded-lg
                         ${
                           disabled
                             ? "bg-gray-300 text-gray-400 cursor-not-allowed"
@@ -170,9 +173,10 @@ export const Booking = ({ property }: Props) => {
                               : "bg-gray-200 hover:bg-purple-600 hover:text-white"
                         }
                       `}
-                    >
-                      {hour}
-                    </button>
+                      >
+                        {hour}
+                      </button>
+                    </div>
                   );
                 })}
               </div>
