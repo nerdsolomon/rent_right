@@ -1,8 +1,8 @@
 import {
   FaBell,
   FaBriefcase,
+  FaCalendarAlt,
   FaChartBar,
-  FaComments,
   FaExclamationCircle,
   FaHome,
 } from "react-icons/fa";
@@ -22,7 +22,7 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
     { title: "Home", path: "/home", icon: FaHome, always: true },
     { title: "Dashboard", path: "/dashboard", icon: FaChartBar, restricted: true },
     { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle, restricted: true },
-    { title: "Bookings", path: "/bookings", icon: FaComments, restricted: false },
+    { title: "Bookings", path: "/bookings", icon: FaCalendarAlt, restricted: false },
     { title: "Notifications", path: "/notifications", icon: FaBell, restricted: false },
     { title: "Portfolio", path: `/portfolio/${currentUser.id}`, icon: FaBriefcase, restricted: false, owner: true },
   ];
