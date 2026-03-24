@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { emptyUser } from "~/types";
+import { images } from "~/services/asset.services";
 
 const Signin = () => {
   const [isOpen, onClose] = useState(false);
@@ -14,8 +16,8 @@ const Signin = () => {
   const authenticate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!login(formData)) {
-      setAlert(true)
-      return
+      setAlert(true);
+      return;
     }
     setFormData(emptyUser);
     setAlert(false);
@@ -26,73 +28,150 @@ const Signin = () => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="text-gray-700 border border-purple-600 px-3 py-2 rounded-full text-sm font-medium hover:bg-purple-500 hover:text-white transition flex items-center gap-2"
+        className="text-gray-700 border border-purple-600 text-purple-600 px-3 py-2 rounded-full text-sm font-medium hover:bg-purple-500 hover:text-white transition flex items-center gap-2"
       >
         Sign In
       </button>
 
       {isOpen && (
-        <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div
             ref={modalRef}
-            className="bg-white rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center"
+            className="bg-white rounded-2xl shadow-lg w-full max-w-5xl h-[90vh] flex overflow-hidden animate-fadeIn"
           >
-            <div className="flex justify-between mb-8">
-              <p className="font-bold">RentRight</p>
-              <button
-                onClick={() => onClose(false)}
-                className="text-gray-400 hover:text-black"
-              >
-                ✕
-              </button>
+            {/* LEFT SIDE */}
+            <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10">
+              <div className="w-full max-w-md">
+                {/* Heading */}
+                <h2 className="text-2xl font-bold mb-2">Welcome back</h2>
+                <p className="text-gray-500 text-sm mb-6">
+                  Sign in to access your account and find your perfect rental.
+                </p>
+
+                {/* Google Button */}
+                <button className="w-full border border-purple-600 text-purple-600 py-3 rounded-full font-medium hover:bg-purple-50 transition">
+                  Continue with Google
+                </button>
+
+                {/* Divider */}
+                <div className="flex items-center my-4 text-gray-400 text-sm">
+                  <hr className="flex-1" />
+                  <span className="px-2">or continue with email</span>
+                  <hr className="flex-1" />
+                </div>
+
+                {/* Form */}
+                <form className="space-y-4" onSubmit={authenticate}>
+                  {alert && (
+                    <div className="bg-yellow-100 rounded-lg text-sm text-gray-600 p-2">
+                      Invalid credentials
+                    </div>
+                  )}
+
+                  <input
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                  />
+
+                  <div className="relative">
+                    <input
+                      className="w-full p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      required
+                      value={formData.password}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
+                    />
+
+                    {/* Eye Icon */}
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-600"
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+
+                  {/* Options */}
+                  <div className="flex items-center justify-between text-sm">
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" />
+                      Remember me
+                    </label>
+
+                    <button
+                      type="button"
+                      className="text-purple-600 hover:underline"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    className="w-full bg-purple-600 text-white py-3 rounded-full font-semibold hover:bg-purple-700 transition"
+                    type="submit"
+                  >
+                    Sign In
+                  </button>
+                </form>
+
+                {/* Footer */}
+                <p className="text-sm text-gray-500 mt-6 text-center">
+                  Don't have an account?{" "}
+                  <a
+                    onClick={() => onClose(false)}
+                    href="#get-started"
+                    className="text-purple-600 cursor-pointer hover:underline"
+                  >
+                    Sign up
+                  </a>
+                </p>
+              </div>
             </div>
 
-            <form className="space-y-4" onSubmit={authenticate}>
-              {alert && (
-                <div className="bg-yellow-100 rounded-lg text-sm text-gray-500 p-2">
-                  Invalid credentials
+            {/* RIGHT SIDE */}
+            <div className="hidden md:flex w-1/2 relative">
+              <img
+                src={images[0]}
+                alt="home"
+                className="w-full h-full object-cover"
+              />
+
+              <div className="absolute inset-0 bg-purple-600/60"></div>
+
+              <div className="absolute inset-0 flex items-center justify-center px-8">
+                <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 text-center max-w-sm">
+                  {/* Logo */}
+                  <div className="flex flex-col items-center mb-4">
+                    <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+                      <FaHome size={22} />
+                    </div>
+                    <span className="text-lg font-bold text-purple-600">
+                      RentRight
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="text-lg font-bold mb-2">
+                    Find Your Dream Home
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Join thousands of happy tenants who found their perfect
+                    rental through RentRight.
+                  </p>
                 </div>
-              )}
-
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-                type="email"
-                placeholder="Email"
-                required
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                required
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-              />
-
-              <div className="flex items-center gap-2 text-xs">
-                <input
-                  id="show-password"
-                  type="checkbox"
-                  checked={showPassword}
-                  onChange={() => setShowPassword(!showPassword)}
-                />
-                <label htmlFor="show-password">Show password</label>
               </div>
-
-              <button
-                className="border border-gray-400 bg-purple-600 px-4 py-2 text-white hover:bg-purple-800 rounded-lg"
-                type="submit"
-              >
-                Sign in
-              </button>
-            </form>
+            </div>
           </div>
         </div>
       )}
