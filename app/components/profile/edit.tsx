@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaCamera } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 
@@ -27,10 +28,14 @@ export const Edit = () => {
         <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
-            className="bg-white rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center animate-fadeIn"
+            className="bg-white rounded-2xl shadow-lg w-[95%] md:w-[700px] p-6 animate-fadeIn max-h-[90vh] overflow-y-auto scrollbar-hidden"
           >
-            <div className="flex justify-between mb-8">
-              <p className="font-bold">Edit Profile</p>
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <p className="font-bold text-lg text-purple-600">Personal Information</p>
+                <p className="text-xs text-gray-400">Update your personal details</p>
+              </div>
+
               <button
                 onClick={() => onClose(false)}
                 className="text-gray-400 hover:text-black"
@@ -39,89 +44,135 @@ export const Edit = () => {
               </button>
             </div>
 
-            <form className="space-y-4" onSubmit={editUser}>
-              {alert && (
-                <div className="bg-yellow-100 rounded-lg text-sm text-gray-500 p-2">
-                  Profile updated
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="flex flex-col items-center md:w-[30%]">
+                <div className="relative inline-block">
+                  <div className="w-28 h-28 bg-gray-400 capitalize border-4 border-purple-600 rounded-full flex items-center justify-center text-purple-600 text-[40px] lg:text-[50px] font-bold overflow-hidden">
+                    {currentUser?.imageUrl ? (
+                      <img
+                        src={currentUser.imageUrl}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : currentUser.company ? (
+                      currentUser.company.charAt(0)
+                    ) : (
+                      `${currentUser.firstName.charAt(0)} ${currentUser.lastName.charAt(0)}`
+                    )}
+                  </div>
+
+                  <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 text-purple-600 w-6 h-6 flex items-center justify-center">
+                    <FaCamera />
+                  </div>
                 </div>
-              )}
 
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                type="text"
-                placeholder="First Name"
-                required
-                value={currentUser.firstName}
-                onChange={(e) =>
-                  updateUser({
-                    ...currentUser,
-                    firstName: e.target.value,
-                  })
-                }
-              />
+                <p className="text-xs text-gray-400 mt-3">
+                  Member since January 2024
+                </p>
+              </div>
 
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                type="text"
-                placeholder="Last Name"
-                required
-                value={currentUser.lastName}
-                onChange={(e) =>
-                  updateUser({
-                    ...currentUser,
-                    lastName: e.target.value,
-                  })
-                }
-              />
-
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                type="text"
-                placeholder="Company (Optional)"
-                value={currentUser.company}
-                onChange={(e) =>
-                  updateUser({
-                    ...currentUser,
-                    company: e.target.value,
-                  })
-                }
-              />
-
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                type="email"
-                placeholder="Email"
-                required
-                value={currentUser.email}
-                onChange={(e) =>
-                  updateUser({
-                    ...currentUser,
-                    email: e.target.value,
-                  })
-                }
-              />
-
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                type="number"
-                placeholder="Phone Number"
-                required
-                value={currentUser.phone}
-                onChange={(e) =>
-                  updateUser({
-                    ...currentUser,
-                    phone: Number(e.target.value),
-                  })
-                }
-              />
-
-              <button
-                className="border border-gray-400 bg-purple-600 px-4 py-2 text-white hover:bg-purple-800 rounded-lg"
-                type="submit"
+              <form
+                className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4"
+                onSubmit={editUser}
               >
-                Save
-              </button>
-            </form>
+                {alert && (
+                  <div className="col-span-2 bg-yellow-100 rounded-lg text-sm text-gray-500 p-2">
+                    Profile updated
+                  </div>
+                )}
+
+                <div className="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm text-gray-600">First Name</label>
+                    <input
+                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      type="text"
+                      required
+                      value={currentUser.firstName}
+                      onChange={(e) =>
+                        updateUser({
+                          ...currentUser,
+                          firstName: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-gray-600">Last Name</label>
+                    <input
+                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      type="text"
+                      required
+                      value={currentUser.lastName}
+                      onChange={(e) =>
+                        updateUser({
+                          ...currentUser,
+                          lastName: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="col-span-2">
+                  <label className="text-sm text-gray-600">
+                    Company (Optional)
+                  </label>
+                  <input
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    type="text"
+                    value={currentUser.company}
+                    onChange={(e) =>
+                      updateUser({
+                        ...currentUser,
+                        company: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="col-span-2">
+                  <label className="text-sm text-gray-600">Email</label>
+                  <input
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    type="email"
+                    required
+                    value={currentUser.email}
+                    onChange={(e) =>
+                      updateUser({
+                        ...currentUser,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="col-span-2">
+                  <label className="text-sm text-gray-600">Phone Number</label>
+                  <input
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    type="number"
+                    required
+                    value={currentUser.phone}
+                    onChange={(e) =>
+                      updateUser({
+                        ...currentUser,
+                        phone: Number(e.target.value),
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="col-span-2">
+                  <button
+                    className="bg-purple-600 px-4 py-2 text-white hover:bg-purple-800 rounded-lg"
+                    type="submit"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}

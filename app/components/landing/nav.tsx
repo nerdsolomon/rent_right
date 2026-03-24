@@ -3,7 +3,7 @@ import { FaHome } from "react-icons/fa";
 
 export const Nav = () => {
   return (
-    <nav className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 md:py-4 bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav id="navbar" className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 md:py-4 bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="flex items-center gap-2 flex-shrink-0">
         <div className="bg-purple-600 text-white w-8 md:w-10 h-8 md:h-10 rounded-lg flex items-center justify-center flex-shrink-0">
           <FaHome size={20} />

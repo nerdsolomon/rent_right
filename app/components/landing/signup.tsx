@@ -181,7 +181,7 @@ const Signup = () => {
                   Already have an account?{" "}
                   <a
                     onClick={() => onClose(false)}
-                    href="#"
+                    href="#navbar"
                     className="text-purple-600 cursor-pointer hover:underline"
                   >
                     Sign In
