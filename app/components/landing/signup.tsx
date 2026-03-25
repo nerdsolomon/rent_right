@@ -170,10 +170,10 @@ const Signup = () => {
                     </p>
                   )}
 
-                  <label className="flex items-center gap-2 text-sm">
-                    <input type="checkbox" />I agree to the
-                    <a className="text-purple-600" href="">
-                      Terms of Service and Privacy Policy
+                  <label className="flex items-center gap-2 text-xs">
+                    <input type="checkbox" />
+                    <a className="text-purple-600 text-left" href="">
+                      I agree to the Terms of Service and Privacy Policy
                     </a>
                   </label>
 
