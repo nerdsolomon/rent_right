@@ -58,6 +58,16 @@ const Signup = () => {
             {/* LEFT SIDE */}
             <div className="w-full md:w-1/2 overflow-y-auto px-6 py-4 scrollbar-hidden">
               <div className="w-full max-w-md">
+                {/* Logo */}
+                <div className="flex flex-col items-center mb-4">
+                  <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+                    <FaHome size={22} />
+                  </div>
+                  <span className="text-lg font-bold text-purple-600">
+                    RentRight
+                  </span>
+                </div>
+
                 {/* Heading */}
                 <h2 className="text-2xl font-bold mb-2">Create your account</h2>
                 <p className="text-gray-500 text-sm mb-6">
@@ -202,16 +212,6 @@ const Signup = () => {
 
               <div className="absolute inset-0 flex items-center justify-center px-8">
                 <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 text-center max-w-sm">
-                  {/* Logo */}
-                  <div className="flex flex-col items-center mb-4">
-                    <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-                      <FaHome size={22} />
-                    </div>
-                    <span className="text-lg font-bold text-purple-600">
-                      RentRight
-                    </span>
-                  </div>
-
                   {/* Content */}
                   <h3 className="text-lg font-bold mb-2">
                     Find Your Dream Home

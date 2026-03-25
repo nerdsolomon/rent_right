@@ -40,11 +40,20 @@ const Signin = () => {
             className="bg-white rounded-2xl shadow-lg w-full max-w-5xl h-[90vh] flex overflow-hidden animate-fadeIn"
           >
             {/* LEFT SIDE */}
-            <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10">
+            <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10 pt-20 overflow-y-auto scrollbar-hidden">
               <div className="w-full max-w-md">
+                {/* Logo */}
+                <div className="flex flex-col items-center m-4">
+                  <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
+                    <FaHome size={22} />
+                  </div>
+                  <span className="text-lg font-bold text-purple-600">
+                    RentRight
+                  </span>
+                </div>
                 {/* Heading */}
-                <h2 className="text-2xl font-bold mb-2">Welcome back</h2>
-                <p className="text-gray-500 text-sm mb-6">
+                <h2 className="text-2xl font-bold mb-2 text-center">Welcome back</h2>
+                <p className="text-gray-500 text-sm mb-6 text-center">
                   Sign in to access your account and find your perfect rental.
                 </p>
 
@@ -102,7 +111,7 @@ const Signin = () => {
                   </div>
 
                   {/* Options */}
-                  <div className="flex items-center justify-between text-sm">
+                  {/* <div className="flex items-center justify-between text-sm">
                     <label className="flex items-center gap-2">
                       <input type="checkbox" />
                       Remember me
@@ -114,7 +123,7 @@ const Signin = () => {
                     >
                       Forgot password?
                     </button>
-                  </div>
+                  </div> */}
 
                   {/* Submit */}
                   <button
@@ -151,16 +160,6 @@ const Signin = () => {
 
               <div className="absolute inset-0 flex items-center justify-center px-8">
                 <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 text-center max-w-sm">
-                  {/* Logo */}
-                  <div className="flex flex-col items-center mb-4">
-                    <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-                      <FaHome size={22} />
-                    </div>
-                    <span className="text-lg font-bold text-purple-600">
-                      RentRight
-                    </span>
-                  </div>
-
                   {/* Content */}
                   <h3 className="text-lg font-bold mb-2">
                     Find Your Dream Home
