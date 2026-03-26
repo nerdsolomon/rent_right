@@ -32,8 +32,12 @@ export const Edit = () => {
           >
             <div className="flex justify-between items-start mb-6">
               <div>
-                <p className="font-bold text-lg text-purple-600">Personal Information</p>
-                <p className="text-xs text-gray-400">Update your personal details</p>
+                <p className="font-bold text-lg text-purple-600">
+                  Personal Information
+                </p>
+                <p className="text-xs text-gray-400">
+                  Update your personal details
+                </p>
               </div>
 
               <button
@@ -65,8 +69,9 @@ export const Edit = () => {
                   </div>
                 </div>
 
-                <p className="text-xs text-gray-400 mt-3">
-                  Member since January 2024
+                <p className="text-xs text-gray-400 mt-3 capitalize">
+                  {(currentUser.role == "owner" && "Landlord") ||
+                    currentUser.role}
                 </p>
               </div>
 

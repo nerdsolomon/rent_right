@@ -30,7 +30,7 @@ export const ProfileInfo = ({ user }: Prop) => {
         ) : user.company ? (
           user.company.charAt(0)
         ) : (
-          `${user.firstName.charAt(0)} ${user.lastName.charAt(0)}`
+          user.firstName.charAt(0)
         )}
       </span>
 

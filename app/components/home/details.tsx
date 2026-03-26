@@ -4,6 +4,7 @@ import { Review } from "./review";
 import type { Property } from "~/types";
 import { images } from "~/services/asset.services";
 import { Booking } from "./booking";
+import { useData } from "~/hooks/useData";
 
 interface Props {
   isOpen: boolean;
@@ -13,6 +14,7 @@ interface Props {
 
 export const Details = ({ isOpen, onClose, property }: Props) => {
   const modalRef = useClickOutside({ isOpen, onClose });
+  const {currentUser} = useData()
   return (
     <>
       {isOpen && (
@@ -45,12 +47,12 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
               </p>
               <div className="flex gap-1 items-center mt-2">
                 <p className="text-purple-600 font-bold text-lg">
-                  ${property.price}
+                  ₦{property.price}
                 </p>
                 <p className="text-xs text-gray-400">/year</p>
               </div>
-              <Booking property={property} />
-              <p className="text-gray-500 mt-2">{property.description}</p>
+              {currentUser.id !== property.owner.id || property.isAvailable != false && <Booking property={property} />}
+              <p className="text-gray-500 mt-2" style={{ whiteSpace: "pre-wrap" }} dangerouslySetInnerHTML={{ __html: property.description}} />
             </div>
 
             <Review propertyId={property.id} />

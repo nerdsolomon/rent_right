@@ -51,7 +51,7 @@ export const PropertyCard = ({ property }: Prop) => {
           <div className="flex items-center justify-between">
             <div className="flex gap-1 items-center">
               <p className="text-purple-600 font-bold text-lg">
-                ${property.price}
+                ₦{property.price}
               </p>
               <p className="text-xs text-gray-400">/year</p>
             </div>

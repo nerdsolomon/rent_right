@@ -99,6 +99,7 @@ export interface Booking {
   time: string
   property: Property
   user: User
+  status: string
 };
 
 export const emptyBooking: Booking = {
@@ -106,5 +107,6 @@ export const emptyBooking: Booking = {
   day: "",
   time: "",
   property: emptyProperty,
-  user: emptyUser
+  user: emptyUser,
+  status: ""
 };

@@ -90,7 +90,7 @@ const Signup = () => {
                 <form className="space-y-4" onSubmit={addUser}>
                   {alert && (
                     <div className="bg-yellow-100 rounded-lg text-sm text-gray-600 p-2">
-                      Invalid credentials
+                      Account created successfully...
                     </div>
                   )}
 

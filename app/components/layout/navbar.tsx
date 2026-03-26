@@ -38,7 +38,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
 
       <div className="flex justify-end">
         <div
-          className="items-center flex gap-2 hover:bg-gray-100 rounded-full px-2 py-2"
+          className="items-center flex gap-2 hover:bg-gray-100 capitalize rounded-full px-2 py-2"
           onClick={() => navigate("/profile")}
         >
           <FaUserCircle size={30} />
