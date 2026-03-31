@@ -8,7 +8,7 @@ import type { Booking, Property } from "~/types";
 
 const Bookings = () => {
   usePageTitle("RentRight - Bookings");
-  const { bookings } = useData();
+  const { bookings, currentUser } = useData();
   const [isOpen, onClose] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property>();
 
@@ -22,10 +22,17 @@ const Bookings = () => {
     booking.status = "cancelled";
   };
 
+  const filteredBookings = bookings.filter((booking) => {
+    const isUser = currentUser.role === "user";
+    const isOwner = currentUser.role === "owner";
+    if (isOwner) return booking.property.owner.id === currentUser.id;
+    if (isUser) return booking.user.id === currentUser.id;
+  });
+
   return (
     <RequireAuth>
       <div className="w-full mt-4">
-        {bookings.length > 0 ? (
+        {filteredBookings.length > 0 ? (
           <div className="border border-gray-200 rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
               <div className="min-w-[650px]">
@@ -81,12 +88,14 @@ const Bookings = () => {
                     <div className="flex justify-end gap-2">
                       {!b.status && (
                         <>
-                          <button
-                            onClick={() => handleAccept(b)}
-                            className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 whitespace-nowrap"
-                          >
-                            Accept
-                          </button>
+                          {currentUser.role === "owner" && (
+                            <button
+                              onClick={() => handleAccept(b)}
+                              className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 whitespace-nowrap"
+                            >
+                              Accept
+                            </button>
+                          )}
                           <button
                             onClick={() => handleCancel(b)}
                             className="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700 whitespace-nowrap"
