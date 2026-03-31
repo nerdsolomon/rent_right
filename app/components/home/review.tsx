@@ -1,22 +1,23 @@
+import type { Property } from "~/types";
 import { SendReview } from "./sendreview";
 import { useData } from "~/hooks/useData";
 
 interface Prop {
-  propertyId: number;
+  property: Property;
 }
 
-export const Review = ({ propertyId }: Prop) => {
-  const { reviews } = useData();
+export const Review = ({ property }: Prop) => {
+  const { reviews, currentUser } = useData();
   return (
     <>
       <div className="flex justify-between p-4 mt-4 border-t border-gray-300">
         <p className="font-bold text-sm">Reviews</p>
-        <SendReview propertyId={propertyId} />
+        {currentUser.id !== property.owner.id && <SendReview propertyId={property.id} />}
       </div>
       <div className="px-4">
         {reviews.length > 0 ? (
           reviews
-            .filter((r) => r.propertyId === propertyId)
+            .filter((r) => r.propertyId === property.id)
             .map((review, index) => (
               <div
                 key={index}
