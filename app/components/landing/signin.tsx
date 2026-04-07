@@ -40,17 +40,18 @@ const Signin = () => {
             className="bg-white rounded-2xl shadow-lg w-full max-w-5xl h-[90vh] flex overflow-hidden animate-fadeIn"
           >
             {/* LEFT SIDE */}
-            <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10 pt-20 overflow-y-auto scrollbar-hidden">
+            <div className="w-full md:w-1/2 flex items-center justify-center px-6 overflow-y-auto scrollbar-hidden">
               <div className="w-full max-w-md">
-                <div className="relative flex items-center justify-center">
-                  {/* Close Button (top-right) */}
+                <div className="lg:hidden flex justify-between">
+                  <div></div>
                   <button
                     onClick={() => onClose(false)}
-                    className="absolute right-0 top-0 text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-black"
                   >
                     ✕
                   </button>
-
+                </div>
+                <div className="relative flex items-center justify-center">
                   {/* Logo */}
                   <div className="flex flex-col items-center m-4">
                     <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">

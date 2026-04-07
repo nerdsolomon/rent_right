@@ -56,27 +56,27 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [users, setUsers] = useState<User[]>(() =>
-    getFromStorage(USERS_KEY, [])
+    getFromStorage(USERS_KEY, []),
   );
 
   const [currentUser, setCurrentUser] = useState<User>(() =>
-    getFromStorage(CURRENT_USER_KEY, emptyUser)
+    getFromStorage(CURRENT_USER_KEY, emptyUser),
   );
 
   const [properties, setProperties] = useState<Property[]>(() =>
-    getFromStorage(PROPERTIES_KEY, [])
+    getFromStorage(PROPERTIES_KEY, []),
   );
 
   const [reviews, setReviews] = useState<Review[]>(() =>
-    getFromStorage(REVIEWS_KEY, [])
+    getFromStorage(REVIEWS_KEY, []),
   );
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>(() =>
-    getFromStorage(FEEDBACKS_KEY, [])
+    getFromStorage(FEEDBACKS_KEY, []),
   );
 
   const [bookings, setBookings] = useState<Booking[]>(() =>
-    getFromStorage(BOOKINGS_KEY, [])
+    getFromStorage(BOOKINGS_KEY, []),
   );
 
   const isAuthenticated = Boolean(currentUser?.id);
@@ -86,40 +86,16 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (users.length === 0) {
-      setUsers([adminUser]);
-    }
-  }, [users]);
-
-  useEffect(() => {
-    saveToStorage(USERS_KEY, users);
-  }, [users]);
-
-  useEffect(() => {
-    if (currentUser?.id) {
-      saveToStorage(CURRENT_USER_KEY, currentUser);
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    saveToStorage(PROPERTIES_KEY, properties);
-  }, [properties]);
-
-  useEffect(() => {
+    if (users.length === 0) setUsers([adminUser]);
     setCurrentUser((prev) => syncCurrentUser(users, prev));
-  }, [users]);
 
-  useEffect(() => {
+    if (currentUser?.id) saveToStorage(CURRENT_USER_KEY, currentUser);
+    saveToStorage(USERS_KEY, users);
+    saveToStorage(PROPERTIES_KEY, properties);
     saveToStorage(REVIEWS_KEY, reviews);
-  }, [reviews]);
-
-  useEffect(() => {
     saveToStorage(FEEDBACKS_KEY, feedbacks);
-  }, [feedbacks]);
-
-  useEffect(() => {
     saveToStorage(BOOKINGS_KEY, bookings);
-  }, [bookings]);
+  }, [users, currentUser, properties, reviews, feedbacks, bookings]);
 
   const clearStorage = () => {
     removeFromStorage(USERS_KEY);
@@ -134,7 +110,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     setProperties([]);
     setReviews([]);
     setFeedbacks([]);
-    setBookings([])
+    setBookings([]);
 
     navigate("/");
   };
@@ -142,7 +118,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const login = (loginUser: User) => {
     const foundUser = users.find(
       (user) =>
-        user.email === loginUser.email && user.password === loginUser.password
+        user.email === loginUser.email && user.password === loginUser.password,
     );
     if (!foundUser) return false;
     setCurrentUser(foundUser);
@@ -158,13 +134,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateUser = (updatedUser: User) => {
     setUsers((prev) =>
-      prev.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+      prev.map((u) => (u.id === updatedUser.id ? updatedUser : u)),
     );
   };
 
   const updateProperty = (updatedProperty: Property) => {
     setProperties((prev) =>
-      prev.map((p) => (p.id === updatedProperty.id ? updatedProperty : p))
+      prev.map((p) => (p.id === updatedProperty.id ? updatedProperty : p)),
     );
   };
 
@@ -178,8 +154,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       prev.map((user) =>
         user.id === id
           ? { ...user, role: user.role === "admin" ? "user" : "admin" }
-          : user
-      )
+          : user,
+      ),
     );
   };
 

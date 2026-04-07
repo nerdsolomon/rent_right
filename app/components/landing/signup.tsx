@@ -58,14 +58,16 @@ const Signup = () => {
             {/* LEFT SIDE */}
             <div className="w-full md:w-1/2 overflow-y-auto px-6 py-4 scrollbar-hidden">
               <div className="w-full max-w-md">
-                <div className="relative flex items-center justify-center">
-                  {/* Close Button (top-right) */}
+                <div className="lg:hidden flex justify-between">
+                  <div></div>
                   <button
                     onClick={() => onClose(false)}
-                    className="absolute right-0 top-0 text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-black"
                   >
                     ✕
                   </button>
+                </div>
+                <div className="relative flex items-center justify-center">
                   {/* Logo */}
                   <div className="flex flex-col items-center mb-4">
                     <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
@@ -180,9 +182,9 @@ const Signup = () => {
                   )}
 
                   <label className="flex items-center gap-2 text-xs">
-                    <input type="checkbox" />
-                    <a className="text-purple-600 text-left" href="">
-                      I agree to the Terms of Service and Privacy Policy
+                    <input type="checkbox" />I agree to the{" "}
+                    <a className="text-purple-600" href="">
+                      Terms of Service and Privacy Policy
                     </a>
                   </label>
 
