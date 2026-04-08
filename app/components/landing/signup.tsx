@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { FaHome } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { FaHome, FaImage } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { emptyUser } from "~/types";
@@ -13,6 +13,8 @@ const Signup = () => {
   const [formData, setFormData] = useState(emptyUser);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [notMatch, setNotMatch] = useState(false);
+  const [prevImage, setPrevImage] = useState('');
+  const prevImageRef = useRef(null)
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -180,6 +182,26 @@ const Signup = () => {
                       Passwords don't match...
                     </p>
                   )}
+
+                  <span onClick={()=> prevImageRef.current.click()} className="flex gap-2 items-center cursor-pointer hover:bg-gray-200 p-2 rounded-lg">
+                    <FaImage className="text-xl text-purple-600"/>
+                    <span>Upload photo</span>
+                  </span>
+
+                  <input
+                    className="hidden"
+                    type="file"
+                    accept="image/*"
+                    ref={prevImageRef}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      const reader = new FileReader();
+                      reader.onload = () => setPrevImage(reader.result);
+                      reader.readAsDataURL(file);
+                    }}
+                  />
+
+                  {prevImage && <img src={prevImage} className="w-20 h-20" />}
 
                   <label className="flex items-center gap-2 text-xs">
                     <input type="checkbox" />I agree to the{" "}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
@@ -8,6 +8,8 @@ export const Edit = () => {
   const modalRef = useClickOutside({ isOpen, onClose });
   const { currentUser, updateUser } = useData();
   const [alert, setAlert] = useState(false);
+  const [prevImage, setPrevImage] = useState("");
+  const prevImageRef = useRef(null);
 
   const editUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ export const Edit = () => {
         onClick={() => onClose(true)}
         className="px-4 py-1 border border-purple-600 text-xs hover:bg-purple-600 text-purple-600 hover:text-white rounded-lg font-semibold"
       >
-        Edit
+        Edit profile
       </button>
 
       {isOpen && (
@@ -51,10 +53,10 @@ export const Edit = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="flex flex-col items-center md:w-[30%]">
                 <div className="relative inline-block">
-                  <div className="w-28 h-28 bg-gray-400 capitalize border-4 border-purple-600 rounded-full flex items-center justify-center text-purple-600 text-[40px] lg:text-[50px] font-bold overflow-hidden">
-                    {currentUser?.imageUrl ? (
+                  <div className="w-30 h-30 bg-gray-400 capitalize border-2 border-purple-600 rounded-full flex items-center justify-center text-purple-600 text-[40px] lg:text-[50px] font-bold overflow-hidden">
+                    {currentUser?.imageUrl || prevImage ? (
                       <img
-                        src={currentUser.imageUrl}
+                        src={currentUser.imageUrl || prevImage}
                         className="w-full h-full object-cover"
                       />
                     ) : currentUser.company ? (
@@ -64,8 +66,23 @@ export const Edit = () => {
                     )}
                   </div>
 
-                  <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 text-purple-600 w-6 h-6 flex items-center justify-center">
+                  <div
+                    onClick={() => prevImageRef.current.click()}
+                    className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 text-purple-600 w-6 h-6 flex items-center justify-center"
+                  >
                     <FaCamera />
+                    <input
+                      className="hidden"
+                      type="file"
+                      accept="image/*"
+                      ref={prevImageRef}
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        const reader = new FileReader();
+                        reader.onload = () => setPrevImage(reader.result);
+                        reader.readAsDataURL(file);
+                      }}
+                    />
                   </div>
                 </div>
 

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { useRef, useState } from "react";
+import { FaImage, FaPlus } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { images } from "~/services/asset.services";
@@ -9,10 +9,16 @@ import { location } from "~/services";
 export const AddProperty = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const [formData, setFormData] = useState<Property>(emptyProperty);
   const { properties, setProperties, currentUser } = useData();
+  const [formData, setFormData] = useState<Property>({
+    ...emptyProperty,
+    country: "Nigeria",
+  });
 
-  const countries = Object.keys(location);
+  const [prevImages, setPrevImages] = useState<string[]>([]);
+  const prevImageRef = useRef<HTMLInputElement | null>(null);
+
+  // const countries = Object.keys(location);
   const states = formData.country
     ? Object.keys(location[formData.country] || {})
     : [];
@@ -43,6 +49,10 @@ export const AddProperty = () => {
     onClose(false);
   };
 
+  const removeImage = (index: number) => {
+    setPrevImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   return (
     <>
       {currentUser.role === "owner" && (
@@ -56,13 +66,21 @@ export const AddProperty = () => {
       )}
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
-            className="bg-white rounded-2xl shadow-lg w-[90%] lg:w-[650px] max-h-[100vh] p-6"
+            className="bg-white rounded-2xl shadow-lg w-[95%] md:w-[700px] p-6 animate-fadeIn max-h-[90vh] overflow-y-auto scrollbar-hidden"
           >
-            <div className="flex justify-between mb-4">
-              <p className="font-bold">Add Property</p>
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <p className="font-bold text-lg text-purple-600">
+                  Upload Property
+                </p>
+                <p className="text-xs text-gray-400">
+                  Upload your property details
+                </p>
+              </div>
+
               <button
                 onClick={() => onClose(false)}
                 className="text-gray-400 hover:text-black"
@@ -71,106 +89,200 @@ export const AddProperty = () => {
               </button>
             </div>
 
-            <form className="space-y-4" onSubmit={addProperty}>
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                type="text"
-                placeholder="Title"
-                required
-                value={formData.title}
-                onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
-                }
-              />
-              <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                type="number"
-                placeholder="Price"
-                required
-                value={formData.price}
-                onChange={(e) =>
-                  setFormData({ ...formData, price: Number(e.target.value) })
-                }
-              />
-              <select
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
-                value={formData.type}
-                onChange={(e) =>
-                  setFormData({ ...formData, type: e.target.value })
-                }
-              >
-                <option>Type</option>
-                <option value="apartment">Apartment</option>
-                <option value="land">Land</option>
-              </select>
-              <select
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
-                value={formData.country}
-                onChange={(e) =>
-                  setFormData({ ...formData, country: e.target.value })
-                }
-              >
-                <option>Country</option>
-                {countries.map((country, index) => (
-                  <option key={index} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-              {formData.country && (
-                <select
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                  value={formData.state}
-                  onChange={(e) =>
-                    setFormData({ ...formData, state: e.target.value })
-                  }
+            <div className="space-y-4">
+              <form onSubmit={addProperty}>
+                <div className="col-span-2">
+                  <label className="text-sm text-gray-600">Title</label>
+                  <input
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    type="text"
+                    placeholder="Title"
+                    required
+                    value={formData.title}
+                    onChange={(e) =>
+                      setFormData({ ...formData, title: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div className="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
+                  <div>
+                    <label className="text-sm text-gray-600">
+                      Property type
+                    </label>
+                    <select
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                      value={formData.type}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          type: e.target.value as Property["type"],
+                        })
+                      }
+                    >
+                      <option>Type</option>
+                      <option value="apartment">Apartment</option>
+                      <option value="building">Building</option>
+                      <option value="land">Land</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-gray-600">Duration</label>
+                    <select
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      // required
+                      // value={formData.type}
+                      // onChange={(e) =>
+                      //   setFormData({ ...formData, type: e.target.value })
+                      // }
+                    >
+                      <option>Duration</option>
+                      <option value="shortlet">Shortlet</option>
+                      <option value="longlet">Lease</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="py-2">
+                  <label className="text-sm text-gray-600">Price</label>
+                  <input
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    type="number"
+                    placeholder="Price"
+                    required
+                    value={formData.price}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        price: Number(e.target.value),
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm text-gray-600">State</label>
+                    <select
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                      value={formData.state}
+                      onChange={(e) =>
+                        setFormData({ ...formData, state: e.target.value })
+                      }
+                    >
+                      <option>State</option>
+                      {states.map((state, index) => (
+                        <option key={index} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-gray-600">City</label>
+                    <select
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      required
+                      value={formData.city}
+                      onChange={(e) =>
+                        setFormData({ ...formData, city: e.target.value })
+                      }
+                    >
+                      <option>City</option>
+                      {cities.map((city: string, index: number) => (
+                        <option key={index} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="col-span-2 py-2">
+                  <label className="text-sm text-gray-600">Description</label>
+                  <textarea
+                    required
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    placeholder="Description"
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div
+                  onClick={() => prevImageRef.current?.click()}
+                  className="flex gap-2 items-center cursor-pointer p-2 rounded-lg"
                 >
-                  <option>State</option>
-                  {states.map((state, index) => (
-                    <option key={index} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              )}
-              {formData.country && formData.state && (
-                <select
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                  value={formData.city}
-                  onChange={(e) =>
-                    setFormData({ ...formData, city: e.target.value })
-                  }
-                >
-                  <option>City</option>
-                  {cities.map((city: string, index: number) => (
-                    <option key={index} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-              )}
-              <textarea
-                required
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                placeholder="Description"
-                value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-              />
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg"
-                >
-                  Add
-                </button>
-              </div>
-            </form>
+                  <FaImage className="text-xl text-purple-600" />
+                  <span className="hover:text-purple-600">Upload photos *</span>
+                  <input
+                    className="hidden"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    required
+                    ref={prevImageRef}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const files = e.target.files;
+                      if (!files) return;
+                      const fileArray = Array.from(files);
+                      Promise.all(
+                        fileArray.map(
+                          (file) =>
+                            new Promise<string>((resolve, reject) => {
+                              const reader = new FileReader();
+                              reader.onload = () =>
+                                resolve(reader.result as string);
+                              reader.onerror = reject;
+                              reader.readAsDataURL(file);
+                            }),
+                        ),
+                      ).then((images) =>
+                        setPrevImages((prev) => [...prev, ...images]),
+                      );
+                    }}
+                  />
+                </div>
+
+                {prevImages.length > 0 && (
+                  <div className="flex flex-wrap gap-3 py-4">
+                    {prevImages.map((image, index) => (
+                      <div key={index} className="relative">
+                        <img
+                          src={image}
+                          className="w-24 h-24 object-cover rounded-lg"
+                          alt="preview"
+                        />
+
+                        {/* Remove button */}
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full shadow hover:bg-red-700"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="col-span-2">
+                  <button
+                    className="bg-purple-600 px-4 py-2 text-white w-full hover:bg-purple-800 rounded-lg"
+                    type="submit"
+                  >
+                    Upload
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}
