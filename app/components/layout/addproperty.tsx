@@ -41,6 +41,8 @@ export const AddProperty = () => {
         description: formData.description,
         imageUrl: images[Math.floor(Math.random() * 2)],
         type: formData.type,
+        listingType: formData.listingType,
+        duration: formData.duration,
         owner: currentUser,
         isAvailable: true,
       },
@@ -92,7 +94,7 @@ export const AddProperty = () => {
             <div className="space-y-4">
               <form onSubmit={addProperty}>
                 <div className="col-span-2">
-                  <label className="text-sm text-gray-600">Title</label>
+                  <label className="text-sm text-gray-600">Title*</label>
                   <input
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                     type="text"
@@ -108,7 +110,7 @@ export const AddProperty = () => {
                 <div className="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
                   <div>
                     <label className="text-sm text-gray-600">
-                      Property type
+                      Property type*
                     </label>
                     <select
                       className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -129,25 +131,29 @@ export const AddProperty = () => {
                   </div>
 
                   <div>
-                    <label className="text-sm text-gray-600">Duration</label>
+                    <label className="text-sm text-gray-600">Listing Type*</label>
                     <select
+                      required
                       className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      // required
-                      // value={formData.type}
-                      // onChange={(e) =>
-                      //   setFormData({ ...formData, type: e.target.value })
-                      // }
+                      value={formData.listingType}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          listingType: e.target.value as Property["listingType"],
+                        })
+                      }
                     >
-                      <option>Duration</option>
-                      <option value="shortlet">Shortlet</option>
-                      <option value="longlet">Lease</option>
+                      <option>Select Type</option>
+                      <option value="rental">Rental</option>
+                      <option value="sale">Sale</option>
                     </select>
                   </div>
-                </div>
-
-                <div className="py-2">
-                  <label className="text-sm text-gray-600">Price</label>
-                  <input
+                
+                  <div>
+                    <label className="text-sm text-gray-600">
+                      Price*
+                    </label>
+                    <input
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                     type="number"
                     placeholder="Price"
@@ -160,11 +166,30 @@ export const AddProperty = () => {
                       })
                     }
                   />
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-gray-600">Duration (only for rental)</label>
+                    <select
+                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      value={formData.duration}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          duration: e.target.value as Property["duration"],
+                        })
+                      }
+                    >
+                      <option>Duration</option>
+                      <option value="shortlet">Short</option>
+                      <option value="longlet">Long</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-600">State</label>
+                    <label className="text-sm text-gray-600">State*</label>
                     <select
                       className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       required
@@ -183,7 +208,7 @@ export const AddProperty = () => {
                   </div>
 
                   <div>
-                    <label className="text-sm text-gray-600">City</label>
+                    <label className="text-sm text-gray-600">City*</label>
                     <select
                       className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       required
@@ -203,7 +228,7 @@ export const AddProperty = () => {
                 </div>
 
                 <div className="col-span-2 py-2">
-                  <label className="text-sm text-gray-600">Description</label>
+                  <label className="text-sm text-gray-600">Description*</label>
                   <textarea
                     required
                     className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"

@@ -44,6 +44,10 @@ export const PropertyCard = ({ property }: Prop) => {
           </h3>
 
           <p className="text-gray-500 text-sm mb-4 flex items-center gap-1">
+            {property.listingType} {property.listingType === 'rental' && ` - ${property.duration}`}
+          </p>
+
+          <p className="text-gray-500 text-sm mb-4 flex items-center gap-1">
             <FaMapMarkerAlt />
             {`${property.city}, ${property.state}, ${property.country}.`}
           </p>

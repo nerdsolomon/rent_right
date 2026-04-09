@@ -61,6 +61,8 @@ export interface Property {
   city: string;
   imageUrl?: string;
   type: string
+  listingType: string
+  duration?: string
   owner: User
   isAvailable?: boolean
 }
@@ -75,6 +77,8 @@ export const emptyProperty: Property = {
   description: "", 
   imageUrl: "",
   type: "",
+  listingType: "",
+  duration: "",
   owner: emptyUser,
   isAvailable: true
 };
