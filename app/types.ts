@@ -59,7 +59,7 @@ export interface Property {
   country: string;
   state: string;
   city: string;
-  imageUrl?: string;
+  imageUrls?: string[];
   type: string
   listingType: string
   duration?: string
@@ -75,7 +75,7 @@ export const emptyProperty: Property = {
   state: "",
   city: "",
   description: "", 
-  imageUrl: "",
+  imageUrls: [],
   type: "",
   listingType: "",
   duration: "",

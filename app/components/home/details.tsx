@@ -34,9 +34,9 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
             </div>
 
             <div className="flex p-1 overflow-x-auto space-x-4 mb-2">
-              {images.map((image, index) => (
-                <img key={index} src={image} className="w-100" />
-              ))}
+              {(property.imageUrls?.length ? property.imageUrls : images).map(
+                (image, index) => <img key={index} src={image} className="w-100" />
+              )}
             </div>
 
             <div className="px-4 space-y-1">

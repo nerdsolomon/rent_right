@@ -5,6 +5,7 @@ import type { Property } from "~/types";
 import { Actions } from "./actions";
 import { useData } from "~/hooks/useData";
 import { ProfileInfo } from "./profileinfo";
+import { images } from "~/services/asset.services";
 
 interface Prop {
   property: Property;
@@ -20,7 +21,7 @@ export const PropertyCard = ({ property }: Prop) => {
       <a className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-600">
         <div className="relative h-48">
           <img
-            src={property.imageUrl}
+            src={property.imageUrls?.length ? property.imageUrls[0] : images[Math.floor(Math.random() * 4)]}
             alt={property.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
