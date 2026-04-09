@@ -182,8 +182,10 @@ export const AddProperty = () => {
                       }
                     >
                       <option>Duration</option>
-                      <option value="shortlet">Short</option>
-                      <option value="longlet">Long</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
                     </select>
                   </div>
                 </div>
