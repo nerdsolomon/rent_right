@@ -2,7 +2,7 @@ import apartment_1 from "~/assets/apartment_001.jpg";
 import apartment_2 from "~/assets/apartment_002.jpg";
 import apartment_3 from "~/assets/apartment_003.jpg";
 import apartment_4 from "~/assets/apartment_004.jpg";
-import termsAndPolicies from "~/assets/T&S.pdf"
+import termsAndPolicies from "~/assets/terms-and-policy.pdf"
 
 export const images = [
     apartment_1, 
