@@ -5,7 +5,6 @@ import {
   FaQuestionCircle,
   FaSuitcase,
   FaUser,
-  FaUserShield,
 } from "react-icons/fa";
 import { ChangePassword } from "~/components/profile/changepassword";
 import { Delete } from "~/components/profile/delete";
@@ -17,6 +16,7 @@ import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 import { Owner } from "~/components/profile/owner";
+import { termAndPolicy } from "~/services/asset.services";
 
 const Profile = () => {
   const { currentUser } = useData();
@@ -90,14 +90,10 @@ const Profile = () => {
             <FaQuestionCircle size={18} />
             <p>Help center</p>
           </div>
-          <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
-            <FaUserShield size={18} />
-            <p>Privacy Policy</p>
-          </div>
-          <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
+          <a href={termAndPolicy} className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
             <FaFileContract size={18} />
-            <p>Terms of Service</p>
-          </div>
+            <p>Terms of Service and Privacy Policy</p>
+          </a>
         </div>
       </div>
     </RequireAuth>

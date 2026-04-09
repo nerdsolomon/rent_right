@@ -7,8 +7,24 @@ export interface User {
   phone: number;
   password: string;
   role: string;
-  NIN?: number;
+  verifyOwner?: VerifyOwner
   imageUrl?: string;
+}
+
+export interface VerifyOwner {
+  NIN?: number;
+  firstName: string;
+  lastName: string;
+  DoB: string;
+  address: string
+}
+
+export const emptyVerifyOwner: VerifyOwner = {
+  NIN: 0,
+  firstName: "",
+  lastName: "",
+  DoB: "",
+  address: ""
 }
 
 export const adminUser: User = {
@@ -32,7 +48,7 @@ export const emptyUser: User = {
   phone: NaN,
   password: "",
   role: "",
-  NIN: NaN
+  verifyOwner: emptyVerifyOwner
 };
 
 export interface Property {

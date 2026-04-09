@@ -3,7 +3,7 @@ import { FaHome, FaImage } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { emptyUser } from "~/types";
-import { images } from "~/services/asset.services";
+import { images, termAndPolicy } from "~/services/asset.services";
 
 const Signup = () => {
   const [isOpen, onClose] = useState(false);
@@ -205,7 +205,7 @@ const Signup = () => {
 
                   <label className="flex items-center gap-2 text-xs">
                     <input type="checkbox" />I agree to the{" "}
-                    <a className="text-purple-600" href="">
+                    <a className="text-purple-600" href={termAndPolicy}>
                       Terms of Service and Privacy Policy
                     </a>
                   </label>
