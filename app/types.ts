@@ -17,6 +17,8 @@ export interface VerifyOwner {
   lastName: string;
   DoB: string;
   address: string
+  isApproved: boolean
+  verifiedAt: string
 }
 
 export const emptyVerifyOwner: VerifyOwner = {
@@ -24,7 +26,9 @@ export const emptyVerifyOwner: VerifyOwner = {
   firstName: "",
   lastName: "",
   DoB: "",
-  address: ""
+  address: "",
+  isApproved: false,
+  verifiedAt: ""
 }
 
 export const adminUser: User = {
@@ -48,7 +52,7 @@ export const emptyUser: User = {
   phone: NaN,
   password: "",
   role: "",
-  verifyOwner: emptyVerifyOwner
+  verifyOwner: undefined
 };
 
 export interface Property {

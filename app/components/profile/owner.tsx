@@ -16,7 +16,6 @@ export const Owner = () => {
     updateUser({
       ...currentUser,
       verifyOwner: formData,
-      role: "owner",
     });
     setAlert(true);
     setFormData(emptyVerifyOwner);

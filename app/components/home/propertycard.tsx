@@ -21,7 +21,11 @@ export const PropertyCard = ({ property }: Prop) => {
       <a className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden focus:outline-none focus:ring-2 focus:ring-purple-600">
         <div className="relative h-48">
           <img
-            src={property.imageUrls?.length ? property.imageUrls[0] : images[Math.floor(Math.random() * 4)]}
+            src={
+              property.imageUrls?.length
+                ? property.imageUrls[0]
+                : images[Math.floor(Math.random() * 4)]
+            }
             alt={property.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -44,8 +48,8 @@ export const PropertyCard = ({ property }: Prop) => {
             {property.title}
           </h3>
 
-          <p className="text-gray-500 text-sm mb-4 flex items-center gap-1">
-            {property.listingType} {property.listingType === 'rental' && ` - ${property.duration}`}
+          <p className="text-purple-500 mb-2 text-sm flex items-center font-bold capitalize">
+            {property.listingType}
           </p>
 
           <p className="text-gray-500 text-sm mb-4 flex items-center gap-1">
@@ -58,7 +62,9 @@ export const PropertyCard = ({ property }: Prop) => {
               <p className="text-purple-600 font-bold text-lg">
                 ₦{property.price}
               </p>
-              <p className="text-xs text-gray-400">/year</p>
+              {property.listingType === "rental" && (
+                <p className="text-xs text-gray-400">{`/${property.duration}`}</p>
+              )}
             </div>
 
             <span

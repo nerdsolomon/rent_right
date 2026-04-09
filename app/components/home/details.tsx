@@ -41,19 +41,19 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
 
             <div className="px-4 space-y-1">
               <p className="capitalize font-bold text-lg">{property.title}</p>
+              <p className="text-purple-500 mb-2 flex items-center text-sm font-bold capitalize">
+                {property.listingType}
+              </p>
               <p className="flex gap-1 items-center text-sm text-gray-500 capitalize">
                 <FaMapMarkerAlt />
                 {`${property.city}, ${property.state}, ${property.country}.`}
               </p>
-              <p className="text-gray-500 text-sm mb-4 flex items-center gap-1">
-                {property.listingType}{" "}
-                {property.listingType === "rental" && `- ${property.duration}`}
-              </p>
+              
               <div className="flex gap-1 items-center mt-2">
                 <p className="text-purple-600 font-bold text-lg">
                   ₦{property.price}
                 </p>
-                <p className="text-xs text-gray-400">/year</p>
+                {property.listingType === 'rental' && <p className="text-xs text-gray-400">{`/${property.duration}`}</p>}
               </div>
               {currentUser.id !== property.owner.id &&
                 property.isAvailable != false && (

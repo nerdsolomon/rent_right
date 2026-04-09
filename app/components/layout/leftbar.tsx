@@ -5,6 +5,7 @@ import {
   FaChartBar,
   FaExclamationCircle,
   FaHome,
+  FaUserCheck,
 } from "react-icons/fa";
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
@@ -21,6 +22,7 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
   const navLinks = [
     { title: "Home", path: "/home", icon: FaHome, always: true },
     { title: "Dashboard", path: "/dashboard", icon: FaChartBar, restricted: true },
+    { title: "Requests", path: "/requests", icon: FaUserCheck, restricted: true },
     { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle, restricted: true },
     { title: "Bookings", path: "/bookings", icon: FaCalendarAlt, restricted: false },
     { title: "Notifications", path: "/notifications", icon: FaBell, restricted: false },

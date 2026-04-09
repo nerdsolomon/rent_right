@@ -9,7 +9,7 @@ export default [
     route("/dashboard", "./routes/dashboard.tsx"),
     route("/feedbacks", "./routes/feedbacks.tsx"),
     route("/bookings", "./routes/bookings.tsx"),
-    route("/portfolio/:id", "./routes/portfolio.tsx")
-
+    route("/portfolio/:id", "./routes/portfolio.tsx"),
+    route("/requests", "./routes/requests.tsx")
   ]),
 ] satisfies RouteConfig;

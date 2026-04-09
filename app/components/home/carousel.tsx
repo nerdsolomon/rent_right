@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useData } from "~/hooks/useData";
+import { images } from "~/services/asset.services";
 
 const AUTO_SLIDE_DELAY = 4000;
 
@@ -71,7 +72,11 @@ export const Carousel = () => {
         {properties.map((property, i) => (
           <div key={i} className="relative min-w-full h-full">
             <img
-              src={property.imageUrl}
+              src={
+                property.imageUrls?.length
+                  ? property.imageUrls[0]
+                  : images[Math.floor(Math.random() * 4)]
+              }
               alt={`slide-${i}`}
               className="w-full h-full object-cover"
             />
