@@ -1,14 +1,58 @@
 // api.services.ts
 
-import type { User, Property, Review, Feedback, Booking } from "~/types";
+import { type User, type Property, type Review, type Feedback, type Booking, emptyUser } from "~/types";
 
 const BASE_URL = "/api";
+
+const TOKEN_KEY = "auth_token";
+
+// ================= AUTH =================
+export const authService = {
+  async login(loginUser: User): Promise<User> {
+    const res = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loginUser),
+    });
+    if (!res.ok) throw new Error("Login failed");
+    const data = await res.json();
+    if (data.token) localStorage.setItem(TOKEN_KEY, data.token);
+    return data;
+  },
+
+  logout() {
+    localStorage.removeItem(TOKEN_KEY);
+  },
+
+  getToken(): string | null {
+    return localStorage.getItem(TOKEN_KEY);
+  },
+
+  async getCurrentUser(): Promise<User> {
+    const token = this.getToken();
+    if (!token) return emptyUser;
+    const res = await fetch(`${BASE_URL}/auth/currentUser`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return emptyUser;
+    return res.json();
+  },
+};
 
 // ================= USERS =================
 export const userService = {
   async getAll(): Promise<User[]> {
     const res = await fetch(`${BASE_URL}/users`);
     if (!res.ok) throw new Error("Failed to fetch users");
+    return res.json();
+  },
+
+  create: async (data: User) => {
+    const res = await fetch("/api/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
     return res.json();
   },
 
@@ -40,6 +84,15 @@ export const propertyService = {
     return res.json();
   },
 
+  create: async (data: Property) => {
+    const res = await fetch("/api/properties", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
+
   async update(property: Property): Promise<Property> {
     const res = await fetch(`${BASE_URL}/properties/${property.id}`, {
       method: "PUT",
@@ -67,6 +120,34 @@ export const reviewService = {
     if (!res.ok) throw new Error("Failed to fetch reviews");
     return res.json();
   },
+
+  create: async (data: Review) => {
+    const res = await fetch("/api/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
+
+  async update(review: Review): Promise<Review> {
+    const res = await fetch(`${BASE_URL}/reviews/${review.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(review),
+    });
+
+    if (!res.ok) throw new Error("Failed to update review");
+    return res.json();
+  },
+
+  async delete(id: number): Promise<void> {
+    const res = await fetch(`${BASE_URL}/reviews/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete review");
+  },
 };
 
 // ================= FEEDBACKS =================
@@ -76,6 +157,34 @@ export const feedbackService = {
     if (!res.ok) throw new Error("Failed to fetch feedbacks");
     return res.json();
   },
+
+  create: async (data: Feedback) => {
+    const res = await fetch("/api/feedbacks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
+
+  async update(feedback: Feedback): Promise<Feedback> {
+    const res = await fetch(`${BASE_URL}/feedbacks/${feedback.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(feedback),
+    });
+
+    if (!res.ok) throw new Error("Failed to update feedback");
+    return res.json();
+  },
+
+  async delete(id: number): Promise<void> {
+    const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete feedback");
+  },
 };
 
 // ================= BOOKINGS =================
@@ -84,5 +193,33 @@ export const bookingService = {
     const res = await fetch(`${BASE_URL}/bookings`);
     if (!res.ok) throw new Error("Failed to fetch bookings");
     return res.json();
+  },
+
+  create: async (data: Booking) => {
+    const res = await fetch("/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
+
+  async update(booking: Booking): Promise<Booking> {
+    const res = await fetch(`${BASE_URL}/bookings/${booking.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(booking),
+    });
+
+    if (!res.ok) throw new Error("Failed to update booking");
+    return res.json();
+  },
+
+  async delete(id: number): Promise<void> {
+    const res = await fetch(`${BASE_URL}/bookings/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete booking");
   },
 };
