@@ -55,7 +55,7 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
           <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
             {({ isActive }) => (
               <div
-                className={`relative flex items-center justify-between p-4 rounded-lg transition ${
+                className={`relative flex items-center justify-between p-4 transition ${
                   isActive
                     ? "bg-purple-600 text-white"
                     : "hover:bg-gray-200 text-gray-700"
