@@ -8,16 +8,38 @@ import type { Booking, Property } from "~/types";
 
 const Bookings = () => {
   usePageTitle("RentRight - Bookings");
-  const { bookings, currentUser, updateBooking } = useData();
+  const { bookings, currentUser, updateBooking, setNotifications, notifications } = useData();
   const [isOpen, onClose] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property>();
 
   const handleAccept = (booking: Booking) => {
     updateBooking({ ...booking, status: "accepted"})
+
+    setNotifications([
+      ...notifications,
+      {
+        id: Math.random(),
+        datetime: new Date().toISOString(),
+        isRead: false,
+        userId: booking.user.id,
+        message: `Your booking to inspect '${booking.property.title}' have been accepted. Go to Bookings for more details.`,
+      },
+    ]);
   };
 
   const handleCancel = (booking: Booking) => {
     updateBooking({ ...booking, status: "cancelled"})
+
+    setNotifications([
+      ...notifications,
+      {
+        id: Math.random(),
+        datetime: new Date().toISOString(),
+        isRead: false,
+        userId: booking.user.id,
+        message: `Your booking to inspect '${booking.property.title}' was cancelled. Go to Bookings for more details.`,
+      },
+    ]);
   };
 
   const filteredBookings = bookings.filter((booking) => {
