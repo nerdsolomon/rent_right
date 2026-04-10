@@ -17,6 +17,7 @@ export function Chart() {
     { name: "Owners", value: users.filter(u => u.role === "owner").length },
     { name: "Users", value: users.filter(u => u.role === "user").length },
     { name: "Apartments", value: properties.filter(p => p.type === "apartment").length},
+    { name: "Buildings", value: properties.filter(p => p.type === "building").length },
     { name: "Lands", value: properties.filter(p => p.type === "land").length },
   ];
 

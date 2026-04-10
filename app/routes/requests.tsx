@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FaUserCheck } from "react-icons/fa";
 import { VerifyInfo } from "~/components/requests/verifyinfo";
-import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
@@ -9,7 +8,7 @@ import type { User } from "~/types";
 
 const Requests = () => {
   usePageTitle("RentRight - Requests");
-  const { users, updateUser } = useData();
+  const { users, updateUser, notifications, setNotifications } = useData();
   const [isOpen, onClose] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
 
@@ -27,16 +26,37 @@ const Requests = () => {
           }
         : undefined,
     });
+
+    setNotifications([
+      ...notifications,
+      {
+        id: Math.random(),
+        datetime: new Date().toISOString(),
+        isRead: false,
+        userId: user.id,
+        message: `Hello, ${user.firstName}.\nCongratulations, you've been approved as an owner. You can now post your properties for rental or sale.`,
+      },
+    ]);
   };
 
-  const handleCancel = (user: User) => {
+  const handleReject = (user: User) => {
     updateUser({
       ...user,
-      role: "owner",
       verifyOwner: user.verifyOwner
-        ? { ...user.verifyOwner, status: "cancelled" }
+        ? { ...user.verifyOwner, status: "rejected" }
         : undefined,
     });
+
+    setNotifications([
+      ...notifications,
+      {
+        id: Math.random(),
+        datetime: new Date().toISOString(),
+        isRead: false,
+        userId: user.id,
+        message: `Hello, ${user.firstName}.\nWe regret to inform you that your request to be verified as an owner was rejected.`,
+      },
+    ]);
   };
 
   return (
@@ -78,9 +98,9 @@ const Requests = () => {
                           Approved
                         </span>
                       )}
-                      {u.verifyOwner?.status === "cancelled" && (
+                      {u.verifyOwner?.status === "rejected" && (
                         <span className="px-2 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
-                          Cancelled
+                          Rejected
                         </span>
                       )}
                       {!u.verifyOwner?.status && (
@@ -105,10 +125,10 @@ const Requests = () => {
                             Approve
                           </button>
                           <button
-                            onClick={() => handleCancel(u)}
+                            onClick={() => handleReject(u)}
                             className="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700 whitespace-nowrap"
                           >
-                            Cancel
+                            Reject
                           </button>
                         </>
                       )}

@@ -1,5 +1,5 @@
-import { FaUserCog, FaUsers, FaUserTie } from "react-icons/fa";
-import { MdApartment, MdLandscape } from "react-icons/md";
+import { FaUserCog, FaUser, FaUserTie } from "react-icons/fa";
+import { MdApartment, MdHome, MdLandscape } from "react-icons/md";
 import { Chart } from "~/components/dashboard/chart";
 import { ClearStorage } from "~/components/dashboard/clearstorage";
 import { Properties } from "~/components/dashboard/properties";
@@ -10,17 +10,18 @@ const Dashboard = () => {
   const usersFilter = [
     { label: "Admins", role: "admin", icon: FaUserCog },
     { label: "Owners", role: "owner", icon: FaUserTie },
-    { label: "Users", role: "user", icon: FaUsers },
+    { label: "Users", role: "user", icon: FaUser },
   ];
   const propertiesFilter = [
     { label: "Apartments", type: "apartment", icon: MdApartment },
+    { label: "Buildings", type: "building", icon: MdHome },
     { label: "Lands", type: "land", icon: MdLandscape },
   ];
 
   return (
     <RequireAuth>
       <Chart />
-      <div className="grid grid-cols-2 gap-4 p-4">
+      <div className="grid lg:grid-cols-3 grid-cols-2 gap-4 p-4">
         {usersFilter.map((user, index) => (
           <Users key={index} role={user.role} label={user.label} icon={user.icon} />
         ))}
