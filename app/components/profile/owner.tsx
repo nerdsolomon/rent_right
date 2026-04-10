@@ -69,9 +69,13 @@ export const Owner = () => {
                   <label className="text-sm text-gray-600">NIN*</label>
                   <input
                     className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-                    type="text"
+                    type="number"
                     placeholder="NIN"
                     required
+                    value={formData.NIN}
+                    onChange={(e) =>
+                      setFormData({ ...formData, NIN: Number(e.target.value) })
+                    }
                   />
                 </div>
 
