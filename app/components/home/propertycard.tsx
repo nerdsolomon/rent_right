@@ -72,7 +72,7 @@ export const PropertyCard = ({ property }: Prop) => {
                 setSelectedProperty(property);
                 onClose(true);
               }}
-              className="text-purple-600 text-xs font-semibold border border-purple-600 px-3 py-2 rounded-full group-hover:bg-purple-50 transition"
+              className="text-purple-600 cursor-pointer text-xs font-semibold border border-purple-600 px-3 py-2 rounded-full group-hover:bg-purple-50 transition"
             >
               View Details
             </span>

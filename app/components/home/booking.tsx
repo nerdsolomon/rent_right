@@ -106,7 +106,7 @@ export const Booking = ({ property }: Props) => {
     <>
       <button
         onClick={() => onClose(true)}
-        className="p-2 border border-purple-600 mt-2 text-xs hover:bg-purple-600 hover:text-white text-purple-600 rounded-xl font-semibold"
+        className="p-2 border border-purple-600 mt-2 text-xs cursor-pointer hover:bg-purple-600 hover:text-white text-purple-600 rounded-xl font-semibold"
       >
         Apply to inspect
       </button>

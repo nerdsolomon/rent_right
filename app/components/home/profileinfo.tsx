@@ -20,7 +20,7 @@ export const ProfileInfo = ({ user }: Prop) => {
         onClick={() => {
           if (isAuthenticated) onClose(true);
         }}
-        className="absolute top-3 left-3 w-8 h-8 aspect-square bg-gray-400 flex capitalize items-center justify-center border-2 border-purple-600 rounded-full font-bold text-purple-600"
+        className="absolute top-3 left-3 w-8 h-8 cursor-pointer aspect-square bg-gray-400 flex capitalize items-center justify-center border-2 border-purple-600 rounded-full font-bold text-purple-600"
       >
         {user?.imageUrl ? (
           <img
