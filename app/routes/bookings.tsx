@@ -8,12 +8,18 @@ import type { Booking, Property } from "~/types";
 
 const Bookings = () => {
   usePageTitle("RentRight - Bookings");
-  const { bookings, currentUser, updateBooking, setNotifications, notifications } = useData();
+  const {
+    bookings,
+    currentUser,
+    updateBooking,
+    setNotifications,
+    notifications,
+  } = useData();
   const [isOpen, onClose] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property>();
 
   const handleAccept = (booking: Booking) => {
-    updateBooking({ ...booking, status: "accepted"})
+    updateBooking({ ...booking, status: "accepted" });
 
     setNotifications([
       ...notifications,
@@ -28,7 +34,7 @@ const Bookings = () => {
   };
 
   const handleCancel = (booking: Booking) => {
-    updateBooking({ ...booking, status: "cancelled"})
+    updateBooking({ ...booking, status: "cancelled" });
 
     setNotifications([
       ...notifications,
@@ -57,7 +63,11 @@ const Bookings = () => {
             <div className="overflow-x-auto">
               <div className="min-w-[650px]">
                 {/* Header */}
-                <div className={`grid bg-gray-100 text-gray-600 text-xs font-semibold uppercase p-3` + currentUser.role === "owner" ? " grid-cols-6" : " grid-cols-5"}>
+                <div
+                  className={`grid bg-gray-100 text-gray-600 text-xs font-semibold uppercase p-3 ${
+                    currentUser.role === "owner" ? "grid-cols-6" : "grid-cols-5"
+                  }`}
+                >
                   <span>Property</span>
                   <span>Date</span>
                   <span>Time</span>
@@ -84,7 +94,7 @@ const Bookings = () => {
                     <span>{b.day}</span>
                     <span>{b.time}</span>
                     {currentUser.role === "owner" && (
-                    <span className="capitalize">{b.user.firstName}</span>
+                      <span className="capitalize">{b.user.firstName}</span>
                     )}
 
                     {/* Status Tag */}
