@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useData } from "~/hooks/useData";
 import type { Notification } from "~/types";
 
 interface Prop {
@@ -7,9 +8,11 @@ interface Prop {
 }
 
 export const MessageCard = ({ notification, formatDate }: Prop) => {
+  const { updateNotification } = useData()
   return (
     <div
       key={notification.id ?? notification.datetime}
+      onClick={() => updateNotification({ ...notification, isRead: true })}
       className={`flex gap-3 px-5 py-4 border-b border-gray-100 hover:bg-gray-50 transition ${
         !notification.isRead ? "bg-blue-50/40" : "bg-white"
       }`}
