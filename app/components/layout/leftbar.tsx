@@ -10,6 +10,7 @@ import {
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
+import { type Notification } from "~/types";
 
 interface Prop {
   isOpen: boolean;
@@ -18,7 +19,7 @@ interface Prop {
 
 const Leftbar = ({ isOpen, onClose }: Prop) => {
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser } = useData();
+  const { currentUser, notifications } = useData();
   const navLinks = [
     { title: "Home", path: "/home", icon: FaHome, always: true },
     { title: "Dashboard", path: "/dashboard", icon: FaChartBar, restricted: true },
@@ -28,6 +29,8 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
     { title: "Notifications", path: "/notifications", icon: FaBell, restricted: false },
     { title: "Portfolio", path: `/portfolio/${currentUser.id}`, icon: FaBriefcase, restricted: false, owner: true },
   ];
+
+  const unreadNotifications = notifications.filter((n) => n.userId === currentUser.id && !n.isRead);
 
   return (
     <aside
@@ -52,12 +55,22 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
           <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
             {({ isActive }) => (
               <div
-                className={`flex gap-2 items-center p-4 ${
-                  isActive ? "bg-purple-600 text-white" : "hover:bg-gray-200"
+                className={`relative flex items-center justify-between p-4 rounded-lg transition ${
+                  isActive
+                    ? "bg-purple-600 text-white"
+                    : "hover:bg-gray-200 text-gray-700"
                 }`}
               >
-                <link.icon />
-                <span>{link.title}</span>
+                <div className="flex items-center gap-2">
+                  <link.icon />
+                  <span>{link.title}</span>
+                </div>
+
+                {link.path === "/notifications" && unreadNotifications.length > 0 && (
+                  <span className="text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full">
+                    {unreadNotifications.length}
+                  </span>
+                )}
               </div>
             )}
           </NavLink>

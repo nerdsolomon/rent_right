@@ -134,7 +134,7 @@ const Notifications = () => {
               No notifications
             </p>
             <p className="text-sm text-gray-400">
-              You're all caught up 🎉
+              You're all caught up
             </p>
           </div>
         )}
