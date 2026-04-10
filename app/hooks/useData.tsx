@@ -47,6 +47,7 @@ interface DataState {
   setFeedbacks: (feedbacks: Feedback[]) => void;
   clearStorage: () => void;
   bookings: Booking[];
+  updateBooking: (booking: Booking) => void
   setBookings: (bookings: Booking[]) => void;
   notifications: Notification[]
   setNotifications: (notifications: Notification[]) => void
@@ -149,6 +150,12 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  const updateBooking = (updatedBooking: Booking) => {
+    setBookings((prev) =>
+      prev.map((b) => (b.id === updatedBooking.id ? updatedBooking : b)),
+    );
+  };
+
   const updateProperty = (updatedProperty: Property) => {
     setProperties((prev) =>
       prev.map((p) => (p.id === updatedProperty.id ? updatedProperty : p)),
@@ -229,6 +236,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         setFeedbacks,
         clearStorage,
         bookings,
+        updateBooking,
         setBookings,
         notifications,
         setNotifications

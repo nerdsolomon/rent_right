@@ -8,18 +8,16 @@ import type { Booking, Property } from "~/types";
 
 const Bookings = () => {
   usePageTitle("RentRight - Bookings");
-  const { bookings, currentUser } = useData();
+  const { bookings, currentUser, updateBooking } = useData();
   const [isOpen, onClose] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property>();
 
   const handleAccept = (booking: Booking) => {
-    // make functional
-    booking.status = "accepted";
+    updateBooking({ ...booking, status: "accepted"})
   };
 
   const handleCancel = (booking: Booking) => {
-    // make functional
-    booking.status = "cancelled";
+    updateBooking({ ...booking, status: "cancelled"})
   };
 
   const filteredBookings = bookings.filter((booking) => {
