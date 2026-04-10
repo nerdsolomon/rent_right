@@ -11,7 +11,13 @@ export const Booking = ({ property }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const [formData, setFormData] = useState(emptyBooking);
-  const { currentUser, bookings, setBookings } = useData();
+  const {
+    currentUser,
+    bookings,
+    setBookings,
+    notifications,
+    setNotifications,
+  } = useData();
 
   const getCurrentWeekDays = () => {
     const today = new Date();
@@ -64,6 +70,18 @@ export const Booking = ({ property }: Props) => {
     };
 
     setBookings([...bookings, bookingData]);
+
+    setNotifications([
+      ...notifications,
+      {
+        id: Math.random(),
+        datetime: new Date().toISOString(),
+        isRead: false,
+        userId: property.owner.id,
+        message: `${currentUser.firstName} just booked a date and time for property inspection, go to Bookings to view details.`,
+      },
+    ]);
+
     alert("Booking successful");
     setFormData(emptyBooking);
     onClose(false);
