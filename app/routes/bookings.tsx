@@ -80,7 +80,9 @@ const Bookings = () => {
                 {bookings.map((b, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-6 items-center p-3 text-sm hover:bg-gray-50 transition"
+                    className={`grid grid-cols-6 items-center p-3 text-sm hover:bg-gray-50 transition ${
+                      currentUser.role === "owner" ? "grid-cols-6" : "grid-cols-5"
+                    }`}
                   >
                     <span
                       className="font-medium capitalize cursor-pointer hover:underline text-purple-500"
