@@ -61,7 +61,7 @@ const Bookings = () => {
                   <span>Property</span>
                   <span>Date</span>
                   <span>Time</span>
-                  <span>User</span>
+                  {currentUser.role === "owner" && <span>User</span>}
                   <span>Status</span>
                   <span className="text-right">Actions</span>
                 </div>
@@ -83,7 +83,9 @@ const Bookings = () => {
                     </span>
                     <span>{b.day}</span>
                     <span>{b.time}</span>
+                    {currentUser.role === "owner" && (
                     <span className="capitalize">{b.user.firstName}</span>
+                    )}
 
                     {/* Status Tag */}
                     <span>
