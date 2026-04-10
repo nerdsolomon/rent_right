@@ -28,34 +28,63 @@ export const Users = ({ role, label, icon: Icon }: Props) => {
       </button>
 
       {isOpen && (
-        <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+          {/* Modal */}
           <div
             ref={modalRef}
-            className="relative bg-gray-100 rounded-lg shadow-lg
-                 w-[95%] lg:w-[700px] max-h-[100vh]
-                 animate-fadeIn scrollbar-hidden"
+            className="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden animate-fadeIn"
           >
-            <div className="flex py-2 px-4 justify-between rounded-lg border-b border-gray-300 sticky top-0 bg-gray-100 z-10">
-              <p className="font-bold text-lg">{label}</p>
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <h2 className="text-lg font-semibold text-gray-800">{label}</h2>
+
               <button
                 onClick={() => onClose(false)}
-                className="text-gray-400 hover:text-black"
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition"
               >
                 ✕
               </button>
             </div>
 
-            {users
-              .filter((user) => user.role === role)
-              .map((user, index) => (
-                <div
-                  key={index}
-                  className="w-full flex items-center px-4 rounded-lg justify-between hover:bg-gray-200"
-                >
-                  <div className="py-1 capitalize">{`${user.firstName} ${user.lastName}`}</div>
-                  <Options user={user}/>
+            {/* Content */}
+            <div className="max-h-[70vh] overflow-y-auto divide-y divide-gray-100">
+              {users.filter((user) => user.role === role).length > 0 ? (
+                users
+                  .filter((user) => user.role === role)
+                  .map((user, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition"
+                    >
+                      {/* Left */}
+                      <div className="flex items-center gap-3">
+                        {/* Avatar */}
+                        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold">
+                          {user.firstName?.[0]}
+                          {user.lastName?.[0]}
+                        </div>
+
+                        {/* Info */}
+                        <div className="flex flex-col">
+                          <span className="font-medium text-gray-800 capitalize">
+                            {user.firstName} {user.lastName}
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            {user.email}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <Options user={user} />
+                    </div>
+                  ))
+              ) : (
+                <div className="py-10 text-center text-gray-400">
+                  No users found
                 </div>
-              ))}
+              )}
+            </div>
           </div>
         </div>
       )}

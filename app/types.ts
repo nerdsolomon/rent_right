@@ -17,17 +17,17 @@ export interface VerifyOwner {
   lastName: string;
   DoB: string;
   address: string
-  isApproved: boolean
+  status: string
   verifiedAt: string
 }
 
 export const emptyVerifyOwner: VerifyOwner = {
-  NIN: 0,
+  NIN: NaN,
   firstName: "",
   lastName: "",
   DoB: "",
   address: "",
-  isApproved: false,
+  status: "",
   verifiedAt: ""
 }
 
@@ -134,3 +134,19 @@ export const emptyBooking: Booking = {
   user: emptyUser,
   status: ""
 };
+
+export interface Notification {
+  id: number
+  userId: number
+  datetime: string
+  message: string
+  isRead: boolean
+}
+
+export const emptyNotification: Notification = {
+  id: NaN,
+  userId: NaN,
+  datetime: "",
+  message: "",
+  isRead: false
+}

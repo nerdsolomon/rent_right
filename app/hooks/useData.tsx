@@ -12,6 +12,7 @@ import {
   syncCurrentUser,
   USERS_KEY,
   BOOKINGS_KEY,
+  NOTIFICATION_KEY
 } from "~/services";
 import {
   adminUser,
@@ -21,6 +22,7 @@ import {
   type Property,
   type Review,
   type User,
+  type Notification
 } from "~/types";
 
 interface DataState {
@@ -46,6 +48,8 @@ interface DataState {
   clearStorage: () => void;
   bookings: Booking[];
   setBookings: (bookings: Booking[]) => void;
+  notifications: Notification[]
+  setNotifications: (notifications: Notification[]) => void
 }
 
 const DataContext = createContext<DataState | null>(null);
@@ -79,6 +83,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     getFromStorage(BOOKINGS_KEY, []),
   );
 
+  const [notifications, setNotifications] = useState<Notification[]>(() =>
+    getFromStorage(NOTIFICATION_KEY, [])
+  )
+
   const isAuthenticated = Boolean(currentUser?.id);
 
   useEffect(() => {
@@ -95,6 +103,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     saveToStorage(REVIEWS_KEY, reviews);
     saveToStorage(FEEDBACKS_KEY, feedbacks);
     saveToStorage(BOOKINGS_KEY, bookings);
+    saveToStorage(NOTIFICATION_KEY, notifications)
   }, [users, currentUser, properties, reviews, feedbacks, bookings]);
 
   const clearStorage = () => {
@@ -104,6 +113,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     removeFromStorage(REVIEWS_KEY);
     removeFromStorage(FEEDBACKS_KEY);
     removeFromStorage(BOOKINGS_KEY);
+    removeFromStorage(NOTIFICATION_KEY)
 
     setUsers([]);
     setCurrentUser(emptyUser);
@@ -111,6 +121,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     setReviews([]);
     setFeedbacks([]);
     setBookings([]);
+    setNotifications([])
 
     navigate("/");
   };
@@ -184,6 +195,10 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       if (event.key === FEEDBACKS_KEY && event.newValue) {
         setProperties(JSON.parse(event.newValue));
       }
+
+      if (event.key === NOTIFICATION_KEY && event.newValue) {
+        setNotifications(JSON.parse(event.newValue))
+      }
     };
 
     window.addEventListener("storage", handler);
@@ -215,6 +230,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         clearStorage,
         bookings,
         setBookings,
+        notifications,
+        setNotifications
       }}
     >
       {children}
