@@ -57,7 +57,7 @@ const Bookings = () => {
             <div className="overflow-x-auto">
               <div className="min-w-[650px]">
                 {/* Header */}
-                <div className="grid grid-cols-6 bg-gray-100 text-gray-600 text-xs font-semibold uppercase p-3">
+                <div className={`grid bg-gray-100 text-gray-600 text-xs font-semibold uppercase p-3` + currentUser.role === "owner" ? " grid-cols-6" : " grid-cols-5"}>
                   <span>Property</span>
                   <span>Date</span>
                   <span>Time</span>
