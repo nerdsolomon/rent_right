@@ -53,7 +53,7 @@ export const Edit = () => {
             <div className="flex flex-col md:flex-row gap-6">
               <div className="flex flex-col items-center md:w-[30%]">
                 <div className="relative inline-block">
-                  <div className="w-30 h-30 bg-gray-400 capitalize border-2 border-purple-600 rounded-full flex items-center justify-center text-purple-600 text-[40px] lg:text-[50px] font-bold overflow-hidden">
+                  <div className="w-30 h-30 flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold text-[40px] lg:text-[50px] overflow-hidden">
                     {currentUser?.imageUrl || prevImage ? (
                       <img
                         src={currentUser.imageUrl || prevImage}
@@ -62,12 +62,12 @@ export const Edit = () => {
                     ) : currentUser.company ? (
                       currentUser.company.charAt(0)
                     ) : (
-                      `${currentUser.firstName.charAt(0)} ${currentUser.lastName.charAt(0)}`
+                      `${currentUser.firstName.charAt(0)}${currentUser.lastName.charAt(0)}`
                     )}
                   </div>
 
                   <div
-                    onClick={() => prevImageRef.current.click()}
+                    onClick={() => prevImageRef.current?.click()}
                     className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 text-purple-600 w-6 h-6 flex items-center justify-center"
                   >
                     <FaCamera />

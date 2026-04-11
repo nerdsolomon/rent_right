@@ -20,7 +20,7 @@ export const ProfileInfo = ({ user }: Prop) => {
         onClick={() => {
           if (isAuthenticated) onClose(true);
         }}
-        className="absolute top-3 left-3 w-8 h-8 cursor-pointer aspect-square bg-gray-400 flex capitalize items-center justify-center border-2 border-purple-600 rounded-full font-bold text-purple-600"
+        className="absolute top-3 left-3 w-8 h-8 cursor-pointer aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold"
       >
         {user?.imageUrl ? (
           <img
@@ -30,7 +30,7 @@ export const ProfileInfo = ({ user }: Prop) => {
         ) : user.company ? (
           user.company.charAt(0)
         ) : (
-          user.firstName.charAt(0)
+          `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`
         )}
       </span>
 
@@ -38,7 +38,7 @@ export const ProfileInfo = ({ user }: Prop) => {
         <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
-            className="bg-gray-100 rounded-2xl bg-purple-100 shadow-lg w-[90%] md:w-[400px] p-4 animate-fadeIn"
+            className="bg-gray-100 rounded-2xl shadow-lg w-[90%] md:w-[400px] p-4 animate-fadeIn"
           >
             <div className="flex justify-end mb-2 px-2">
               <button
@@ -50,7 +50,7 @@ export const ProfileInfo = ({ user }: Prop) => {
             </div>
 
             <div className="flex justify-center">
-              <div className="w-[25%] border-4 border-purple-600 bg-gray-400 rounded-full aspect-square flex capitalize items-center justify-center text-purple-600 text-[40px] lg:text-[50px] font-bold">
+              <div className="w-[25%] aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold text-[40px] lg:text-[50px]">
                 {user?.imageUrl ? (
                   <img
                     src={user.imageUrl}
@@ -59,7 +59,7 @@ export const ProfileInfo = ({ user }: Prop) => {
                 ) : user.company ? (
                   user.company.charAt(0)
                 ) : (
-                  `${user.firstName.charAt(0)} ${user.lastName.charAt(0)}`
+                  `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`
                 )}
               </div>
             </div>

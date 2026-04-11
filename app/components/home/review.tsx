@@ -23,7 +23,7 @@ export const Review = ({ property }: Prop) => {
                 key={index}
                 className="p-2 flex items-center text-sm border-t gap-4 border-gray-300"
               >
-                <span className="w-10 h-10 aspect-square bg-gray-400 flex capitalize items-center justify-center border-2 border-purple-600 rounded-full font-bold text-purple-600">
+                <span className="w-10 h-10 aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold">
                   {review.user?.imageUrl ? (
                     <img
                       src={review.user.imageUrl}
@@ -32,7 +32,7 @@ export const Review = ({ property }: Prop) => {
                   ) : review.user.company ? (
                     review.user.company.charAt(0)
                   ) : (
-                    `${review.user.firstName.charAt(0)} ${review.user.lastName.charAt(0)}`
+                    `${review.user.firstName.charAt(0)}${review.user.lastName.charAt(0)}`
                   )}
                 </span>
                 <div className="items-center">

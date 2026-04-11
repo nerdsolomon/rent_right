@@ -17,7 +17,7 @@ const Portfolio = () => {
     <>
       <div className="p-4">
         <div className="flex justify-center">
-          <div className="relative w-[20%] bg-gray-400 border-4 border-purple-600 rounded-full aspect-square flex capitalize items-center justify-center text-purple-600 text-[40px] lg:text-[50px] font-bold overflow-hidden">
+          <div className="relative w-[20%] bg-gray-400 aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold text-[40px] lg:text-[50px] overflow-hidden">
             {user.imageUrl ? (
               <img
                 src={user.imageUrl}
