@@ -10,7 +10,6 @@ import {
 import { NavLink } from "react-router";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
-import { type Notification } from "~/types";
 
 interface Prop {
   isOpen: boolean;
