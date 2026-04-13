@@ -42,18 +42,20 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
       <div className="flex justify-end gap-2">
         <div className="lg:hidden flex items-center justify-center gap-2">
           <Searchbar />
-          <div
-            className="relative inline-flex items-center justify-center"
-            onClick={() => navigate("/notifications")}
-          >
-            <FaBell size={20} aria-label="Notifications" />
+          {currentUser.role !== "admin" && (
+            <div
+              className="relative inline-flex items-center justify-center"
+              onClick={() => navigate("/notifications")}
+            >
+              <FaBell size={20} aria-label="Notifications" />
 
-            {unreadNotifications.length > 0 && (
-              <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 flex items-center justify-center text-[10px] font-medium bg-blue-500 text-white rounded-full">
-                {unreadNotifications.length}
-              </span>
-            )}
-          </div>
+              {unreadNotifications.length > 0 && (
+                <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 flex items-center justify-center text-[10px] font-medium bg-blue-500 text-white rounded-full">
+                  {unreadNotifications.length}
+                </span>
+              )}
+            </div>
+          )}
         </div>
         <div
           className="items-center flex gap-2 hover:bg-gray-100 capitalize rounded-full px-2 py-2"
