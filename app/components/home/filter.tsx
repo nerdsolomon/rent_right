@@ -3,14 +3,35 @@ import Dropdown from "./dropdown";
 import { SelectInput } from "./select";
 import { location } from "~/services";
 
-export const Filter = () => {
-  const [country, setCountry] = useState("Nigeria");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [type, setType] = useState("");
-  const [listingType, setListType] = useState("");
-  const [duration, setDuration] = useState("");
+interface Prop {
+  country: string;
+  setCountry: (value: string) => void;
+  state: string;
+  setState: (value: string) => void;
+  city: string;
+  setCity: (value: string) => void;
+  type: string;
+  setType: (value: string) => void;
+  listingType: string;
+  setListType: (value: string) => void;
+  duration: string;
+  setDuration: (value: string) => void;
+}
 
+export const Filter = ({
+  country,
+  setCountry,
+  city,
+  duration,
+  listingType,
+  setCity,
+  setDuration,
+  setListType,
+  setState,
+  setType,
+  state,
+  type,
+}: Prop) => {
   // const countries = Object.keys(location);
   const states = country ? Object.keys(location[country] || {}) : [];
   const cities = country && state ? location[country]?.[state] || [] : [];
@@ -43,9 +64,26 @@ export const Filter = () => {
             onSelect={setCity}
           />
         )}
-        <Dropdown label="Property Type" value={type} list={types} onSelect={setType} />
-        <Dropdown label="Listing Type" value={listingType} list={listingTypes} onSelect={setListType} />
-        {listingType === "rental" && <Dropdown label="Duration" value={duration} list={durations} onSelect={setDuration} />}
+        <Dropdown
+          label="Property Type"
+          value={type}
+          list={types}
+          onSelect={setType}
+        />
+        <Dropdown
+          label="Listing Type"
+          value={listingType}
+          list={listingTypes}
+          onSelect={setListType}
+        />
+        {listingType === "rental" && (
+          <Dropdown
+            label="Duration"
+            value={duration}
+            list={durations}
+            onSelect={setDuration}
+          />
+        )}
       </div>
 
       <div className="hidden lg:block space-y-2">

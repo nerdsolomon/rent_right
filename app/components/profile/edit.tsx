@@ -9,11 +9,11 @@ export const Edit = () => {
   const { currentUser, updateUser } = useData();
   const [alert, setAlert] = useState(false);
   const [prevImage, setPrevImage] = useState("");
-  const prevImageRef = useRef(null);
+  const prevImageRef = useRef<HTMLInputElement | null>(null);
 
   const editUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateUser({ ...currentUser });
+    updateUser({ ...currentUser, imageUrl: prevImage });
     setAlert(true);
   };
 

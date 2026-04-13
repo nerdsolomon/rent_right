@@ -21,23 +21,30 @@ import { termAndPolicy } from "~/services/asset.services";
 const Profile = () => {
   const { currentUser } = useData();
   usePageTitle(`RentRight - ${currentUser.firstName} ${currentUser.lastName}`);
+
+  const displayName = currentUser.company
+    ? currentUser.company
+    : `${currentUser.firstName} ${currentUser.lastName}`;
+
+  const initials = currentUser.company
+    ? currentUser.company.charAt(0)
+    : `${currentUser.firstName?.[0] ?? ""}${currentUser.lastName?.[0] ?? ""}`;
   return (
     <RequireAuth>
       <div className="py-4 px-6 space-y-4">
-        <div className="flex justify-center">
-          <div className="w-[30%] aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold text-[40px] lg:text-[50px] font-bold">
-            {currentUser?.imageUrl ? (
-              <img
-                src={currentUser.imageUrl}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            ) : currentUser.company ? (
-              currentUser.company.charAt(0)
-            ) : (
-              `${currentUser.firstName.charAt(0)}${currentUser.lastName.charAt(0)}`
-            )}
-          </div>
+        <div className="flex flex-col items-center gap-4">
+        <div className="relative w-30 h-30 md:w-40 md:h-40 rounded-full overflow-hidden bg-purple-100 text-purple-600 flex items-center justify-center text-3xl md:text-4xl font-semibold">
+          {currentUser.imageUrl ? (
+            <img
+              src={currentUser.imageUrl}
+              alt={displayName}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            initials
+          )}
         </div>
+      </div>
 
         <Edit />
 

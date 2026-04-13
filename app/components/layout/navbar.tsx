@@ -61,10 +61,19 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
           className="items-center flex gap-2 hover:bg-gray-100 capitalize rounded-full px-2 py-2"
           onClick={() => navigate("/profile")}
         >
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold">
-            {currentUser.firstName?.[0]}
-            {currentUser.lastName?.[0]}
-          </div>
+          <div className="relative w-10 h-10 rounded-full overflow-hidden bg-purple-100 text-purple-600 flex items-center justify-center text-3xl md:text-4xl font-semibold">
+          {currentUser.imageUrl ? (
+            <img
+              src={currentUser.imageUrl}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            `${currentUser.firstName?.[0]}${currentUser.lastName?.[0]}`
+          )}
+        </div>
+
+
+
           <span className="hidden lg:block">
             {currentUser.company
               ? currentUser.company

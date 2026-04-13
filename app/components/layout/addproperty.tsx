@@ -43,14 +43,14 @@ export const AddProperty = () => {
     setProperties([
       ...properties,
       {
-        id: Date.now(), 
+        id: Date.now(),
         country: formData.country,
         state: formData.state,
         city: formData.city,
         title: formData.title,
         price: formData.price,
         description: formData.description,
-        imageUrls: prevImages, 
+        imageUrls: prevImages,
         type: formData.type,
         listingType: formData.listingType,
         duration: formData.duration,
@@ -154,8 +154,8 @@ export const AddProperty = () => {
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          listingType:
-                            e.target.value as Property["listingType"],
+                          listingType: e.target
+                            .value as Property["listingType"],
                         })
                       }
                     >
@@ -191,8 +191,7 @@ export const AddProperty = () => {
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          duration:
-                            e.target.value as Property["duration"],
+                          duration: e.target.value as Property["duration"],
                         })
                       }
                     >
@@ -216,7 +215,7 @@ export const AddProperty = () => {
                         setFormData({
                           ...formData,
                           state: e.target.value,
-                          city: "", 
+                          city: "",
                         })
                       }
                     >
@@ -250,9 +249,7 @@ export const AddProperty = () => {
                 </div>
 
                 <div className="col-span-2 py-2">
-                  <label className="text-sm text-gray-600">
-                    Description*
-                  </label>
+                  <label className="text-sm text-gray-600">Description*</label>
                   <textarea
                     required
                     className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -271,9 +268,7 @@ export const AddProperty = () => {
                   className="flex gap-2 items-center cursor-pointer pb-3 rounded-lg"
                 >
                   <FaImage className="text-xl text-purple-600" />
-                  <span className="hover:text-purple-600">
-                    Upload photos *
-                  </span>
+                  <span className="hover:text-purple-600">Upload photos *</span>
                   <input
                     className="hidden"
                     type="file"
@@ -295,10 +290,10 @@ export const AddProperty = () => {
                                 resolve(reader.result as string);
                               reader.onerror = reject;
                               reader.readAsDataURL(file);
-                            })
-                        )
+                            }),
+                        ),
                       ).then((images) =>
-                        setPrevImages((prev) => [...prev, ...images])
+                        setPrevImages((prev) => [...prev, ...images]),
                       );
                     }}
                   />
@@ -311,13 +306,12 @@ export const AddProperty = () => {
                         <img
                           src={image}
                           className="w-24 h-24 object-cover rounded-lg"
-                          alt="preview"
                         />
 
                         <button
                           type="button"
                           onClick={() => removeImage(index)}
-                          className="absolute -t p-1 -right-2 bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full shadow hover:bg-red-700"
+                          className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full shadow hover:bg-red-700"
                         >
                           ✕
                         </button>

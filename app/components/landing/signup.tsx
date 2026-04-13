@@ -14,7 +14,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [notMatch, setNotMatch] = useState(false);
   const [prevImage, setPrevImage] = useState('');
-  const prevImageRef = useRef(null)
+  const prevImageRef = useRef<HTMLInputElement | null>(null)
 
   const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +30,7 @@ const Signup = () => {
           email: formData.email,
           password: formData.password,
           role: "user",
+          imageUrl: prevImage
         },
       ]);
       setFormData(emptyUser);
@@ -183,7 +184,7 @@ const Signup = () => {
                     </p>
                   )}
 
-                  <span onClick={()=> prevImageRef.current.click()} className="flex gap-2 items-center cursor-pointer hover:bg-gray-200 p-2 rounded-lg">
+                  <span onClick={()=> prevImageRef.current?.click()} className="flex gap-2 items-center cursor-pointer hover:bg-gray-200 p-2 rounded-lg">
                     <FaImage className="text-xl text-purple-600"/>
                     <span>Upload photo</span>
                   </span>
@@ -194,7 +195,7 @@ const Signup = () => {
                     accept="image/*"
                     ref={prevImageRef}
                     onChange={(e) => {
-                      const file = e.target.files[0];
+                      const file = e.target.files[0]
                       const reader = new FileReader();
                       reader.onload = () => setPrevImage(reader.result);
                       reader.readAsDataURL(file);
