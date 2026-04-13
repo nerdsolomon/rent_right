@@ -41,8 +41,8 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
 
             <div className="px-4 space-y-1">
               <p className="capitalize font-bold text-lg">{property.title}</p>
-              <p className="text-purple-500 mb-2 flex items-center text-sm font-bold capitalize">
-                {property.listingType}
+              <p className="text-green-500 mb-2 flex items-center text-sm font-bold capitalize">
+                For {property.listingType}
               </p>
               <p className="flex gap-1 items-center text-sm text-gray-500 capitalize">
                 <FaMapMarkerAlt />

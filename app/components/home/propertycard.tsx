@@ -48,8 +48,8 @@ export const PropertyCard = ({ property }: Prop) => {
             {property.title}
           </h3>
 
-          <p className="text-purple-500 mb-2 text-sm flex items-center font-bold capitalize">
-            {property.listingType}
+          <p className="text-green-500 mb-2 text-sm flex items-center font-bold capitalize">
+            For {property.listingType}
           </p>
 
           <p className="text-gray-500 text-sm mb-4 flex items-center gap-1">

@@ -3,6 +3,7 @@ import { FaEllipsisV } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import type { Property } from "~/types";
+import { EditProperty } from "./editproperty";
 
 interface Prop {
   property: Property;
@@ -25,9 +26,7 @@ export const Actions = ({ property }: Prop) => {
       {isOpen && (
         <div className="absolute right-0 top-0 z-[9999] w-40 rounded-lg bg-white shadow-md">
           <div className="py-1 text-xs text-gray-700">
-            <button className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100">
-              Edit
-            </button>
+            <EditProperty property={property} />
             <button
               onClick={() => updateProperty({...property, isAvailable: !property.isAvailable }) }
               className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100"

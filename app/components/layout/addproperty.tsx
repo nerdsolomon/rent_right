@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { FaImage, FaPlus } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
-import { images } from "~/services/asset.services";
 import { emptyProperty, type Property } from "~/types";
 import { location } from "~/services";
 
@@ -10,6 +9,7 @@ export const AddProperty = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const { properties, setProperties, currentUser } = useData();
+
   const [formData, setFormData] = useState<Property>({
     ...emptyProperty,
     country: "Nigeria",
@@ -18,10 +18,10 @@ export const AddProperty = () => {
   const [prevImages, setPrevImages] = useState<string[]>([]);
   const prevImageRef = useRef<HTMLInputElement | null>(null);
 
-  // const countries = Object.keys(location);
   const states = formData.country
     ? Object.keys(location[formData.country] || {})
     : [];
+
   const cities =
     formData.country && formData.state
       ? location[formData.country]?.[formData.state] || []
@@ -29,18 +29,28 @@ export const AddProperty = () => {
 
   const addProperty = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (prevImages.length === 0) {
+      alert("Please upload at least one image");
+      return;
+    }
+
+    if (formData.listingType === "rental" && !formData.duration) {
+      alert("Please select duration for rental");
+      return;
+    }
+
     setProperties([
       ...properties,
       {
-        id: Math.random(),
+        id: Date.now(), 
         country: formData.country,
         state: formData.state,
         city: formData.city,
         title: formData.title,
         price: formData.price,
         description: formData.description,
-        // imageUrls: prevImages,
-        imageUrls: images,
+        imageUrls: prevImages, 
         type: formData.type,
         listingType: formData.listingType,
         duration: formData.duration,
@@ -48,7 +58,9 @@ export const AddProperty = () => {
         isAvailable: true,
       },
     ]);
-    setFormData(emptyProperty);
+
+    setFormData({ ...emptyProperty, country: "Nigeria" });
+    setPrevImages([]);
     onClose(false);
   };
 
@@ -61,7 +73,7 @@ export const AddProperty = () => {
       {currentUser.role === "owner" && (
         <button
           onClick={() => onClose(true)}
-          className="fixed bottom-8 right-8 border-4 border-white bg-purple-600 text-white hover:bg-purple-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
+          className="fixed bottom-8 right-8 border-4 border-white bg-purple-600 text-white hover:bg-purple-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center g p-1 transition"
         >
           <FaPlus className="text-md" />
           <span className="hidden lg:inline font-medium">Add Property</span>
@@ -97,7 +109,7 @@ export const AddProperty = () => {
                 <div className="col-span-2">
                   <label className="text-sm text-gray-600">Title*</label>
                   <input
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                     type="text"
                     placeholder="Title"
                     required
@@ -114,7 +126,7 @@ export const AddProperty = () => {
                       Property type*
                     </label>
                     <select
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       required
                       value={formData.type}
                       onChange={(e) =>
@@ -124,7 +136,7 @@ export const AddProperty = () => {
                         })
                       }
                     >
-                      <option>Type</option>
+                      <option value="">Type</option>
                       <option value="apartment">Apartment</option>
                       <option value="building">Building</option>
                       <option value="land">Land</option>
@@ -132,56 +144,59 @@ export const AddProperty = () => {
                   </div>
 
                   <div>
-                    <label className="text-sm text-gray-600">Listing Type*</label>
+                    <label className="text-sm text-gray-600">
+                      Listing Type*
+                    </label>
                     <select
                       required
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       value={formData.listingType}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          listingType: e.target.value as Property["listingType"],
+                          listingType:
+                            e.target.value as Property["listingType"],
                         })
                       }
                     >
-                      <option>Select Type</option>
+                      <option value="">Select Type</option>
                       <option value="rental">Rental</option>
                       <option value="sale">Sale</option>
                     </select>
                   </div>
-                
+
                   <div>
-                    <label className="text-sm text-gray-600">
-                      Price*
-                    </label>
+                    <label className="text-sm text-gray-600">Price*</label>
                     <input
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    type="number"
-                    placeholder="Price"
-                    required
-                    value={formData.price}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        price: Number(e.target.value),
-                      })
-                    }
-                  />
+                      className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      type="number"
+                      required
+                      value={formData.price}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          price: Number(e.target.value),
+                        })
+                      }
+                    />
                   </div>
 
                   <div>
-                    <label className="text-sm text-gray-600">Duration (only for rental)</label>
+                    <label className="text-sm text-gray-600">
+                      Duration (only for rental)
+                    </label>
                     <select
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       value={formData.duration}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          duration: e.target.value as Property["duration"],
+                          duration:
+                            e.target.value as Property["duration"],
                         })
                       }
                     >
-                      <option>Duration</option>
+                      <option value="">Duration</option>
                       <option value="daily">Daily</option>
                       <option value="weekly">Weekly</option>
                       <option value="monthly">Monthly</option>
@@ -194,14 +209,18 @@ export const AddProperty = () => {
                   <div>
                     <label className="text-sm text-gray-600">State*</label>
                     <select
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       required
                       value={formData.state}
                       onChange={(e) =>
-                        setFormData({ ...formData, state: e.target.value })
+                        setFormData({
+                          ...formData,
+                          state: e.target.value,
+                          city: "", 
+                        })
                       }
                     >
-                      <option>State</option>
+                      <option value="">State</option>
                       {states.map((state, index) => (
                         <option key={index} value={state}>
                           {state}
@@ -213,14 +232,14 @@ export const AddProperty = () => {
                   <div>
                     <label className="text-sm text-gray-600">City*</label>
                     <select
-                      className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       required
                       value={formData.city}
                       onChange={(e) =>
                         setFormData({ ...formData, city: e.target.value })
                       }
                     >
-                      <option>City</option>
+                      <option value="">City</option>
                       {cities.map((city: string, index: number) => (
                         <option key={index} value={city}>
                           {city}
@@ -231,35 +250,42 @@ export const AddProperty = () => {
                 </div>
 
                 <div className="col-span-2 py-2">
-                  <label className="text-sm text-gray-600">Description*</label>
+                  <label className="text-sm text-gray-600">
+                    Description*
+                  </label>
                   <textarea
                     required
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    placeholder="Description"
+                    className="w-full p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                     value={formData.description}
                     onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
+                      setFormData({
+                        ...formData,
+                        description: e.target.value,
+                      })
                     }
                   />
                 </div>
 
                 <div
                   onClick={() => prevImageRef.current?.click()}
-                  className="flex gap-2 items-center cursor-pointer p-2 rounded-lg"
+                  className="flex gap-2 items-center cursor-pointer pb-3 rounded-lg"
                 >
                   <FaImage className="text-xl text-purple-600" />
-                  <span className="hover:text-purple-600">Upload photos *</span>
+                  <span className="hover:text-purple-600">
+                    Upload photos *
+                  </span>
                   <input
                     className="hidden"
                     type="file"
                     accept="image/*"
                     multiple
-                    required
                     ref={prevImageRef}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange={(e) => {
                       const files = e.target.files;
                       if (!files) return;
+
                       const fileArray = Array.from(files);
+
                       Promise.all(
                         fileArray.map(
                           (file) =>
@@ -269,10 +295,10 @@ export const AddProperty = () => {
                                 resolve(reader.result as string);
                               reader.onerror = reject;
                               reader.readAsDataURL(file);
-                            }),
-                        ),
+                            })
+                        )
                       ).then((images) =>
-                        setPrevImages((prev) => [...prev, ...images]),
+                        setPrevImages((prev) => [...prev, ...images])
                       );
                     }}
                   />
@@ -288,11 +314,10 @@ export const AddProperty = () => {
                           alt="preview"
                         />
 
-                        {/* Remove button */}
                         <button
                           type="button"
                           onClick={() => removeImage(index)}
-                          className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full shadow hover:bg-red-700"
+                          className="absolute -t p-1 -right-2 bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full shadow hover:bg-red-700"
                         >
                           ✕
                         </button>
@@ -303,8 +328,9 @@ export const AddProperty = () => {
 
                 <div className="col-span-2">
                   <button
-                    className="bg-purple-600 px-4 py-2 text-white w-full hover:bg-purple-800 rounded-lg"
+                    className="bg-purple-600 px-4 py-2 text-white w-full hover:bg-purple-800 rounded-lg disabled:opacity-50"
                     type="submit"
+                    disabled={prevImages.length === 0}
                   >
                     Upload
                   </button>
