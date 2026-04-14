@@ -56,7 +56,7 @@ export const Edit = () => {
                   <div className="w-30 h-30 flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold text-[40px] lg:text-[50px] overflow-hidden">
                     {currentUser?.imageUrl || prevImage ? (
                       <img
-                        src={currentUser.imageUrl || prevImage}
+                        src={prevImage ? prevImage : currentUser.imageUrl }
                         className="w-full h-full object-cover"
                       />
                     ) : currentUser.company ? (
