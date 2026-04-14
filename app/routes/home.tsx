@@ -18,9 +18,15 @@ const Home = () => {
   const [listingType, setListType] = useState("");
   const [duration, setDuration] = useState("");
 
-  // const filteredProperties = properties.filter((p) => {
-  //   p.city === city || p.state === state || p.type === type || p.listingType === listingType || p.duration === duration;
-  // });
+  const filteredProperties = properties.filter((p) => {
+  return (
+    (!city || p.city === city) &&
+    (!state || p.state === state) &&
+    (!type || p.type === type) &&
+    (!listingType || p.listingType === listingType) &&
+    (!duration || p.duration === duration)
+  );
+});
 
   return (
     <RequireAuth>
@@ -43,7 +49,7 @@ const Home = () => {
           />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {properties.map((property, index) => (
+          {filteredProperties.map((property, index) => (
             <PropertyCard property={property} key={index} />
           ))}
         </div>
