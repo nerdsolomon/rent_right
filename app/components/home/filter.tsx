@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Dropdown from "./dropdown";
 import { SelectInput } from "./select";
 import { location } from "~/services";
@@ -32,50 +31,64 @@ export const Filter = ({
   state,
   type,
 }: Prop) => {
-  // const countries = Object.keys(location);
   const states = country ? Object.keys(location[country] || {}) : [];
   const cities = country && state ? location[country]?.[state] || [] : [];
+
   const types = ["land", "building", "apartment"];
   const listingTypes = ["rental", "sale"];
   const durations = ["daily", "weekly", "monthly", "yearly"];
 
+  // ✅ centralised handlers (fixes your issue)
+  const handleStateChange = (value: string) => {
+    setState(value);
+    setCity(""); // reset dependent field
+  };
+
+  const handleCityChange = (value: string) => {
+    setCity(value);
+  };
+
+  const handleListingTypeChange = (value: string) => {
+    setListType(value);
+    setDuration(""); 
+  };
+
   return (
     <>
-      <div className="flex pb-4 gap-2 flex-wrap block lg:hidden">
-        {/* <Dropdown
-          label="Country"
-          value={country}
-          list={countries}
-          onSelect={setCountry}
-        /> */}
+      {/* ✅ MOBILE */}
+      <div className="flex pb-4 gap-2 flex-wrap lg:hidden">
         {country && (
           <Dropdown
             label="State"
             value={state}
             list={states}
-            onSelect={setState}
+            onSelect={handleStateChange}
           />
         )}
+
         {country && state && (
           <Dropdown
             label="City"
             value={city}
             list={cities}
-            onSelect={setCity}
+            onSelect={handleCityChange}
           />
         )}
+
         <Dropdown
           label="Property Type"
           value={type}
           list={types}
           onSelect={setType}
         />
+
         <Dropdown
           label="Listing Type"
           value={listingType}
           list={listingTypes}
-          onSelect={setListType}
+          onSelect={handleListingTypeChange}
         />
+
         {listingType === "rental" && (
           <Dropdown
             label="Duration"
@@ -86,48 +99,40 @@ export const Filter = ({
         )}
       </div>
 
-      <div className="hidden lg:block space-y-2">
-        {/* <SelectInput
-          label="Country"
-          value={country}
-          list={countries}
-          onChange={(value) => {
-            setCountry(value);
-            setState("");
-            setCity("");
-          }}
-        /> */}
+      {/* ✅ DESKTOP */}
+      <div className="grid grid-cols-5 pb-4">
         {country && (
           <SelectInput
             label="State"
             value={state}
             list={states}
-            onChange={(value) => {
-              setState(value);
-              setCity("");
-            }}
+            onChange={handleStateChange}
           />
         )}
+
         {country && state && (
           <SelectInput
             label="City"
             value={city}
             list={cities}
-            onChange={setCity}
+            onChange={handleCityChange}
           />
         )}
+
         <SelectInput
           label="Property Type"
           value={type}
           list={types}
           onChange={setType}
         />
+
         <SelectInput
           label="Listing Type"
           value={listingType}
           list={listingTypes}
-          onChange={setListType}
+          onChange={handleListingTypeChange}
         />
+
         {listingType === "rental" && (
           <SelectInput
             label="Duration"
