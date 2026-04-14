@@ -1,263 +1,376 @@
-// api.services.ts
+import {
+  type User,
+  type Property,
+  type Review,
+  type Feedback,
+  type Booking,
+  type Notification,
+  emptyUser,
+} from "~/types";
 
-import { type User, type Property, type Review, type Feedback, type Booking, emptyUser, type Notification } from "~/types";
-
-const BASE_URL = "/api";
-
+const BASE_URL = "https://rental-app-backend-b4lj.onrender.com/api";
 const TOKEN_KEY = "auth_token";
+
+// ================= HELPERS =================
+const getToken = () => localStorage.getItem(TOKEN_KEY);
+
+const authHeaders = () => ({
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${getToken()}`,
+});
 
 // ================= AUTH =================
 export const authService = {
-  async login(loginUser: User): Promise<User> {
+  create: async (data: Partial<User>) => {
+    const res = await fetch(`${BASE_URL}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
+
+  login: async (data: Partial<User>) => {
     const res = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginUser),
+      body: JSON.stringify(data),
     });
+
     if (!res.ok) throw new Error("Login failed");
-    const data = await res.json();
-    if (data.token) localStorage.setItem(TOKEN_KEY, data.token);
-    return data;
+
+    const result = await res.json();
+    if (result.token) localStorage.setItem(TOKEN_KEY, result.token);
+
+    return result;
   },
 
-  logout() {
-    localStorage.removeItem(TOKEN_KEY);
+  verifyEmail: async (data: { email: string; otp: string }) => {
+    const res = await fetch(`${BASE_URL}/auth/verify-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
   },
 
-  getToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY);
+  verifyPhone: async (data: { phone: string; otp: string }) => {
+    const res = await fetch(`${BASE_URL}/auth/verify-phone`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
   },
 
-  async getCurrentUser(): Promise<User> {
-    const token = this.getToken();
+  resendOtp: async (data: { email?: string; phone?: string }) => {
+    const res = await fetch(`${BASE_URL}/auth/resend-otp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
+
+  me: async (): Promise<User> => {
+    const token = getToken();
     if (!token) return emptyUser;
-    const res = await fetch(`${BASE_URL}/auth/currentUser`, {
+
+    const res = await fetch(`${BASE_URL}/auth/me`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
     if (!res.ok) return emptyUser;
     return res.json();
+  },
+
+  logout: async () => {
+    const token = getToken();
+    localStorage.removeItem(TOKEN_KEY);
+
+    if (!token) return;
+
+    await fetch(`${BASE_URL}/auth/logout`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+
+  googleLogin: () => {
+    window.location.href = `${BASE_URL}/auth/google`;
+  },
+
+  facebookLogin: () => {
+    window.location.href = `${BASE_URL}/auth/facebook`;
   },
 };
 
 // ================= USERS =================
 export const userService = {
-  async getAll(): Promise<User[]> {
-    const res = await fetch(`${BASE_URL}/users`);
-    if (!res.ok) throw new Error("Failed to fetch users");
+  getAll: async () => {
+    const res = await fetch(`${BASE_URL}/users`, {
+      headers: authHeaders(),
+    });
     return res.json();
   },
 
-  create: async (data: User) => {
-    const res = await fetch("/api/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+  getById: async (id: number) => {
+    const res = await fetch(`${BASE_URL}/users/${id}`, {
+      headers: authHeaders(),
+    });
+    return res.json();
+  },
+
+  update: async (id: number, data: Partial<User>) => {
+    const res = await fetch(`${BASE_URL}/users/${id}`, {
+      method: "PUT",
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
     return res.json();
   },
 
-  async update(user: User): Promise<User> {
-    const res = await fetch(`${BASE_URL}/users/${user.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
+  delete: async (id: number) => {
+    await fetch(`${BASE_URL}/users/${id}`, {
+      method: "DELETE",
+      headers: authHeaders(),
     });
+  },
 
-    if (!res.ok) throw new Error("Failed to update user");
+  toggleRole: async (id: number) => {
+    const res = await fetch(`${BASE_URL}/users/${id}/toggle-role`, {
+      method: "PATCH",
+      headers: authHeaders(),
+    });
+    return res.json();
+  },
+};
+
+// ================= NIN VERIFICATION =================
+export const ninService = {
+  submit: async (data: {
+    nin: string;
+    name: string;
+    address: string;
+  }) => {
+    const res = await fetch(`${BASE_URL}/nin-verification/submit`, {
+      method: "POST",
+      headers: authHeaders(),
+      body: JSON.stringify(data),
+    });
     return res.json();
   },
 
-  async delete(id: number): Promise<void> {
-    const res = await fetch(`${BASE_URL}/users/${id}`, {
-      method: "DELETE",
+  status: async () => {
+    const res = await fetch(`${BASE_URL}/nin-verification/status`, {
+      headers: authHeaders(),
     });
+    return res.json();
+  },
 
-    if (!res.ok) throw new Error("Failed to delete user");
+  adminGetAll: async (status?: string) => {
+    const res = await fetch(
+      `${BASE_URL}/nin-verification/admin/all${
+        status ? `?status=${status}` : ""
+      }`,
+      { headers: authHeaders() }
+    );
+    return res.json();
+  },
+
+  review: async (id: number, data: { status: "approved" | "rejected" }) => {
+    const res = await fetch(
+      `${BASE_URL}/nin-verification/admin/${id}/review`,
+      {
+        method: "PATCH",
+        headers: authHeaders(),
+        body: JSON.stringify(data),
+      }
+    );
+    return res.json();
   },
 };
 
 // ================= PROPERTIES =================
 export const propertyService = {
-  async getAll(): Promise<Property[]> {
+  getAll: async () => {
     const res = await fetch(`${BASE_URL}/properties`);
-    if (!res.ok) throw new Error("Failed to fetch properties");
+    return res.json();
+  },
+
+  getById: async (id: number) => {
+    const res = await fetch(`${BASE_URL}/properties/${id}`);
+    return res.json();
+  },
+
+  getByOwner: async (userId: number) => {
+    const res = await fetch(`${BASE_URL}/properties/owner/${userId}`);
     return res.json();
   },
 
   create: async (data: Property) => {
-    const res = await fetch("/api/properties", {
+    const res = await fetch(`${BASE_URL}/properties`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
     return res.json();
   },
 
-  async update(property: Property): Promise<Property> {
-    const res = await fetch(`${BASE_URL}/properties/${property.id}`, {
+  update: async (id: number, data: Property) => {
+    const res = await fetch(`${BASE_URL}/properties/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(property),
+      headers: authHeaders(),
+      body: JSON.stringify(data),
     });
-
-    if (!res.ok) throw new Error("Failed to update property");
     return res.json();
   },
 
-  async delete(id: number): Promise<void> {
-    const res = await fetch(`${BASE_URL}/properties/${id}`, {
+  delete: async (id: number) => {
+    await fetch(`${BASE_URL}/properties/${id}`, {
       method: "DELETE",
+      headers: authHeaders(),
     });
-
-    if (!res.ok) throw new Error("Failed to delete property");
   },
 };
 
 // ================= REVIEWS =================
 export const reviewService = {
-  async getAll(): Promise<Review[]> {
+  getAll: async () => {
     const res = await fetch(`${BASE_URL}/reviews`);
-    if (!res.ok) throw new Error("Failed to fetch reviews");
+    return res.json();
+  },
+
+  getByProperty: async (propertyId: number) => {
+    const res = await fetch(
+      `${BASE_URL}/reviews/property/${propertyId}`
+    );
     return res.json();
   },
 
   create: async (data: Review) => {
-    const res = await fetch("/api/reviews", {
+    const res = await fetch(`${BASE_URL}/reviews`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
     return res.json();
   },
 
-  async update(review: Review): Promise<Review> {
-    const res = await fetch(`${BASE_URL}/reviews/${review.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(review),
-    });
-
-    if (!res.ok) throw new Error("Failed to update review");
-    return res.json();
-  },
-
-  async delete(id: number): Promise<void> {
-    const res = await fetch(`${BASE_URL}/reviews/${id}`, {
+  delete: async (id: number) => {
+    await fetch(`${BASE_URL}/reviews/${id}`, {
       method: "DELETE",
+      headers: authHeaders(),
     });
-
-    if (!res.ok) throw new Error("Failed to delete review");
   },
 };
 
-// ================= FEEDBACKS =================
+// ================= FEEDBACK =================
 export const feedbackService = {
-  async getAll(): Promise<Feedback[]> {
-    const res = await fetch(`${BASE_URL}/feedbacks`);
-    if (!res.ok) throw new Error("Failed to fetch feedbacks");
+  getAll: async () => {
+    const res = await fetch(`${BASE_URL}/feedbacks`, {
+      headers: authHeaders(),
+    });
     return res.json();
   },
 
   create: async (data: Feedback) => {
-    const res = await fetch("/api/feedbacks", {
+    const res = await fetch(`${BASE_URL}/feedbacks`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
     return res.json();
   },
 
-  async update(feedback: Feedback): Promise<Feedback> {
-    const res = await fetch(`${BASE_URL}/feedbacks/${feedback.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(feedback),
+  markViewed: async (id: number) => {
+    const res = await fetch(`${BASE_URL}/feedbacks/${id}/view`, {
+      method: "PATCH",
+      headers: authHeaders(),
     });
-
-    if (!res.ok) throw new Error("Failed to update feedback");
     return res.json();
   },
 
-  async delete(id: number): Promise<void> {
-    const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
+  delete: async (id: number) => {
+    await fetch(`${BASE_URL}/feedbacks/${id}`, {
       method: "DELETE",
+      headers: authHeaders(),
     });
-
-    if (!res.ok) throw new Error("Failed to delete feedback");
   },
 };
 
 // ================= BOOKINGS =================
 export const bookingService = {
-  async getAll(): Promise<Booking[]> {
-    const res = await fetch(`${BASE_URL}/bookings`);
-    if (!res.ok) throw new Error("Failed to fetch bookings");
+  getAll: async () => {
+    const res = await fetch(`${BASE_URL}/bookings`, {
+      headers: authHeaders(),
+    });
+    return res.json();
+  },
+
+  myBookings: async () => {
+    const res = await fetch(`${BASE_URL}/bookings/my-bookings`, {
+      headers: authHeaders(),
+    });
     return res.json();
   },
 
   create: async (data: Booking) => {
-    const res = await fetch("/api/bookings", {
+    const res = await fetch(`${BASE_URL}/bookings`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
     return res.json();
   },
 
-  async update(booking: Booking): Promise<Booking> {
-    const res = await fetch(`${BASE_URL}/bookings/${booking.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(booking),
-    });
-
-    if (!res.ok) throw new Error("Failed to update booking");
-    return res.json();
-  },
-
-  async delete(id: number): Promise<void> {
-    const res = await fetch(`${BASE_URL}/bookings/${id}`, {
+  delete: async (id: number) => {
+    await fetch(`${BASE_URL}/bookings/${id}`, {
       method: "DELETE",
+      headers: authHeaders(),
     });
-
-    if (!res.ok) throw new Error("Failed to delete booking");
   },
 };
 
-
 // ================= NOTIFICATIONS =================
 export const notificationService = {
-  async getAll(): Promise<Notification[]> {
-    const res = await fetch(`${BASE_URL}/notifications`);
-    if (!res.ok) throw new Error("Failed to fetch notifications");
+  getAll: async () => {
+    const res = await fetch(`${BASE_URL}/notifications`, {
+      headers: authHeaders(),
+    });
     return res.json();
   },
 
   create: async (data: Notification) => {
-    const res = await fetch("/api/notifications", {
+    const res = await fetch(`${BASE_URL}/notifications`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
     return res.json();
   },
 
-  async update(notification: Notification): Promise<Notification> {
-    const res = await fetch(`${BASE_URL}/notifications/${notification.id}`, {
+  update: async (id: number, data: Notification) => {
+    const res = await fetch(`${BASE_URL}/notifications/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(notification),
+      headers: authHeaders(),
+      body: JSON.stringify(data),
     });
-
-    if (!res.ok) throw new Error("Failed to update notification");
     return res.json();
   },
 
-  async delete(id: number): Promise<void> {
-    const res = await fetch(`${BASE_URL}/notifications/${id}`, {
+  delete: async (id: number) => {
+    await fetch(`${BASE_URL}/notifications/${id}`, {
       method: "DELETE",
+      headers: authHeaders(),
     });
+  },
+};
 
-    if (!res.ok) throw new Error("Failed to delete notification");
+// ================= HEALTH CHECK =================
+export const healthService = {
+  check: async () => {
+    const res = await fetch(`${BASE_URL}/health`);
+    return res.json();
   },
 };

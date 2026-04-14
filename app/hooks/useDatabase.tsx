@@ -11,7 +11,14 @@ import {
   notificationService,
 } from "~/services";
 
-import type { User, Property, Review, Feedback, Booking, Notification } from "~/types";
+import type {
+  User,
+  Property,
+  Review,
+  Feedback,
+  Booking,
+  Notification,
+} from "~/types";
 
 import { emptyUser } from "~/types";
 
@@ -35,17 +42,14 @@ interface DataState {
 
   reviews: Review[];
   createReview: (review: Review) => Promise<void>;
-  updateReview: (review: Review) => Promise<void>;
   deleteReview: (id: number) => Promise<void>;
 
   feedbacks: Feedback[];
   createFeedback: (feedback: Feedback) => Promise<void>;
-  updateFeedback: (feedback: Feedback) => Promise<void>;
   deleteFeedback: (id: number) => Promise<void>;
 
   bookings: Booking[];
   createBooking: (booking: Booking) => Promise<void>;
-  updateBooking: (booking: Booking) => Promise<void>;
   deleteBooking: (id: number) => Promise<void>;
 
   notifications: Notification[];
@@ -68,39 +72,33 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const [currentUser, setCurrentUser] = useState<User>(emptyUser);
 
   const isAuthenticated = Boolean(currentUser?.id);
 
-  // ================= FETCH ALL =================
+  // ================= REFRESH ALL =================
   const refreshAll = async () => {
     try {
       setIsLoading(true);
 
-      const [
-        usersData,
-        propertiesData,
-        reviewsData,
-        feedbacksData,
-        bookingsData,
-        notificationData,
-      ] = await Promise.all([
-        userService.getAll(),
-        propertyService.getAll(),
-        reviewService.getAll(),
-        feedbackService.getAll(),
-        bookingService.getAll(),
-        notificationService.getAll()
-      ]);
+      const [usersData, propertiesData, reviewsData, feedbacksData, bookingsData, notificationsData] =
+        await Promise.all([
+          userService.getAll(),
+          propertyService.getAll(),
+          reviewService.getAll(),
+          feedbackService.getAll(),
+          bookingService.getAll(),
+          notificationService.getAll(),
+        ]);
 
       setUsers(usersData);
       setProperties(propertiesData);
       setReviews(reviewsData);
       setFeedbacks(feedbacksData);
       setBookings(bookingsData);
-      setNotifications(notificationData)
+      setNotifications(notificationsData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -108,14 +106,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // ================= SYNC CURRENTUSER =================
+  // ================= AUTH SYNC =================
   const syncAuth = async () => {
-    setIsLoading(true);
     try {
-      const user = await authService.getCurrentUser();
-      if (user?.id) setCurrentUser(user);
+      const user = await authService.me();
+      setCurrentUser(user?.id ? user : emptyUser);
     } catch (err) {
-      console.error("Failed to sync auth:", err);
+      console.error(err);
       setCurrentUser(emptyUser);
     } finally {
       setIsLoading(false);
@@ -128,201 +125,107 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // ================= AUTH =================
-  const login = async (loginUser: User) => {
+  const login = async (user: User) => {
     try {
-      const user = await authService.login(loginUser);
-      setCurrentUser(user);
+      const res = await authService.login(user);
+      setCurrentUser(res?.user || res);
       navigate("/home");
       return true;
     } catch (err) {
-      console.error("Login failed:", err);
+      console.error(err);
       return false;
     }
   };
 
-  const logout = () => {
-    authService.logout();
+  const logout = async () => {
+    await authService.logout();
     setCurrentUser(emptyUser);
     navigate("/");
   };
 
   // ================= USERS =================
   const createUser = async (user: User) => {
-    try {
-      const created = await userService.create(user);
-      setUsers((prev) => [...prev, created]);
-    } catch (err) {
-      console.error(err);
-    }
+    const created = await authService.create(user);
+    setUsers((prev) => [...prev, created]);
   };
 
   const updateUser = async (user: User) => {
-    try {
-      const updated = await userService.update(user);
-      setUsers((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
-    } catch (err) {
-      console.error(err);
-    }
+    const updated = await userService.update(user.id, user);
+    setUsers((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
   };
 
   const deleteUser = async (id: number) => {
-    try {
-      await userService.delete(id);
-      setUsers((prev) => prev.filter((u) => u.id !== id));
-      if (currentUser.id === id) logout();
-    } catch (err) {
-      console.error(err);
-    }
+    await userService.delete(id);
+    setUsers((prev) => prev.filter((u) => u.id !== id));
+
+    if (currentUser.id === id) logout();
   };
 
   // ================= PROPERTIES =================
   const createProperty = async (property: Property) => {
-    try {
-      const created = await propertyService.create(property);
-      setProperties((prev) => [...prev, created]);
-    } catch (err) {
-      console.error(err);
-    }
+    const created = await propertyService.create(property);
+    setProperties((prev) => [...prev, created]);
   };
 
   const updateProperty = async (property: Property) => {
-    try {
-      const updated = await propertyService.update(property);
-      setProperties((prev) =>
-        prev.map((p) => (p.id === updated.id ? updated : p)),
-      );
-    } catch (err) {
-      console.error(err);
-    }
+    const updated = await propertyService.update(property.id, property);
+    setProperties((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
   };
 
   const deleteProperty = async (id: number) => {
-    try {
-      await propertyService.delete(id);
-      setProperties((prev) => prev.filter((p) => p.id !== id));
-    } catch (err) {
-      console.error(err);
-    }
+    await propertyService.delete(id);
+    setProperties((prev) => prev.filter((p) => p.id !== id));
   };
 
   // ================= REVIEWS =================
   const createReview = async (review: Review) => {
-    try {
-      const created = await reviewService.create(review);
-      setReviews((prev) => [...prev, created]);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const updateReview = async (review: Review) => {
-    try {
-      const updated = await reviewService.update(review);
-      setReviews((prev) =>
-        prev.map((r) => (r.id === updated.id ? updated : r)),
-      );
-    } catch (err) {
-      console.error(err);
-    }
+    const created = await reviewService.create(review);
+    setReviews((prev) => [...prev, created]);
   };
 
   const deleteReview = async (id: number) => {
-    try {
-      await reviewService.delete(id);
-      setReviews((prev) => prev.filter((r) => r.id !== id));
-    } catch (err) {
-      console.error(err);
-    }
+    await reviewService.delete(id);
+    setReviews((prev) => prev.filter((r) => r.id !== id));
   };
 
-  // ================= FEEDBACKS =================
+  // ================= FEEDBACK =================
   const createFeedback = async (feedback: Feedback) => {
-    try {
-      const created = await feedbackService.create(feedback);
-      setFeedbacks((prev) => [...prev, created]);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const updateFeedback = async (feedback: Feedback) => {
-    try {
-      const updated = await feedbackService.update(feedback);
-      setFeedbacks((prev) =>
-        prev.map((f) => (f.id === updated.id ? updated : f)),
-      );
-    } catch (err) {
-      console.error(err);
-    }
+    const created = await feedbackService.create(feedback);
+    setFeedbacks((prev) => [...prev, created]);
   };
 
   const deleteFeedback = async (id: number) => {
-    try {
-      await feedbackService.delete(id);
-      setFeedbacks((prev) => prev.filter((f) => f.id !== id));
-    } catch (err) {
-      console.error(err);
-    }
+    await feedbackService.delete(id);
+    setFeedbacks((prev) => prev.filter((f) => f.id !== id));
   };
 
   // ================= BOOKINGS =================
   const createBooking = async (booking: Booking) => {
-    try {
-      const created = await bookingService.create(booking);
-      setBookings((prev) => [...prev, created]);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const updateBooking = async (booking: Booking) => {
-    try {
-      const updated = await bookingService.update(booking);
-      setBookings((prev) =>
-        prev.map((b) => (b.id === updated.id ? updated : b)),
-      );
-    } catch (err) {
-      console.error(err);
-    }
+    const created = await bookingService.create(booking);
+    setBookings((prev) => [...prev, created]);
   };
 
   const deleteBooking = async (id: number) => {
-    try {
-      await bookingService.delete(id);
-      setBookings((prev) => prev.filter((b) => b.id !== id));
-    } catch (err) {
-      console.error(err);
-    }
+    await bookingService.delete(id);
+    setBookings((prev) => prev.filter((b) => b.id !== id));
   };
 
   // ================= NOTIFICATIONS =================
   const createNotification = async (notification: Notification) => {
-    try {
-      const created = await notificationService.create(notification);
-      setNotifications((prev) => [...prev, created]);
-    } catch (err) {
-      console.error(err);
-    }
+    const created = await notificationService.create(notification);
+    setNotifications((prev) => [...prev, created]);
   };
 
   const updateNotification = async (notification: Notification) => {
-    try {
-      const updated = await notificationService.update(notification);
-      setNotifications((prev) =>
-        prev.map((b) => (b.id === updated.id ? updated : b)),
-      );
-    } catch (err) {
-      console.error(err);
-    }
+    const updated = await notificationService.update(notification.id, notification);
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === updated.id ? updated : n))
+    );
   };
 
   const deleteNotification = async (id: number) => {
-    try {
-      await notificationService.delete(id);
-      setNotifications((prev) => prev.filter((b) => b.id !== id));
-    } catch (err) {
-      console.error(err);
-    }
+    await notificationService.delete(id);
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
 
   return (
@@ -347,17 +250,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
         reviews,
         createReview,
-        updateReview,
         deleteReview,
 
         feedbacks,
         createFeedback,
-        updateFeedback,
         deleteFeedback,
 
         bookings,
         createBooking,
-        updateBooking,
         deleteBooking,
 
         notifications,
@@ -375,8 +275,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useDatabase = () => {
   const ctx = useContext(DataContext);
-  if (!ctx) {
-    throw new Error("useDatabase must be used within DataProvider");
-  }
+  if (!ctx) throw new Error("useDatabase must be used within DataProvider");
   return ctx;
 };
