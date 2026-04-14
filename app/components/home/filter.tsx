@@ -56,7 +56,7 @@ export const Filter = ({
   return (
     <>
       {/* ✅ MOBILE */}
-      <div className="flex pb-4 gap-2 flex-wrap lg:hidden">
+      <div className="flex lg:hidden pb-4 gap-2 flex-wrap">
         {country && (
           <Dropdown
             label="State"
@@ -100,7 +100,7 @@ export const Filter = ({
       </div>
 
       {/* ✅ DESKTOP */}
-      <div className="grid grid-cols-5 pb-4">
+      <div className="hidden lg:grid grid-cols-5 pb-4">
         {country && (
           <SelectInput
             label="State"
