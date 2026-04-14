@@ -61,7 +61,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
           className="items-center flex gap-2 hover:bg-gray-100 capitalize rounded-full px-2 py-2"
           onClick={() => navigate("/profile")}
         >
-          <div className="relative w-10 h-10 rounded-full overflow-hidden bg-purple-100 text-purple-600 flex items-center justify-center text-3xl md:text-lg font-semibold">
+          <div className="relative w-10 h-10 rounded-full overflow-hidden bg-purple-100 text-purple-600 flex items-center justify-center text-[40px] lg:text-[50px] font-semibold">
           {currentUser.imageUrl ? (
             <img
               src={currentUser.imageUrl}
