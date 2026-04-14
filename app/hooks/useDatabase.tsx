@@ -8,9 +8,10 @@ import {
   feedbackService,
   bookingService,
   authService,
+  notificationService,
 } from "~/services";
 
-import type { User, Property, Review, Feedback, Booking } from "~/types";
+import type { User, Property, Review, Feedback, Booking, Notification } from "~/types";
 
 import { emptyUser } from "~/types";
 
@@ -47,6 +48,11 @@ interface DataState {
   updateBooking: (booking: Booking) => Promise<void>;
   deleteBooking: (id: number) => Promise<void>;
 
+  notifications: Notification[];
+  createNotification: (notification: Notification) => Promise<void>;
+  updateNotification: (notification: Notification) => Promise<void>;
+  deleteNotification: (id: number) => Promise<void>;
+
   refreshAll: () => Promise<void>;
 }
 
@@ -62,6 +68,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([])
 
   const [currentUser, setCurrentUser] = useState<User>(emptyUser);
 
@@ -78,12 +85,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         reviewsData,
         feedbacksData,
         bookingsData,
+        notificationData,
       ] = await Promise.all([
         userService.getAll(),
         propertyService.getAll(),
         reviewService.getAll(),
         feedbackService.getAll(),
         bookingService.getAll(),
+        notificationService.getAll()
       ]);
 
       setUsers(usersData);
@@ -91,6 +100,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       setReviews(reviewsData);
       setFeedbacks(feedbacksData);
       setBookings(bookingsData);
+      setNotifications(notificationData)
     } catch (err) {
       console.error(err);
     } finally {
@@ -285,6 +295,36 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // ================= NOTIFICATIONS =================
+  const createNotification = async (notification: Notification) => {
+    try {
+      const created = await notificationService.create(notification);
+      setNotifications((prev) => [...prev, created]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateNotification = async (notification: Notification) => {
+    try {
+      const updated = await notificationService.update(notification);
+      setNotifications((prev) =>
+        prev.map((b) => (b.id === updated.id ? updated : b)),
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteNotification = async (id: number) => {
+    try {
+      await notificationService.delete(id);
+      setNotifications((prev) => prev.filter((b) => b.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -319,6 +359,11 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         createBooking,
         updateBooking,
         deleteBooking,
+
+        notifications,
+        createNotification,
+        updateNotification,
+        deleteNotification,
 
         refreshAll,
       }}

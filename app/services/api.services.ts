@@ -1,6 +1,6 @@
 // api.services.ts
 
-import { type User, type Property, type Review, type Feedback, type Booking, emptyUser } from "~/types";
+import { type User, type Property, type Review, type Feedback, type Booking, emptyUser, type Notification } from "~/types";
 
 const BASE_URL = "/api";
 
@@ -221,5 +221,43 @@ export const bookingService = {
     });
 
     if (!res.ok) throw new Error("Failed to delete booking");
+  },
+};
+
+
+// ================= NOTIFICATIONS =================
+export const notificationService = {
+  async getAll(): Promise<Notification[]> {
+    const res = await fetch(`${BASE_URL}/notifications`);
+    if (!res.ok) throw new Error("Failed to fetch notifications");
+    return res.json();
+  },
+
+  create: async (data: Notification) => {
+    const res = await fetch("/api/notifications", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
+
+  async update(notification: Notification): Promise<Notification> {
+    const res = await fetch(`${BASE_URL}/notifications/${notification.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(notification),
+    });
+
+    if (!res.ok) throw new Error("Failed to update notification");
+    return res.json();
+  },
+
+  async delete(id: number): Promise<void> {
+    const res = await fetch(`${BASE_URL}/notifications/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete notification");
   },
 };
