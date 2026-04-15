@@ -21,12 +21,17 @@ const authHeaders = () => ({
 
 // ================= AUTH =================
 export const authService = {
-  create: async (data: Partial<User>) => {
+  create: async (data: Partial<User> | FormData) => {
+    const isFormData = data instanceof FormData;
+
     const res = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      headers: isFormData
+        ? undefined 
+        : { "Content-Type": "application/json" },
+      body: isFormData ? data : JSON.stringify(data),
     });
+
     return res.json();
   },
 

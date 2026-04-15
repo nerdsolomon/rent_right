@@ -1,48 +1,56 @@
 import { useEffect, useRef, useState } from "react";
 import { FaHome, FaImage } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import { emptyUser } from "~/types";
 import { images, termAndPolicy } from "~/services/asset.services";
+import { useRegister, useGoogleLogin } from "~/hooks/useAuth";
 
 const Signup = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
   const [alert, setAlert] = useState(false);
-  const { users, setUsers } = useData();
   const [formData, setFormData] = useState(emptyUser);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [notMatch, setNotMatch] = useState(false);
-  const [prevImage, setPrevImage] = useState('');
-  const prevImageRef = useRef<HTMLInputElement | null>(null)
+  const [prevImage, setPrevImage] = useState("");
+  const prevImageRef = useRef<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
-  const addUser = async (e: React.FormEvent<HTMLFormElement>) => {
+  const { mutate: register, isPending, isSuccess, error } = useRegister();
+  const googleLogin = useGoogleLogin();
+
+  const addUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (notMatch === false) {
-      setUsers([
-        ...users,
-        {
-          id: Math.random(),
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          company: formData.company,
-          phone: formData.phone,
-          email: formData.email,
-          password: formData.password,
-          role: "user",
-          imageUrl: prevImage
-        },
-      ]);
-      setFormData(emptyUser);
-      setConfirmPassword("");
-      setAlert(true);
+    if (notMatch) return;
+
+    const form = new FormData();
+
+    form.append("firstName", formData.firstName);
+    form.append("lastName", formData.lastName);
+    form.append("company", formData.company || "");
+    form.append("phone", String(formData.phone));
+    form.append("email", formData.email);
+    form.append("password", formData.password);
+
+    if (file) {
+      form.append("image", file); 
     }
+
+    register(form);
   };
 
   useEffect(() => {
-    if (confirmPassword !== formData.password) setNotMatch(true);
-    else setNotMatch(false);
-  }, [confirmPassword]);
+    if (isSuccess) {
+      setFormData(emptyUser);
+      setConfirmPassword("");
+      setPrevImage("");
+      setAlert(true);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    setNotMatch(confirmPassword !== formData.password);
+  }, [confirmPassword, formData.password]);
 
   return (
     <>
@@ -89,7 +97,10 @@ const Signup = () => {
                 </p>
 
                 {/* Google Button */}
-                <button className="w-full border border-purple-600 text-purple-600 py-2 rounded-full font-medium hover:bg-purple-50 transition">
+                <button
+                  onClick={googleLogin}
+                  className="w-full border border-purple-600 text-purple-600 py-2 rounded-full font-medium hover:bg-purple-50 transition"
+                >
                   Continue with Google
                 </button>
 
@@ -102,6 +113,11 @@ const Signup = () => {
 
                 {/* Form */}
                 <form className="space-y-4" onSubmit={addUser}>
+                  {error && (
+                    <div className="bg-red-100 text-red-600 text-sm p-2 rounded">
+                      Something went wrong. Try again.
+                    </div>
+                  )}
                   {alert && (
                     <div className="bg-yellow-100 rounded-lg text-sm text-gray-600 p-2">
                       Account created successfully...
@@ -184,8 +200,11 @@ const Signup = () => {
                     </p>
                   )}
 
-                  <span onClick={()=> prevImageRef.current?.click()} className="flex gap-2 items-center cursor-pointer hover:bg-gray-200 p-2 rounded-lg">
-                    <FaImage className="text-xl text-purple-600"/>
+                  <span
+                    onClick={() => prevImageRef.current?.click()}
+                    className="flex gap-2 items-center cursor-pointer hover:bg-gray-200 py-2 rounded-lg"
+                  >
+                    <FaImage className="text-xl text-purple-600" />
                     <span>Upload photo</span>
                   </span>
 
@@ -195,17 +214,22 @@ const Signup = () => {
                     accept="image/*"
                     ref={prevImageRef}
                     onChange={(e) => {
-                      const file = e.target.files[0]
+                      const selectedFile = e.target.files?.[0];
+                      if (!selectedFile) return;
+
+                      setFile(selectedFile);
+
                       const reader = new FileReader();
-                      reader.onload = () => setPrevImage(reader.result);
-                      reader.readAsDataURL(file);
+                      reader.onload = () =>
+                        setPrevImage(reader.result as string);
+                      reader.readAsDataURL(selectedFile);
                     }}
                   />
 
                   {prevImage && <img src={prevImage} className="w-20 h-20" />}
 
                   <label className="flex items-center gap-2 text-xs">
-                    <input type="checkbox" required />I agree to the{" "}
+                    <input className="accent-purple-600 w-4 h-4 cursor-pointer" type="checkbox" required />I agree to the{" "}
                     <a className="text-purple-600" href={termAndPolicy}>
                       Terms of Service and Privacy Policy
                     </a>
@@ -215,8 +239,9 @@ const Signup = () => {
                   <button
                     className="w-full bg-purple-600 text-white py-2 rounded-full font-semibold hover:bg-purple-700 transition"
                     type="submit"
+                    disabled={isPending}
                   >
-                    Create account
+                    {isPending ? "Creating..." : "Create account"}
                   </button>
                 </form>
 

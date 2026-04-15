@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { emptyUser } from "~/types";
 import { images } from "~/services/asset.services";
+import { useLogin, useGoogleLogin } from "~/hooks/useAuth";
 
 const Signin = () => {
   const [isOpen, onClose] = useState(false);
@@ -13,16 +14,25 @@ const Signin = () => {
   const modalRef = useClickOutside({ isOpen, onClose });
   const { login } = useData();
 
+  const { mutate: loginUser, isPending, error, isSuccess } = useLogin();
+  const googleLogin = useGoogleLogin();
+
   const authenticate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!login(formData)) {
-      setAlert(true);
-      return;
-    }
-    setFormData(emptyUser);
-    setAlert(false);
-    onClose(false);
+
+    loginUser({
+      email: formData.email,
+      password: formData.password,
+    });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setFormData(emptyUser);
+      setAlert(false);
+      onClose(false);
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -72,7 +82,10 @@ const Signin = () => {
                 </p>
 
                 {/* Google Button */}
-                <button className="w-full border border-purple-600 text-purple-600 py-3 rounded-full font-medium hover:bg-purple-50 transition">
+                <button
+                  onClick={googleLogin}
+                  className="w-full border border-purple-600 text-purple-600 py-3 rounded-full font-medium hover:bg-purple-50 transition"
+                >
                   Continue with Google
                 </button>
 
@@ -85,8 +98,8 @@ const Signin = () => {
 
                 {/* Form */}
                 <form className="space-y-4" onSubmit={authenticate}>
-                  {alert && (
-                    <div className="bg-yellow-100 rounded-lg text-sm text-gray-600 p-2">
+                  {error && (
+                    <div className="bg-red-100 rounded-lg text-sm text-red-600 p-2">
                       Invalid credentials
                     </div>
                   )}
@@ -96,6 +109,7 @@ const Signin = () => {
                     type="email"
                     placeholder="Enter your email"
                     required
+                    disabled={isPending}
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
@@ -108,6 +122,7 @@ const Signin = () => {
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       required
+                      disabled={isPending}
                       value={formData.password}
                       onChange={(e) =>
                         setFormData({ ...formData, password: e.target.value })
@@ -126,7 +141,10 @@ const Signin = () => {
 
                   <div className="flex items-center justify-between text-sm">
                     <label className="flex items-center gap-2">
-                      <input type="checkbox" />
+                      <input
+                        className="accent-purple-600 w-4 h-4 cursor-pointer"
+                        type="checkbox"
+                      />
                       Remember me
                     </label>
 
@@ -142,8 +160,9 @@ const Signin = () => {
                   <button
                     className="w-full bg-purple-600 text-white py-3 rounded-full font-semibold hover:bg-purple-700 transition"
                     type="submit"
+                    disabled={isPending}
                   >
-                    Sign In
+                    {isPending ? "Signing in..." : "Sign In"}
                   </button>
                 </form>
 
