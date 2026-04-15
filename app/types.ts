@@ -4,7 +4,7 @@ export interface User {
   lastName: string;
   company: string;
   email: string;
-  phone: number;
+  phone: string;
   password: string;
   role: string;
   verifyOwner?: VerifyOwner
@@ -37,7 +37,7 @@ export const adminUser: User = {
   lastName: "RentRight",
   company: "RentRight",
   email: "admin@rentright.com",
-  phone: 9876543210,
+  phone: "9876543210",
   password: "admin123",
   role: "admin",
   imageUrl: ""
@@ -49,7 +49,7 @@ export const emptyUser: User = {
   lastName: "",
   company: "",
   email: "",
-  phone: NaN,
+  phone: "",
   password: "",
   role: "",
   verifyOwner: undefined

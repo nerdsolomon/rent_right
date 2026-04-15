@@ -19,20 +19,26 @@ const authHeaders = () => ({
   Authorization: `Bearer ${getToken()}`,
 });
 
+
 // ================= AUTH =================
 export const authService = {
-  create: async (data: Partial<User> | FormData) => {
-    const isFormData = data instanceof FormData;
-
+  create: async (data: Partial<User>) => {
     const res = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
-      headers: isFormData
-        ? undefined 
-        : { "Content-Type": "application/json" },
-      body: isFormData ? data : JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
 
-    return res.json();
+    const result = await res.json();
+
+    if (!res.ok) {
+      console.error("REGISTER ERROR:", result);
+      throw new Error(result?.message || "Registration failed");
+    }
+
+    return result;
   },
 
   login: async (data: Partial<User>) => {
@@ -42,10 +48,16 @@ export const authService = {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error("Login failed");
-
     const result = await res.json();
-    if (result.token) localStorage.setItem(TOKEN_KEY, result.token);
+
+    if (!res.ok) {
+      console.error("LOGIN ERROR:", result);
+      throw new Error(result?.message || "Login failed");
+    }
+
+    if (result.token) {
+      localStorage.setItem(TOKEN_KEY, result.token);
+    }
 
     return result;
   },

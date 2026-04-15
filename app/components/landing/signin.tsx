@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import { emptyUser } from "~/types";
 import { images } from "~/services/asset.services";
 import { useLogin, useGoogleLogin } from "~/hooks/useAuth";
@@ -10,9 +9,7 @@ const Signin = () => {
   const [isOpen, onClose] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(emptyUser);
-  const [alert, setAlert] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { login } = useData();
 
   const { mutate: loginUser, isPending, error, isSuccess } = useLogin();
   const googleLogin = useGoogleLogin();
@@ -29,7 +26,6 @@ const Signin = () => {
   useEffect(() => {
     if (isSuccess) {
       setFormData(emptyUser);
-      setAlert(false);
       onClose(false);
     }
   }, [isSuccess]);
@@ -100,7 +96,7 @@ const Signin = () => {
                 <form className="space-y-4" onSubmit={authenticate}>
                   {error && (
                     <div className="bg-red-100 rounded-lg text-sm text-red-600 p-2">
-                      Invalid credentials
+                      {(error as Error).message}
                     </div>
                   )}
 
