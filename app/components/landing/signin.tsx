@@ -79,7 +79,7 @@ const Signin = () => {
                 {/* Divider */}
                 <div className="flex items-center my-4 text-gray-400 text-sm">
                   <hr className="flex-1" />
-                  <span className="px-2">or continue with email</span>
+                  <span className="px-2">or</span>
                   <hr className="flex-1" />
                 </div>
 
@@ -92,7 +92,7 @@ const Signin = () => {
                   )}
 
                   <input
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                     type="email"
                     placeholder="Enter your email"
                     required
@@ -104,7 +104,7 @@ const Signin = () => {
 
                   <div className="relative">
                     <input
-                      className="w-full p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                      className="w-full p-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       required
@@ -124,8 +124,7 @@ const Signin = () => {
                     </button>
                   </div>
 
-                  {/* Options */}
-                  {/* <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center justify-between text-sm">
                     <label className="flex items-center gap-2">
                       <input type="checkbox" />
                       Remember me
@@ -137,7 +136,7 @@ const Signin = () => {
                     >
                       Forgot password?
                     </button>
-                  </div> */}
+                  </div>
 
                   {/* Submit */}
                   <button
