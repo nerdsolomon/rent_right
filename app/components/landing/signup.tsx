@@ -205,7 +205,7 @@ const Signup = () => {
                   {prevImage && <img src={prevImage} className="w-20 h-20" />}
 
                   <label className="flex items-center gap-2 text-xs">
-                    <input type="checkbox" />I agree to the{" "}
+                    <input type="checkbox" required />I agree to the{" "}
                     <a className="text-purple-600" href={termAndPolicy}>
                       Terms of Service and Privacy Policy
                     </a>
