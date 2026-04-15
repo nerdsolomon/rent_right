@@ -48,7 +48,7 @@ export const PropertyCard = ({ property }: Prop) => {
             {property.title}
           </h3>
 
-          <p className="text-green-500 mb-2 text-sm flex items-center font-bold capitalize">
+          <p className="text-green-500 mb-2 text-md flex items-center font-bold capitalize">
             For {property.listingType}
           </p>
 
