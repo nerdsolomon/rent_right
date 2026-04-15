@@ -1,5 +1,6 @@
 // hooks/auth/useAuth.ts
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import { authService } from "~/services";
 
 export const authKeys = {
@@ -21,11 +22,13 @@ export const useRegister = () => {
 
 export const useLogin = () => {
   const qc = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: authService.login,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: authKeys.me });
+      navigate("/home");
     },
   });
 };
