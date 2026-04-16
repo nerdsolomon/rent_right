@@ -1,20 +1,32 @@
 import type { ReactNode } from "react";
-import { useData } from "~/hooks/useData";
+import { useUpdateNotification } from "~/hooks/useNotifications";
 import type { Notification } from "~/types";
 
 interface Prop {
   notification: Notification;
-  formatDate: (value: string) => ReactNode
+  formatDate: (value: string) => ReactNode;
 }
 
 export const MessageCard = ({ notification, formatDate }: Prop) => {
-  const { updateNotification } = useData()
+  const { mutate: updateNotification, isPending } =
+    useUpdateNotification();
+
+  const handleClick = () => {
+    if (!notification.id || notification.isRead) return;
+
+    updateNotification({
+      id: notification.id,
+      data: { isRead: true },
+    });
+  };
+
   return (
     <div
-      key={notification.id ?? notification.datetime}
-      onClick={() => updateNotification({ ...notification, isRead: true })}
-      className={`flex gap-3 px-5 py-4 border-b border-gray-100 hover:bg-gray-50 transition ${
-        !notification.isRead ? "bg-blue-50/40" : "bg-white"
+      onClick={handleClick}
+      className={`flex gap-3 px-5 py-4 border-b border-gray-100 transition cursor-pointer ${
+        !notification.isRead
+          ? "bg-blue-50/40 hover:bg-blue-50"
+          : "bg-white hover:bg-gray-50"
       }`}
     >
       {/* unread dot */}
@@ -38,7 +50,7 @@ export const MessageCard = ({ notification, formatDate }: Prop) => {
       {/* badge */}
       {!notification.isRead && (
         <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full h-fit">
-          New
+          {isPending ? "..." : "New"}
         </span>
       )}
     </div>

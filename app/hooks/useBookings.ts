@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { bookingService } from "~/services";
+import type { Booking } from "~/types";
 
 export const bookingKeys = {
   all: ["bookings"] as const,
@@ -43,6 +44,26 @@ export const useDeleteBooking = () => {
 
   return useMutation({
     mutationFn: bookingService.delete,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: bookingKeys.all });
+      qc.invalidateQueries({ queryKey: bookingKeys.mine });
+    },
+  });
+};
+
+// ================= UPDATE BOOKING =================
+type UpdateBookingParams = {
+  id: number;
+  data: Partial<Booking>;
+};
+
+export const useUpdateBooking = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: UpdateBookingParams) =>
+      bookingService.update(id, data),
+
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: bookingKeys.all });
       qc.invalidateQueries({ queryKey: bookingKeys.mine });

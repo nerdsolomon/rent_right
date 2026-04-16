@@ -371,6 +371,16 @@ export const bookingService = {
     return handleResponse(res);
   },
 
+  update: async (id: number, data: Partial<Booking>) => {
+    const res = await fetch(`${BASE_URL}/bookings/${id}`, {
+      method: "PUT",
+      headers: authHeaders(),
+      body: JSON.stringify(data), 
+    });
+
+    return handleResponse(res);
+  },
+
   delete: async (id: number) => {
     const res = await fetch(`${BASE_URL}/bookings/${id}`, {
       method: "DELETE",

@@ -136,7 +136,6 @@ export const emptyBooking: Booking = {
 };
 
 export interface Notification {
-  id: number
   userId: number
   datetime: string
   message: string
@@ -144,7 +143,6 @@ export interface Notification {
 }
 
 export const emptyNotification: Notification = {
-  id: NaN,
   userId: NaN,
   datetime: "",
   message: "",
