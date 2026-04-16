@@ -137,7 +137,7 @@ export const userService = {
   },
 
   create: async (data: Partial<User>) => {
-    const res = await fetch(`${BASE_URL}/users`, {
+    const res = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(data),

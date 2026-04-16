@@ -21,7 +21,7 @@ export const useCreateUser = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: userService.create, // ⚠️ assumes you add it (see note below)
+    mutationFn: userService.create,
 
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userKeys.all });
