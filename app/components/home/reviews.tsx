@@ -1,24 +1,26 @@
-import type { Property } from "~/types";
+import type { Property, Review } from "~/types";
 import { SendReview } from "./sendreview";
-import { useData } from "~/hooks/useData";
+import { useMe } from "~/hooks/useAuth";
+import { useReviews } from "~/hooks/useReviews";
 
 interface Prop {
   property: Property;
 }
 
-export const Review = ({ property }: Prop) => {
-  const { reviews, currentUser } = useData();
+export const Reviews = ({ property }: Prop) => {
+  const { data: currentUser } = useMe();
+  const { data: reviews} = useReviews()
   return (
     <>
       <div className="flex justify-between p-4 mt-4 border-t border-gray-300">
         <p className="font-bold text-sm">Reviews</p>
-        {currentUser.id !== property.owner.id && <SendReview propertyId={property.id} />}
+        {currentUser?.id !== property.owner.id && <SendReview propertyId={property.id} />}
       </div>
       <div className="px-4">
         {reviews.length > 0 ? (
           reviews
-            .filter((r) => r.propertyId === property.id)
-            .map((review, index) => (
+            .filter((r: Review) => r.propertyId === property.id)
+            .map((review: Review, index: number) => (
               <div
                 key={index}
                 className="p-2 flex items-center text-sm border-t gap-4 border-gray-300"

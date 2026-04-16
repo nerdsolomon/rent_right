@@ -4,7 +4,6 @@ import { AddProperty } from "~/components/layout/addproperty";
 import Leftbar from "~/components/layout/leftbar";
 import { Navbar } from "~/components/layout/navbar";
 import Rightbar from "~/components/layout/rightbar";
-import { DataProvider } from "~/hooks/useData";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 
 const Layout = () => {
@@ -12,7 +11,7 @@ const Layout = () => {
   const [isOpen, onClose] = useState(false);
 
   return (
-    <DataProvider>
+    <>
       {location.pathname == "/" ? (
         <main className="h-screen">
           <Outlet />
@@ -32,7 +31,7 @@ const Layout = () => {
           <AddProperty/>
         </RequireAuth>
       )}
-    </DataProvider>
+    </>
   );
 };
 

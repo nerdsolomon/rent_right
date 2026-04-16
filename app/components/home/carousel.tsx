@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { useData } from "~/hooks/useData";
+import { useProperties } from "~/hooks/useProperties";
 import { images } from "~/services/asset.services";
+import type { Property } from "~/types";
 
 const AUTO_SLIDE_DELAY = 4000;
 
@@ -10,7 +11,9 @@ export const Carousel = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
-  const { properties } = useData();
+  const {data} = useProperties()
+    const properties = data?.properties ?? []
+  
   const total = properties.length;
 
   const next = () => {
@@ -69,7 +72,7 @@ export const Carousel = () => {
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         onTransitionEnd={() => setIsAnimating(false)}
       >
-        {properties.map((property, i) => (
+        {properties.map((property: Property, i: number) => (
           <div key={i} className="relative min-w-full h-full">
             <img
               src={
@@ -96,7 +99,7 @@ export const Carousel = () => {
       </div>
 
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
-        {properties.map((_, i) => (
+        {properties.map((_: any, i: number) => (
           <div
             key={i}
             className={`h-2 rounded-full transition-all duration-300 ${

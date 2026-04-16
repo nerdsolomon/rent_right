@@ -1,12 +1,16 @@
 import { useRef, useState } from "react";
 import { FaCamera } from "react-icons/fa";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
+import { useUpdateUser } from "~/hooks/useUsers";
 
 export const Edit = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser, updateUser } = useData();
+  const { data, isLoading } = useMe();
+  const currentUser = data?.user
+  const { mutate: updateUser } = useUpdateUser()
   const [alert, setAlert] = useState(false);
   const [prevImage, setPrevImage] = useState("");
   const prevImageRef = useRef<HTMLInputElement | null>(null);

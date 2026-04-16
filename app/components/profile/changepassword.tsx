@@ -1,104 +1,154 @@
 import { useEffect, useState } from "react";
 import { FaUserLock } from "react-icons/fa";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
+import { useUpdateUser } from "~/hooks/useUsers";
 
 export const ChangePassword = () => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser, updateUser } = useData();
-  const [formData, setFormData] = useState({ old: "", new: "", confirm: "" });
+  const [isOpen, setIsOpen] = useState(false);
+
+  const modalRef = useClickOutside({
+    isOpen,
+    onClose: setIsOpen,
+  });
+
+  const [formData, setFormData] = useState({
+    old: "",
+    new: "",
+    confirm: "",
+  });
+
   const [notMatch, setNotMatch] = useState(false);
-  const [alert, setAlert] = useState(false);
   const [message, setMessage] = useState("");
 
+  const { data, isLoading } = useMe();
+  const currentUser = data?.user
+  const { mutate: updateUser, isPending } = useUpdateUser();
+
+  // ✅ FIXED: watch both fields
   useEffect(() => {
-    if (formData.new !== formData.confirm) setNotMatch(true);
-    else setNotMatch(false);
-  }, [formData.confirm]);
+    setNotMatch(
+      formData.new.length > 0 &&
+      formData.confirm.length > 0 &&
+      formData.new !== formData.confirm
+    );
+  }, [formData.new, formData.confirm]);
 
   const changePassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.old === currentUser.password && notMatch === false) {
-      updateUser({ ...currentUser, password: formData.new });
-      setMessage("Password changed successfully");
-    } else {
-      setMessage("Old password is incorrect");
+
+    if (!currentUser?.id) {
+      setMessage("User not loaded");
+      return;
     }
-    setAlert(true);
+
+    if (notMatch) {
+      setMessage("Passwords do not match");
+      return;
+    }
+
+    // 🚨 backend must validate old password
+    updateUser(
+      {
+        id: currentUser.id,
+        data: {
+          oldPassword: formData.old,
+          password: formData.new,
+        },
+      },
+      {
+        onSuccess: () => {
+          setMessage("Password changed successfully");
+          setFormData({ old: "", new: "", confirm: "" });
+        },
+        onError: () => {
+          setMessage("Failed to change password");
+        },
+      }
+    );
   };
 
   return (
     <div>
       <div
         className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer"
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
       >
         <FaUserLock size={18} />
         <p>Change password</p>
       </div>
 
       {isOpen && (
-        <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
-            className="bg-gray-100 rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center animate-fadeIn"
+            className="bg-gray-100 rounded-2xl shadow-lg w-[90%] md:w-[400px] p-6 text-center"
           >
-            <p className="font-bold mb-4 text-purple-600">Change Password</p>
+            <p className="font-bold mb-4 text-purple-600">
+              Change Password
+            </p>
 
             <form className="space-y-4" onSubmit={changePassword}>
-              {alert && (
-                <div className="bg-yellow-100 rounded-lg text-sm text-gray-500 p-2">
+              {message && (
+                <div className="bg-yellow-100 rounded-lg text-sm text-gray-600 p-2">
                   {message}
                 </div>
               )}
+
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="password"
                 placeholder="Old Password"
-                required
                 value={formData.old}
                 onChange={(e) =>
                   setFormData({ ...formData, old: e.target.value })
                 }
+                className="w-full p-2 border rounded-lg"
+                required
               />
+
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="password"
                 placeholder="New Password"
-                required
                 value={formData.new}
                 onChange={(e) =>
                   setFormData({ ...formData, new: e.target.value })
                 }
+                className="w-full p-2 border rounded-lg"
+                required
               />
+
               <input
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 type="password"
                 placeholder="Confirm Password"
-                required
                 value={formData.confirm}
                 onChange={(e) =>
                   setFormData({ ...formData, confirm: e.target.value })
                 }
+                className="w-full p-2 border rounded-lg"
+                required
               />
+
               {notMatch && (
-                <p className="text-sm text-red-500 text-start">
-                  Passwords don't match...
+                <p className="text-sm text-red-500 text-left">
+                  Passwords don't match
                 </p>
               )}
-              <div className="grid grid-cols-2 gap-2 items-center">
+
+              <div className="grid grid-cols-2 gap-2">
                 <button
-                  onClick={() => onClose(false)}
-                  className="p-2 border border-purple-400 text-xs hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold"
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 border rounded-lg text-purple-600"
                 >
                   Cancel
                 </button>
+
                 <button
                   type="submit"
-                  className="p-2 bg-purple-600 text-xs hover:bg-purple-800 text-white rounded-lg font-semibold"
+                  disabled={isPending}
+                  className="p-2 bg-purple-600 text-white rounded-lg"
                 >
-                  Save
+                  {isPending ? "Saving..." : "Save"}
                 </button>
               </div>
             </form>

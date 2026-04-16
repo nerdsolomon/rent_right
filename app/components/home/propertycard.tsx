@@ -3,9 +3,9 @@ import { Details } from "./details";
 import { useState } from "react";
 import type { Property } from "~/types";
 import { Actions } from "./actions";
-import { useData } from "~/hooks/useData";
 import { ProfileInfo } from "./profileinfo";
 import { images } from "~/services/asset.services";
+import { useMe } from "~/hooks/useAuth";
 
 interface Prop {
   property: Property;
@@ -14,7 +14,7 @@ interface Prop {
 export const PropertyCard = ({ property }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property>();
-  const { currentUser, isAuthenticated } = useData();
+  const { data: currentUser } = useMe()
 
   return (
     <>
@@ -30,9 +30,9 @@ export const PropertyCard = ({ property }: Prop) => {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
 
-          <ProfileInfo user={property.owner} />
+          {property.owner && <ProfileInfo user={property.owner} />}
 
-          {currentUser.id === property.owner.id && isAuthenticated && (
+          {currentUser?.id === property.owner?.id && !!currentUser && (
             <div className="absolute top-3 right-3">
               <Actions property={property} />
             </div>
@@ -80,7 +80,7 @@ export const PropertyCard = ({ property }: Prop) => {
         </div>
       </a>
 
-      {isOpen && selectedProperty && isAuthenticated && (
+      {isOpen && selectedProperty && !!currentUser && (
         <Details
           isOpen={isOpen}
           onClose={() => onClose(false)}

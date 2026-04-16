@@ -1,14 +1,17 @@
 import { useRef, useState } from "react";
 import { FaImage, FaPlus } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import { emptyProperty, type Property } from "~/types";
 import { location } from "~/services";
+import { useCreateProperty } from "~/hooks/useProperties";
+import { useMe } from "~/hooks/useAuth";
 
 export const AddProperty = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { properties, setProperties, currentUser } = useData();
+  const { data, isLoading } = useMe();
+  const currentUser = data?.user
+  const { mutate: register, isPending, isSuccess, error } = useCreateProperty()
 
   const [formData, setFormData] = useState<Property>({
     ...emptyProperty,
@@ -40,9 +43,7 @@ export const AddProperty = () => {
       return;
     }
 
-    setProperties([
-      ...properties,
-      {
+      register({
         id: Date.now(),
         country: formData.country,
         state: formData.state,
@@ -54,10 +55,9 @@ export const AddProperty = () => {
         type: formData.type,
         listingType: formData.listingType,
         duration: formData.duration,
-        owner: currentUser,
         isAvailable: true,
-      },
-    ]);
+        owner: currentUser
+      })
 
     setFormData({ ...emptyProperty, country: "Nigeria" });
     setPrevImages([]);
@@ -70,7 +70,7 @@ export const AddProperty = () => {
 
   return (
     <>
-      {currentUser.role === "owner" && (
+      {currentUser?.role === "owner" && (
         <button
           onClick={() => onClose(true)}
           className="fixed bottom-8 right-8 border-4 border-white bg-purple-600 text-white hover:bg-purple-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center g p-1 transition"

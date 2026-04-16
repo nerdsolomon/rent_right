@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { FaUserTie } from "react-icons/fa";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
+import { useUpdateUser } from "~/hooks/useUsers";
 import { emptyVerifyOwner } from "~/types";
 
 export const Owner = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser, updateUser } = useData();
+  const { data } = useMe();
+  const currentUser = data?.user;
+  const { mutate: updateUser, isPending } = useUpdateUser();
   const [alert, setAlert] = useState(false);
   const [formData, setFormData] = useState(emptyVerifyOwner);
 

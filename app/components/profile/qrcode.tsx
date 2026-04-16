@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaCopy, FaQrcode } from "react-icons/fa";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useData } from "~/hooks/useData";
 import { useQrCode } from "~/hooks/useQrCode";
@@ -7,7 +8,8 @@ import { useQrCode } from "~/hooks/useQrCode";
 export const Qrcode = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser } = useData();
+  const { data } = useMe();
+  const currentUser = data?.user;
   const profileUrl = `${window.location.origin}/portfolio/${currentUser.id}`;
   const qrCode = useQrCode(profileUrl);
   return (

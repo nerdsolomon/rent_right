@@ -1,5 +1,4 @@
 import { usePageTitle } from "~/hooks/usePageTitle";
-import { useData } from "~/hooks/useData";
 import Footer from "~/components/landing/footer";
 import FeaturedProperties from "~/components/landing/featuredproperties";
 import Features from "~/components/landing/features";
@@ -10,7 +9,6 @@ import HeroSection from "~/components/landing/hero";
 
 const Landing = () => {
   usePageTitle("RentRight");
-  const { users } = useData();
 
   return (
     <>

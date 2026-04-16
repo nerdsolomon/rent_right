@@ -8,7 +8,10 @@ export const notificationKeys = {
 export const useNotifications = () =>
   useQuery({
     queryKey: notificationKeys.all,
-    queryFn: notificationService.getAll,
+    queryFn: async () => {
+      const res = await notificationService.getAll();
+      return Array.isArray(res) ? res : [];
+    },
   });
 
 export const useCreateNotification = () => {

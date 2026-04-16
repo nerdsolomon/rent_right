@@ -1,13 +1,16 @@
 import { useParams } from "react-router";
 import { PropertyCard } from "~/components/home/propertycard";
-import { useData } from "~/hooks/useData";
+import { useProperties } from "~/hooks/useProperties";
+import { useUsers } from "~/hooks/useUsers";
+import type { Property, User } from "~/types";
 
 const Portfolio = () => {
   const { id } = useParams();
-  const { users, properties } = useData();
+  const { data: users } = useUsers()
+  const { data: properties} = useProperties()
 
   const userId = Number(id);
-  const user = users.find((u) => u.id === userId);
+  const user = users.find((u: User) => u.id === userId);
 
   if (!user) {
     return (
@@ -18,7 +21,7 @@ const Portfolio = () => {
   }
 
   const userProperties = properties.filter(
-    (p) => p.owner?.id === user.id
+    (p: Property) => p.owner?.id === user.id
   );
 
   const displayName = user.company
@@ -51,7 +54,7 @@ const Portfolio = () => {
 
       {userProperties.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {userProperties.map((property) => (
+          {userProperties.map((property: Property) => (
             <PropertyCard property={property} key={property.id} />
           ))}
         </div>

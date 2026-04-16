@@ -1,17 +1,20 @@
 import { FaBell } from "react-icons/fa";
 import { Section } from "~/components/notifications/section";
+import { useMe } from "~/hooks/useAuth";
 import { useData } from "~/hooks/useData";
+import { useNotifications } from "~/hooks/useNotifications";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 import { type Notification } from "~/types";
 
 const Notifications = () => {
   usePageTitle("RentRight - Notifications");
-  const { notifications, currentUser } = useData();
+  const { data: currentUser } = useMe();
+  const { data: notifications } = useNotifications()
 
   const filteredNotifications: Notification[] = notifications
-    .filter((n) => n.userId === currentUser.id)
-    .sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+    .filter((n: Notification) => n.userId === currentUser?.id)
+    .sort((a: { datetime: string | number | Date; }, b: { datetime: string | number | Date; }) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
 
   const isToday = (date: string) => {
     const d = new Date(date);

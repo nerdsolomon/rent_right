@@ -14,46 +14,45 @@ const TOKEN_KEY = "auth_token";
 // ================= HELPERS =================
 const getToken = () => localStorage.getItem(TOKEN_KEY);
 
-const authHeaders = () => ({
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${getToken()}`,
-});
+const handleResponse = async (res: Response) => {
+  const data = await res.json().catch(() => null);
 
+  if (!res.ok) {
+    throw new Error(data?.message || "Something went wrong");
+  }
+
+  return data;
+};
+
+export const authHeaders = (isFormData = false) => {
+  const token = getToken();
+
+  return {
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
+  };
+};
 
 // ================= AUTH =================
 export const authService = {
   create: async (data: Partial<User>) => {
     const res = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
 
-    const result = await res.json();
-
-    if (!res.ok) {
-      console.error("REGISTER ERROR:", result);
-      throw new Error(result?.message || "Registration failed");
-    }
-
-    return result;
+    return handleResponse(res);
   },
 
   login: async (data: Partial<User>) => {
     const res = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
 
-    const result = await res.json();
-
-    if (!res.ok) {
-      console.error("LOGIN ERROR:", result);
-      throw new Error(result?.message || "Login failed");
-    }
+    const result = await handleResponse(res);
 
     if (result.token) {
       localStorage.setItem(TOKEN_KEY, result.token);
@@ -65,40 +64,44 @@ export const authService = {
   verifyEmail: async (data: { email: string; otp: string }) => {
     const res = await fetch(`${BASE_URL}/auth/verify-email`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   verifyPhone: async (data: { phone: string; otp: string }) => {
     const res = await fetch(`${BASE_URL}/auth/verify-phone`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   resendOtp: async (data: { email?: string; phone?: string }) => {
     const res = await fetch(`${BASE_URL}/auth/resend-otp`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
-  me: async (): Promise<User> => {
+  me: async (): Promise<User | null> => {
     const token = getToken();
-    if (!token) return emptyUser;
+    if (!token) return null;
 
     const res = await fetch(`${BASE_URL}/auth/me`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: authHeaders(),
     });
 
-    if (!res.ok) return emptyUser;
-    return res.json();
+    if (!res.ok) return null;
+
+    return handleResponse(res);
   },
 
   logout: async () => {
@@ -107,10 +110,12 @@ export const authService = {
 
     if (!token) return;
 
-    await fetch(`${BASE_URL}/auth/logout`, {
+    const res = await fetch(`${BASE_URL}/auth/logout`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
+      headers: authHeaders(),
     });
+
+    return handleResponse(res);
   },
 
   googleLogin: () => {
@@ -128,14 +133,24 @@ export const userService = {
     const res = await fetch(`${BASE_URL}/users`, {
       headers: authHeaders(),
     });
-    return res.json();
+    return handleResponse(res);
+  },
+
+  create: async (data: Partial<User>) => {
+    const res = await fetch(`${BASE_URL}/users`, {
+      method: "POST",
+      headers: authHeaders(),
+      body: JSON.stringify(data),
+    });
+
+    return handleResponse(res);
   },
 
   getById: async (id: number) => {
     const res = await fetch(`${BASE_URL}/users/${id}`, {
       headers: authHeaders(),
     });
-    return res.json();
+    return handleResponse(res);
   },
 
   update: async (id: number, data: Partial<User>) => {
@@ -144,14 +159,17 @@ export const userService = {
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   delete: async (id: number) => {
-    await fetch(`${BASE_URL}/users/${id}`, {
+    const res = await fetch(`${BASE_URL}/users/${id}`, {
       method: "DELETE",
       headers: authHeaders(),
     });
+
+    return handleResponse(res);
   },
 
   toggleRole: async (id: number) => {
@@ -159,40 +177,38 @@ export const userService = {
       method: "PATCH",
       headers: authHeaders(),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 };
 
-// ================= NIN VERIFICATION =================
+// ================= NIN =================
 export const ninService = {
-  submit: async (data: {
-    nin: string;
-    name: string;
-    address: string;
-  }) => {
+  submit: async (data: { nin: string; name: string; address: string }) => {
     const res = await fetch(`${BASE_URL}/nin-verification/submit`, {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   status: async () => {
     const res = await fetch(`${BASE_URL}/nin-verification/status`, {
       headers: authHeaders(),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   adminGetAll: async (status?: string) => {
     const res = await fetch(
-      `${BASE_URL}/nin-verification/admin/all${
-        status ? `?status=${status}` : ""
-      }`,
+      `${BASE_URL}/nin-verification/admin/all${status ? `?status=${status}` : ""}`,
       { headers: authHeaders() }
     );
-    return res.json();
+
+    return handleResponse(res);
   },
 
   review: async (id: number, data: { status: "approved" | "rejected" }) => {
@@ -204,7 +220,8 @@ export const ninService = {
         body: JSON.stringify(data),
       }
     );
-    return res.json();
+
+    return handleResponse(res);
   },
 };
 
@@ -212,17 +229,17 @@ export const ninService = {
 export const propertyService = {
   getAll: async () => {
     const res = await fetch(`${BASE_URL}/properties`);
-    return res.json();
+    return handleResponse(res);
   },
 
   getById: async (id: number) => {
     const res = await fetch(`${BASE_URL}/properties/${id}`);
-    return res.json();
+    return handleResponse(res);
   },
 
   getByOwner: async (userId: number) => {
     const res = await fetch(`${BASE_URL}/properties/owner/${userId}`);
-    return res.json();
+    return handleResponse(res);
   },
 
   create: async (data: Property) => {
@@ -231,23 +248,27 @@ export const propertyService = {
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
-  update: async (id: number, data: Property) => {
+  update: async (id: number, data: FormData) => {
     const res = await fetch(`${BASE_URL}/properties/${id}`, {
       method: "PUT",
-      headers: authHeaders(),
-      body: JSON.stringify(data),
+      headers: authHeaders(true),
+      body: data,
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   delete: async (id: number) => {
-    await fetch(`${BASE_URL}/properties/${id}`, {
+    const res = await fetch(`${BASE_URL}/properties/${id}`, {
       method: "DELETE",
       headers: authHeaders(),
     });
+
+    return handleResponse(res);
   },
 };
 
@@ -255,14 +276,12 @@ export const propertyService = {
 export const reviewService = {
   getAll: async () => {
     const res = await fetch(`${BASE_URL}/reviews`);
-    return res.json();
+    return handleResponse(res);
   },
 
   getByProperty: async (propertyId: number) => {
-    const res = await fetch(
-      `${BASE_URL}/reviews/property/${propertyId}`
-    );
-    return res.json();
+    const res = await fetch(`${BASE_URL}/reviews/property/${propertyId}`);
+    return handleResponse(res);
   },
 
   create: async (data: Review) => {
@@ -271,14 +290,17 @@ export const reviewService = {
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   delete: async (id: number) => {
-    await fetch(`${BASE_URL}/reviews/${id}`, {
+    const res = await fetch(`${BASE_URL}/reviews/${id}`, {
       method: "DELETE",
       headers: authHeaders(),
     });
+
+    return handleResponse(res);
   },
 };
 
@@ -288,7 +310,8 @@ export const feedbackService = {
     const res = await fetch(`${BASE_URL}/feedbacks`, {
       headers: authHeaders(),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   create: async (data: Feedback) => {
@@ -297,7 +320,8 @@ export const feedbackService = {
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   markViewed: async (id: number) => {
@@ -305,14 +329,17 @@ export const feedbackService = {
       method: "PATCH",
       headers: authHeaders(),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   delete: async (id: number) => {
-    await fetch(`${BASE_URL}/feedbacks/${id}`, {
+    const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
       method: "DELETE",
       headers: authHeaders(),
     });
+
+    return handleResponse(res);
   },
 };
 
@@ -322,14 +349,16 @@ export const bookingService = {
     const res = await fetch(`${BASE_URL}/bookings`, {
       headers: authHeaders(),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   myBookings: async () => {
     const res = await fetch(`${BASE_URL}/bookings/my-bookings`, {
       headers: authHeaders(),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   create: async (data: Booking) => {
@@ -338,14 +367,17 @@ export const bookingService = {
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   delete: async (id: number) => {
-    await fetch(`${BASE_URL}/bookings/${id}`, {
+    const res = await fetch(`${BASE_URL}/bookings/${id}`, {
       method: "DELETE",
       headers: authHeaders(),
     });
+
+    return handleResponse(res);
   },
 };
 
@@ -355,7 +387,8 @@ export const notificationService = {
     const res = await fetch(`${BASE_URL}/notifications`, {
       headers: authHeaders(),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   create: async (data: Notification) => {
@@ -364,7 +397,8 @@ export const notificationService = {
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   update: async (id: number, data: Notification) => {
@@ -373,21 +407,24 @@ export const notificationService = {
       headers: authHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+
+    return handleResponse(res);
   },
 
   delete: async (id: number) => {
-    await fetch(`${BASE_URL}/notifications/${id}`, {
+    const res = await fetch(`${BASE_URL}/notifications/${id}`, {
       method: "DELETE",
       headers: authHeaders(),
     });
+
+    return handleResponse(res);
   },
 };
 
-// ================= HEALTH CHECK =================
+// ================= HEALTH =================
 export const healthService = {
   check: async () => {
     const res = await fetch(`${BASE_URL}/health`);
-    return res.json();
+    return handleResponse(res);
   },
 };

@@ -8,8 +8,10 @@ import {
   FaUserCheck,
 } from "react-icons/fa";
 import { NavLink } from "react-router";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
+import { useNotifications } from "~/hooks/useNotifications";
+import type { Notification } from "~/types";
 
 interface Prop {
   isOpen: boolean;
@@ -18,7 +20,9 @@ interface Prop {
 
 const Leftbar = ({ isOpen, onClose }: Prop) => {
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser, notifications } = useData();
+  const { data: notifications = [] } = useNotifications()
+  const { data, isLoading } = useMe();
+  const currentUser = data?.user
   const navLinks = [
     { title: "Home", path: "/home", icon: FaHome, always: true },
     { title: "Dashboard", path: "/dashboard", icon: FaChartBar, restricted: true },
@@ -26,10 +30,10 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
     { title: "Feedbacks", path: "/feedbacks", icon: FaExclamationCircle, restricted: true },
     { title: "Bookings", path: "/bookings", icon: FaCalendarAlt, restricted: false },
     { title: "Notifications", path: "/notifications", icon: FaBell, restricted: false },
-    { title: "Portfolio", path: `/portfolio/${currentUser.id}`, icon: FaBriefcase, restricted: false, owner: true },
+    { title: "Portfolio", path: `/portfolio/${currentUser?.id}`, icon: FaBriefcase, restricted: false, owner: true },
   ];
 
-  const unreadNotifications = notifications.filter((n) => n.userId === currentUser.id && !n.isRead);
+  const unreadNotifications = notifications.filter((n: Notification) => n.userId === currentUser?.id && !n.isRead);
 
   return (
     <aside
@@ -42,8 +46,8 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
     >
       {navLinks
         .filter((link) => {
-          const isAdmin = currentUser.role === "admin";
-          const isOwner = currentUser.role === "owner";
+          const isAdmin = currentUser?.role === "admin";
+          const isOwner = currentUser?.role === "owner";
           if (link.always) return true;
           if (isAdmin) return link.restricted === true;
           if (link.restricted) return false;        

@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
+import { useDeleteUser } from "~/hooks/useUsers";
 
-export const Delete = () => {
+interface Prop {
+  userId : number
+}
+
+export const Delete = ({ userId} : Prop) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser, deleteUser } = useData();
+  const { mutate: deleteUser } = useDeleteUser()
   return (
     <div>
       <div
@@ -35,7 +39,7 @@ export const Delete = () => {
                 Cancel
               </button>
               <button
-                onClick={() => deleteUser(currentUser.id)}
+                onClick={() => deleteUser(userId)}
                 className="p-2 bg-red-400 mt-2 text-xs hover:bg-red-500 text-white rounded-lg font-semibold"
               >
                 Delete

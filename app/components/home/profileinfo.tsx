@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import { type User } from "~/types";
 
 interface Prop {
@@ -11,14 +11,14 @@ interface Prop {
 export const ProfileInfo = ({ user }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { isAuthenticated } = useData();
+  const { data: currentUser } = useMe();
   const navigate = useNavigate()
 
   return (
     <>
       <span
         onClick={() => {
-          if (isAuthenticated) onClose(true);
+          if (!!currentUser) onClose(true);
         }}
         className="absolute top-3 left-3 w-8 h-8 cursor-pointer aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold"
       >

@@ -8,61 +8,84 @@ export const authKeys = {
   all: ["auth"] as const,
 };
 
+// ================= ME =================
 export const useMe = () =>
   useQuery({
     queryKey: authKeys.me,
     queryFn: authService.me,
+    retry: false,
+    staleTime: 5 * 60 * 1000,
   });
 
-export const useRegister = () => {
-  return useMutation({
-    mutationFn: authService.create,
-  });
-};
-
+// ================= LOGIN =================
 export const useLogin = () => {
   const qc = useQueryClient();
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: authService.login,
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: authKeys.me });
-      navigate("/home");
+
+    onSuccess: async () => {
+      // force refetch user BEFORE navigation
+      await qc.invalidateQueries({ queryKey: authKeys.me });
+
+      navigate("/home", { replace: true });
+    },
+
+    onError: (err) => {
+      console.error("LOGIN ERROR:", err);
     },
   });
 };
 
-export const useVerifyEmail = () => {
-  return useMutation({
+// ================= VERIFY EMAIL =================
+export const useVerifyEmail = () =>
+  useMutation({
     mutationFn: authService.verifyEmail,
+    onError: (err) => console.error("VERIFY EMAIL ERROR:", err),
   });
-};
 
-export const useVerifyPhone = () => {
-  return useMutation({
+// ================= VERIFY PHONE =================
+export const useVerifyPhone = () =>
+  useMutation({
     mutationFn: authService.verifyPhone,
+    onError: (err) => console.error("VERIFY PHONE ERROR:", err),
   });
-};
 
-export const useResendOtp = () => {
-  return useMutation({
+// ================= RESEND OTP =================
+export const useResendOtp = () =>
+  useMutation({
     mutationFn: authService.resendOtp,
+    onError: (err) => console.error("RESEND OTP ERROR:", err),
   });
-};
 
+// ================= LOGOUT =================
 export const useLogout = () => {
   const qc = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: authService.logout,
-    onSuccess: () => {
-      qc.setQueryData(authKeys.me, null);
-      qc.removeQueries({ queryKey: authKeys.me });
+
+    onSuccess: async () => {
+      // 🔥 HARD RESET ALL AUTH STATE
+      await qc.cancelQueries();
+      qc.removeQueries(); // clears everything (important for security)
+
+      navigate("/", { replace: true });
+    },
+
+    onError: (err) => {
+      console.error("LOGOUT ERROR:", err);
+
+      // still force logout locally even if API fails
+      qc.removeQueries();
+      navigate("/", { replace: true });
     },
   });
 };
 
+// ================= SOCIAL LOGIN =================
 export const useGoogleLogin = () => {
   return () => authService.googleLogin();
 };

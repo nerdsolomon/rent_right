@@ -1,8 +1,9 @@
 import { useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import type { IconType } from "react-icons";
 import { Options } from "./options";
+import { useUsers } from "~/hooks/useUsers";
+import type { User } from "~/types";
 
 interface Props {
   label: string;
@@ -13,7 +14,7 @@ interface Props {
 export const Users = ({ role, label, icon: Icon }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { users } = useData();
+  const { data: users } = useUsers()
   return (
     <>
       <button
@@ -22,7 +23,7 @@ export const Users = ({ role, label, icon: Icon }: Props) => {
       >
         <Icon className="text-xl" />
         <p className="text-xl font-bold">
-          {users.filter((user) => user.role === role).length}
+          {users.filter((user: User) => user.role === role).length}
         </p>
         {label}
       </button>
@@ -48,10 +49,10 @@ export const Users = ({ role, label, icon: Icon }: Props) => {
 
             {/* Content */}
             <div className="max-h-[70vh] overflow-y-auto divide-y divide-gray-100">
-              {users.filter((user) => user.role === role).length > 0 ? (
+              {users.filter((user: User) => user.role === role).length > 0 ? (
                 users
-                  .filter((user) => user.role === role)
-                  .map((user, index) => (
+                  .filter((user: User) => user.role === role)
+                  .map((user: User, index: number) => (
                     <div
                       key={index}
                       className="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition"

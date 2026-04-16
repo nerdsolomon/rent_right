@@ -1,10 +1,11 @@
 import useClickOutside from "~/hooks/useClickOutside";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { Review } from "./review";
+import { Reviews } from "./reviews";
 import type { Property } from "~/types";
 import { images } from "~/services/asset.services";
 import { Booking } from "./booking";
 import { useData } from "~/hooks/useData";
+import { useMe } from "~/hooks/useAuth";
 
 interface Props {
   isOpen: boolean;
@@ -14,7 +15,7 @@ interface Props {
 
 export const Details = ({ isOpen, onClose, property }: Props) => {
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { currentUser } = useData();
+  const { data: currentUser } = useMe();
   return (
     <>
       {isOpen && (
@@ -55,7 +56,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
                 </p>
                 {property.listingType === 'rental' && <p className="text-xs text-gray-400">{`/${property.duration}`}</p>}
               </div>
-              {currentUser.id !== property.owner.id &&
+              {currentUser?.id !== property.owner.id &&
                 property.isAvailable != false && (
                   <Booking property={property} />
                 )}
@@ -66,7 +67,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
               />
             </div>
 
-            <Review property={property} />
+            <Reviews property={property} />
           </div>
         </div>
       )}

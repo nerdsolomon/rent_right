@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import { type IconType } from "react-icons";
+import { useDeleteProperty, useProperties } from "~/hooks/useProperties";
+import type { Property } from "~/types";
 
 interface Props {
   label: string;
@@ -13,7 +14,9 @@ interface Props {
 export const Properties = ({ label, type, icon: Icon }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { deleteProperty, properties } = useData();
+  const { data } = useProperties()
+  const properties = data?.properties ?? []
+  const { mutate: deleteProperty } = useDeleteProperty()
   return (
     <>
       <button
@@ -22,7 +25,7 @@ export const Properties = ({ label, type, icon: Icon }: Props) => {
       >
         <Icon className="text-xl" />
         <p className="text-xl font-bold">
-          {properties.filter((property) => property.type === type).length}
+          {properties.filter((property: Property) => property.type === type).length}
         </p>
         {label}
       </button>
@@ -61,10 +64,10 @@ export const Properties = ({ label, type, icon: Icon }: Props) => {
 
                   {/* Body */}
                   <tbody className="divide-y divide-gray-100">
-                    {properties.filter((p) => p.type === type).length > 0 ? (
+                    {properties.filter((p: Property) => p.type === type).length > 0 ? (
                       properties
-                        .filter((property) => property.type === type)
-                        .map((property, index) => (
+                        .filter((property: Property) => property.type === type)
+                        .map((property: Property, index: number) => (
                           <tr
                             key={index}
                             className="hover:bg-gray-50 transition"

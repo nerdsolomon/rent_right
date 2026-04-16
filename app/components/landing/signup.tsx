@@ -3,7 +3,8 @@ import { FaHome } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { emptyUser } from "~/types";
 import { images, termAndPolicy } from "~/services/asset.services";
-import { useRegister, useGoogleLogin } from "~/hooks/useAuth";
+import { useGoogleLogin } from "~/hooks/useAuth";
+import { useCreateUser } from "~/hooks/useUsers";
 
 const Signup = () => {
   const [isOpen, onClose] = useState(false);
@@ -14,7 +15,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [notMatch, setNotMatch] = useState(false);
 
-  const { mutate: register, isPending, isSuccess, error } = useRegister();
+  const { mutate: register, isPending, isSuccess, error } = useCreateUser();
   const googleLogin = useGoogleLogin();
 
   const addUser = (e: React.FormEvent<HTMLFormElement>) => {
