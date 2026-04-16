@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { userService } from "~/services";
+import { authService, userService } from "~/services";
 import type { User } from "~/types";
 
 export const userKeys = {
@@ -21,7 +21,7 @@ export const useCreateUser = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: userService.create,
+    mutationFn: authService.create,
 
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userKeys.all });
