@@ -11,8 +11,10 @@ import type { Booking, Property } from "~/types";
 const Bookings = () => {
   usePageTitle("RentRight - Bookings");
 
-  const { data: bookings = [] } = useMyBookings();
-  const { data: currentUser } = useMe();
+  const { data: bData } = useMyBookings();
+  const bookings = bData?.bookings ?? []
+  const { data: uData } = useMe();
+  const currentUser = uData?.user 
 
   const { mutate: updateBooking } = useUpdateBooking();
   const { mutate: createNotification } = useCreateNotification();
