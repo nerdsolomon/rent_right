@@ -50,7 +50,7 @@ export const Users = ({ role, label, icon: Icon }: Props) => {
             </div>
 
             {/* Content */}
-            <div className="max-h-[70vh] overflow-y-auto divide-y divide-gray-100">
+            <div className="h-[80vh] overflow-y-auto scrollbar-hidden divide-y divide-gray-100">
               {users.filter((user: User) => user.role === role).length > 0 ? (
                 users
                   .filter((user: User) => user.role === role)

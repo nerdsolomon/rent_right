@@ -102,7 +102,7 @@ export const ChangePassword = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, old: e.target.value })
                 }
-                className="w-full p-2 border rounded-lg"
+                className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               />
 
@@ -113,7 +113,7 @@ export const ChangePassword = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, new: e.target.value })
                 }
-                className="w-full p-2 border rounded-lg"
+                className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               />
 
@@ -124,7 +124,7 @@ export const ChangePassword = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, confirm: e.target.value })
                 }
-                className="w-full p-2 border rounded-lg"
+                className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               />
 
@@ -138,7 +138,7 @@ export const ChangePassword = () => {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="p-2 border rounded-lg text-purple-600"
+                  className="px-4 py-2 text-sm hover:bg-purple-600 hover:text-white border rounded-lg text-purple-600"
                 >
                   Cancel
                 </button>
@@ -146,7 +146,7 @@ export const ChangePassword = () => {
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="p-2 bg-purple-600 text-white rounded-lg"
+                  className="px-4 py-2 text-sm hover:bg-purple-800 bg-purple-600 text-white rounded-lg"
                 >
                   {isPending ? "Saving..." : "Save"}
                 </button>

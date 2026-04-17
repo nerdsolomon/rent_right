@@ -51,7 +51,7 @@ export const Properties = ({ label, type, icon: Icon }: Props) => {
             </div>
 
             {/* Content */}
-            <div className="max-h-[70vh] overflow-y-auto">
+            <div className="h-[80vh] overflow-y-auto scrollbar-hidden">
               <div className="border border-gray-100 rounded-xl overflow-hidden">
                 <table className="w-full text-sm">
                   {/* Header */}

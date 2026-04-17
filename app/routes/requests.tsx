@@ -1,62 +1,64 @@
 import { useState } from "react";
 import { FaUserCheck } from "react-icons/fa";
 import { VerifyInfo } from "~/components/requests/verifyinfo";
-import { useData } from "~/hooks/useData";
+import { useCreateNotification } from "~/hooks/useNotifications";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
+import { useUpdateUser, useUsers } from "~/hooks/useUsers";
 import type { User } from "~/types";
 
 const Requests = () => {
   usePageTitle("RentRight - Requests");
-  const { users, updateUser, notifications, setNotifications } = useData();
   const [isOpen, onClose] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
 
-  const filterUsers = users.filter((u) => u.verifyOwner != null);
+  const { data: usersData } = useUsers();
+  const users = usersData?.users ?? [];
+
+  const { mutate: updateUser } = useUpdateUser();
+  const { mutate: createNotification } = useCreateNotification();
+
+  const filterUsers = users.filter((u: User) => u.verifyOwner != null);
 
   const handleApprove = (user: User) => {
     updateUser({
-      ...user,
-      role: "owner",
-      verifyOwner: user.verifyOwner
-        ? {
-            ...user.verifyOwner,
-            verifiedAt: new Date().toISOString(),
-            status: "approved",
-          }
-        : undefined,
+      id: user.id,
+      data: {
+        role: "owner",
+        verifyOwner: user.verifyOwner
+          ? {
+              ...user.verifyOwner,
+              verifiedAt: new Date().toISOString(),
+              status: "approved",
+            }
+          : undefined,
+      },
     });
 
-    setNotifications([
-      ...notifications,
-      {
-        id: Math.random(),
-        datetime: new Date().toISOString(),
-        isRead: false,
-        userId: user.id,
-        message: `Hello, ${user.firstName}.\nCongratulations, you've been approved as an owner. You can now post your properties for rental or sale.`,
-      },
-    ]);
+    createNotification({
+      datetime: new Date().toISOString(),
+      isRead: false,
+      userId: user.id,
+      message: `Hello, ${user.firstName}.\nCongratulations, you've been approved as an owner. You can now post your properties for rental or sale.`,
+    });
   };
 
   const handleReject = (user: User) => {
     updateUser({
-      ...user,
-      verifyOwner: user.verifyOwner
-        ? { ...user.verifyOwner, status: "rejected" }
-        : undefined,
+      id: user.id,
+      data: {
+        verifyOwner: user.verifyOwner
+          ? { ...user.verifyOwner, status: "rejected" }
+          : undefined,
+      },
     });
 
-    setNotifications([
-      ...notifications,
-      {
-        id: Math.random(),
-        datetime: new Date().toISOString(),
-        isRead: false,
-        userId: user.id,
-        message: `Hello, ${user.firstName}.\nWe regret to inform you that your request to be verified as an owner was rejected.`,
-      },
-    ]);
+    createNotification({
+      datetime: new Date().toISOString(),
+      isRead: false,
+      userId: user.id,
+      message: `Hello, ${user.firstName}.\nWe regret to inform you that your request to be verified as an owner was rejected.`,
+    });
   };
 
   return (
@@ -75,7 +77,7 @@ const Requests = () => {
                 </div>
 
                 {/* Rows */}
-                {filterUsers.map((u, index) => (
+                {filterUsers.map((u: User, index: number) => (
                   <div
                     key={index}
                     className="grid grid-cols-4 items-center p-3 text-sm hover:bg-gray-50 transition"

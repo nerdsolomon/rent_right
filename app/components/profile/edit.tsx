@@ -20,7 +20,6 @@ export const Edit = () => {
 
   const [formData, setFormData] = useState(emptyUser);
 
-  // Sync form with user data
   useEffect(() => {
     if (currentUser) {
       setFormData(currentUser);
@@ -31,10 +30,11 @@ export const Edit = () => {
     e.preventDefault();
 
     updateUser({
-      ...currentUser,
-      ...formData,
-      phone: Number(formData.phone),
-      imageUrl: prevImage || currentUser.imageUrl,
+      id: currentUser.id,
+      data: {
+        ...formData,
+        imageUrl: prevImage || currentUser.imageUrl,
+      },
     });
 
     setAlert(true);
