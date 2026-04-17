@@ -2,8 +2,7 @@ import { useState } from "react";
 import { FaEllipsisV } from "react-icons/fa";
 import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
-import { useDeleteUser } from "~/hooks/useUsers";
+import { useDeleteUser, useToggleUserRole } from "~/hooks/useUsers";
 import type { User } from "~/types";
 
 interface Prop {
@@ -12,11 +11,13 @@ interface Prop {
 
 export const Options = ({ user }: Prop) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { toggleRole } = useData();
+  const modalRef = useClickOutside({ isOpen, onClose: setIsOpen });
+
   const { data } = useMe();
   const currentUser = data?.user;
+
   const { mutate: deleteUser } = useDeleteUser()
-  const modalRef = useClickOutside({ isOpen, onClose: setIsOpen });
+  const { mutate: toggleRole } = useToggleUserRole()
 
   return (
     <div ref={modalRef} className="relative inline-block text-left">

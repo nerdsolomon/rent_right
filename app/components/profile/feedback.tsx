@@ -1,18 +1,27 @@
 import { useState } from "react";
 import { FaBug } from "react-icons/fa";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
+import { useCreateFeedback, useFeedbacks } from "~/hooks/useFeedbacks";
 import { emptyFeedback } from "~/types";
 
 export const Feedback = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { feedbacks, setFeedbacks, currentUser } = useData();
+
+  const { data } = useMe();
+  const currentUser = data?.user;
+
+  const { data: fData } = useFeedbacks();
+  const feedbacks = fData?.feedbacks ?? [];
+
+  const { mutate: createFeedback } = useCreateFeedback();
+
   const [formData, setFormData] = useState(emptyFeedback);
 
   const sendFeedback = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFeedbacks([...feedbacks, formData]);
+    createFeedback(formData);
     setFormData(emptyFeedback);
     onClose(false);
   };
@@ -61,7 +70,7 @@ export const Feedback = () => {
                     id: Math.random(),
                     text: e.target.value,
                     user: currentUser,
-                    isViewed: false
+                    isViewed: false,
                   })
                 }
               />

@@ -1,18 +1,21 @@
 import { FaExclamationCircle } from "react-icons/fa";
-import { useData } from "~/hooks/useData";
+import { useFeedbacks } from "~/hooks/useFeedbacks";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
+import type { Feedback } from "~/types";
 
 const Feedbacks = () => {
   usePageTitle("RentRight - Feedbacks");
-  const { feedbacks } = useData();
+
+  const { data } = useFeedbacks()
+  const feedbacks = data?.feedbacks ?? []
 
   return (
     <RequireAuth>
       <div className="w-full mt-4">
         {feedbacks.length > 0 ? (
           <div className="border border-gray-200 rounded-lg overflow-hidden">
-            {feedbacks.map((f, index) => (
+            {feedbacks.map((f: Feedback, index: number) => (
               <div
                 key={index}
                 className={`flex gap-3 p-4 items-start transition ${

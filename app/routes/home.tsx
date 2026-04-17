@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { FaHome } from "react-icons/fa";
 import { Carousel } from "~/components/home/carousel";
 import { Filter } from "~/components/home/filter";
 import { PropertyCard } from "~/components/home/propertycard";
@@ -9,8 +10,8 @@ import type { Property } from "~/types";
 
 const Home = () => {
   usePageTitle("RentRight - Home");
-  const {data} = useProperties()
-  const properties = data?.properties ?? []
+  const { data } = useProperties();
+  const properties = data?.properties ?? [];
 
   const [country, setCountry] = useState("Nigeria");
   const [state, setState] = useState("");
@@ -25,7 +26,8 @@ const Home = () => {
         (!city || p.city?.toLowerCase() === city.toLowerCase()) &&
         (!state || p.state?.toLowerCase() === state.toLowerCase()) &&
         (!type || p.type?.toLowerCase() === type.toLowerCase()) &&
-        (!listingType || p.listingType?.toLowerCase() === listingType.toLowerCase()) &&
+        (!listingType ||
+          p.listingType?.toLowerCase() === listingType.toLowerCase()) &&
         (!duration || p.duration?.toLowerCase() === duration.toLowerCase())
       );
     });
@@ -51,17 +53,20 @@ const Home = () => {
           type={type}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredProperties.length > 0 ? (
-            filteredProperties.map((property: Property, index: number) => (
+        {filteredProperties.length > 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {filteredProperties.map((property: Property, index: number) => (
               <PropertyCard property={property} key={index} />
-            ))
-          ) : (
-            <p className="text-gray-500 pt-20 col-span-full text-center">
-              No properties match your filters.
+            ))}
+          </div>
+        ) : (
+          <div className="mt-40 text-center">
+            <FaHome size={40} className="text-gray-300 mb-5 mx-auto" />
+            <p className="font-bold text-[22px] text-gray-300">
+              No property to show
             </p>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </RequireAuth>
   );

@@ -93,7 +93,7 @@ const Profile = () => {
         </div>
 
         <div className="space-y-4">
-          {/* {currentUser?.role !== "admin" && <Feedback />} */}
+          {currentUser?.role !== "admin" && <Feedback />}
           <div className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
             <FaQuestionCircle size={18} />
             <p>Help center</p>

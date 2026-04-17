@@ -14,7 +14,9 @@ interface Props {
 export const Users = ({ role, label, icon: Icon }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { data: users } = useUsers()
+
+  const { data } = useUsers()
+  const users = data?.users ?? []
   return (
     <>
       <button

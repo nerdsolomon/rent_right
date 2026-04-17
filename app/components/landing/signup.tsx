@@ -62,6 +62,15 @@ const Signup = () => {
             {/* LEFT SIDE */}
             <div className="w-full md:w-1/2 overflow-y-auto px-6 py-4">
               <div className="w-full max-w-md">
+                <div className="lg:hidden flex justify-between">
+                  <div></div>
+                  <button
+                    onClick={() => onClose(false)}
+                    className="text-gray-400 hover:text-black"
+                  >
+                    ✕
+                  </button>
+                </div>
                 <div className="flex flex-col items-center mb-4">
                   <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
                     <FaHome size={22} />

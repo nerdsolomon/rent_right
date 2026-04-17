@@ -1,5 +1,4 @@
 import Dropdown from "./dropdown";
-import { SelectInput } from "./select";
 import { location } from "~/services";
 
 interface Prop {
@@ -38,10 +37,9 @@ export const Filter = ({
   const listingTypes = ["rental", "sale"];
   const durations = ["daily", "weekly", "monthly", "yearly"];
 
-  // ✅ centralised handlers (fixes your issue)
   const handleStateChange = (value: string) => {
     setState(value);
-    setCity(""); // reset dependent field
+    setCity("");
   };
 
   const handleCityChange = (value: string) => {
@@ -55,8 +53,7 @@ export const Filter = ({
 
   return (
     <>
-      {/* ✅ MOBILE */}
-      <div className="flex lg:hidden pb-4 gap-2 flex-wrap">
+      <div className="flex pb-4 gap-2 flex-wrap">
         {country && (
           <Dropdown
             label="State"
@@ -95,50 +92,6 @@ export const Filter = ({
             value={duration}
             list={durations}
             onSelect={setDuration}
-          />
-        )}
-      </div>
-
-      {/* ✅ DESKTOP */}
-      <div className="hidden lg:grid grid-cols-5 pb-4">
-        {country && (
-          <SelectInput
-            label="State"
-            value={state}
-            list={states}
-            onChange={handleStateChange}
-          />
-        )}
-
-        {country && state && (
-          <SelectInput
-            label="City"
-            value={city}
-            list={cities}
-            onChange={handleCityChange}
-          />
-        )}
-
-        <SelectInput
-          label="Property Type"
-          value={type}
-          list={types}
-          onChange={setType}
-        />
-
-        <SelectInput
-          label="Listing Type"
-          value={listingType}
-          list={listingTypes}
-          onChange={handleListingTypeChange}
-        />
-
-        {listingType === "rental" && (
-          <SelectInput
-            label="Duration"
-            value={duration}
-            list={durations}
-            onChange={setDuration}
           />
         )}
       </div>

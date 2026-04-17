@@ -11,8 +11,11 @@ import { useProperties } from "~/hooks/useProperties";
 import { useUsers } from "~/hooks/useUsers";
 
 export function Chart() {
-  const { data: users } = useUsers()
-  const { data: properties } = useProperties()
+  const { data: usersData } = useUsers()
+  const users = usersData?.users ?? []
+
+  const { data: propertiesData } = useProperties()
+  const properties = propertiesData?.properties ?? []
 
   const data = [
     { name: "Admins", value: users.filter((u: { role: string; }) => u.role === "admin").length },

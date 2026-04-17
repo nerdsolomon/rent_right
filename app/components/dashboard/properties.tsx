@@ -14,6 +14,7 @@ interface Props {
 export const Properties = ({ label, type, icon: Icon }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
+  
   const { data } = useProperties()
   const properties = data?.properties ?? []
   const { mutate: deleteProperty } = useDeleteProperty()

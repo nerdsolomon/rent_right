@@ -1,12 +1,12 @@
 import { useState } from "react";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import { FaExclamationTriangle, FaTrash } from "react-icons/fa";
+import { useDeleteUser } from "~/hooks/useUsers";
 
 export const ClearStorage = () => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { clearStorage } = useData();
+  const { mutate: clearStorage } = useDeleteUser()
   return (
     <>
       <button
@@ -56,7 +56,7 @@ export const ClearStorage = () => {
 
               <button
                 onClick={() => {
-                  clearStorage();
+                  clearStorage(0);
                   onClose(false);
                 }}
                 className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition flex items-center gap-2"

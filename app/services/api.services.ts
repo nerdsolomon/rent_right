@@ -294,6 +294,16 @@ export const reviewService = {
     return handleResponse(res);
   },
 
+  update: async (id: number, data: Partial<Review>) => {
+    const res = await fetch(`${BASE_URL}/reviews/${id}`, {
+      method: "PUT",
+      headers: authHeaders(),
+      body: JSON.stringify(data), 
+    });
+
+    return handleResponse(res);
+  },
+
   delete: async (id: number) => {
     const res = await fetch(`${BASE_URL}/reviews/${id}`, {
       method: "DELETE",
@@ -328,6 +338,16 @@ export const feedbackService = {
     const res = await fetch(`${BASE_URL}/feedbacks/${id}/view`, {
       method: "PATCH",
       headers: authHeaders(),
+    });
+
+    return handleResponse(res);
+  },
+
+  update: async (id: number, data: Partial<Feedback>) => {
+    const res = await fetch(`${BASE_URL}/feedbacks/${id}`, {
+      method: "PUT",
+      headers: authHeaders(),
+      body: JSON.stringify(data), 
     });
 
     return handleResponse(res);

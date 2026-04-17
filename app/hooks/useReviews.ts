@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { reviewService } from "~/services";
+import type { Review } from "~/types";
 
 export const reviewKeys = {
   all: ["reviews"] as const,
@@ -35,12 +36,29 @@ export const useCreateReview = () => {
     onSuccess: (_, variables: any) => {
       qc.invalidateQueries({ queryKey: reviewKeys.all });
 
-      // 🔥 IMPORTANT: also refresh property-specific reviews
       if (variables?.propertyId) {
         qc.invalidateQueries({
           queryKey: reviewKeys.byProperty(variables.propertyId),
         });
       }
+    },
+  });
+};
+
+type UpdateReviewParams = {
+  id: number;
+  data: Partial<Review>;
+};
+
+export const useUpdateReview = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: UpdateReviewParams) =>
+      reviewService.update(id, data),
+
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: reviewKeys.all });
     },
   });
 };
@@ -55,7 +73,6 @@ export const useDeleteReview = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: reviewKeys.all });
 
-      // optional but safe (ensures UI consistency everywhere)
       qc.invalidateQueries({
         predicate: (query) => query.queryKey[0] === "reviews",
       });
