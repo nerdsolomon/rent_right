@@ -63,10 +63,8 @@ export const useToggleUserRole = () => {
     mutationFn: (id: number) => userService.toggleRole(id),
 
     onSuccess: () => {
-      // refresh all users
       qc.invalidateQueries({ queryKey: userKeys.all });
 
-      // optional: invalidate everything related to users
       qc.invalidateQueries({
         predicate: (query) => query.queryKey[0] === "users",
       });

@@ -45,13 +45,6 @@ export const useVerifyEmail = () =>
     onError: (err) => console.error("VERIFY EMAIL ERROR:", err),
   });
 
-// ================= VERIFY PHONE =================
-export const useVerifyPhone = () =>
-  useMutation({
-    mutationFn: authService.verifyPhone,
-    onError: (err) => console.error("VERIFY PHONE ERROR:", err),
-  });
-
 // ================= RESEND OTP =================
 export const useResendOtp = () =>
   useMutation({

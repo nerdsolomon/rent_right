@@ -71,16 +71,6 @@ export const authService = {
     return handleResponse(res);
   },
 
-  verifyPhone: async (data: { phone: string; otp: string }) => {
-    const res = await fetch(`${BASE_URL}/auth/verify-phone`, {
-      method: "POST",
-      headers: authHeaders(),
-      body: JSON.stringify(data),
-    });
-
-    return handleResponse(res);
-  },
-
   resendOtp: async (data: { email?: string; phone?: string }) => {
     const res = await fetch(`${BASE_URL}/auth/resend-otp`, {
       method: "POST",
