@@ -139,37 +139,39 @@ export const Edit = () => {
                   </div>
                 )}
 
-                {/* First + Last Name */}
-                <div>
-                  <label className="text-sm text-gray-600">First Name</label>
-                  <input
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    type="text"
-                    required
-                    value={formData.firstName}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        firstName: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+                <div className="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* First + Last Name */}
+                  <div>
+                    <label className="text-sm text-gray-600">First Name</label>
+                    <input
+                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      type="text"
+                      required
+                      value={formData.firstName}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          firstName: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
 
-                <div>
-                  <label className="text-sm text-gray-600">Last Name</label>
-                  <input
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    type="text"
-                    required
-                    value={formData.lastName}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        lastName: e.target.value,
-                      })
-                    }
-                  />
+                  <div>
+                    <label className="text-sm text-gray-600">Last Name</label>
+                    <input
+                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      type="text"
+                      required
+                      value={formData.lastName}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          lastName: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
 
                 {/* Company */}
