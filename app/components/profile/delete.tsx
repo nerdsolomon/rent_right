@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaExclamationTriangle, FaTrash } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useDeleteUser } from "~/hooks/useUsers";
 
 interface Prop {
-  userId : number
+  userId: number;
 }
 
-export const Delete = ({ userId} : Prop) => {
+export const Delete = ({ userId }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { mutate: deleteUser } = useDeleteUser()
+  const { mutate: deleteUser } = useDeleteUser();
   return (
     <div>
       <div
@@ -22,26 +22,51 @@ export const Delete = ({ userId} : Prop) => {
       </div>
 
       {isOpen && (
-        <div className="fixed absolute inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
           <div
             ref={modalRef}
-            className="bg-gray-100 rounded-2xl shadow-lg w-[270px] p-6 animate-fadeIn"
+            className="relative bg-gray-100 rounded-lg shadow-lg w-[90%] lg:w-[500px] max-h-[100vh] animate-fadeIn"
           >
-            <p className="text-gray-400 text-md">
-              Deleting your account will permanently erase all your data. Are
-              you sure you want to continue?
-            </p>
-            <div className="grid grid-cols-2 gap-2 items-center mt-4">
+            <div className="flex items-center justify-between py-3 px-4 border-b border-gray-300">
+              <div className="flex items-center gap-2 text-red-600 font-semibold">
+                <FaExclamationTriangle className="text-lg" />
+                <span>Delete account</span>
+              </div>
+
               <button
                 onClick={() => onClose(false)}
-                className="p-2 bg-gray-400 mt-2 text-xs hover:bg-gray-500 text-white rounded-lg font-semibold"
+                className="text-gray-400 hover:text-black text-lg"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="px-6 py-6 text-gray-700">
+              <p className="text-sm leading-relaxed">
+                <strong className="text-red-600">Warning:</strong> This action
+                will permanently delete{" "}
+                <strong>all your data and properties</strong>. This cannot be
+                undone.
+              </p>
+            </div>
+
+            <div className="flex justify-end gap-3 text-sm px-6 py-4 border-t border-gray-300">
+              <button
+                onClick={() => onClose(false)}
+                className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
               >
                 Cancel
               </button>
+
               <button
-                onClick={() => deleteUser(userId)}
-                className="p-2 bg-red-400 mt-2 text-xs hover:bg-red-500 text-white rounded-lg font-semibold"
+                onClick={() => {
+                  deleteUser(userId);
+                  onClose(false);
+                }}
+                className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition flex items-center gap-2"
               >
+                <FaTrash />
                 Delete
               </button>
             </div>

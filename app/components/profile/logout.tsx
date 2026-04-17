@@ -19,7 +19,7 @@ export const Logout = () => {
     logout(undefined, {
       onSuccess: () => {
         setIsOpen(false);
-        navigate("/login", { replace: true });
+        navigate("/", { replace: true });
       },
     });
   };
@@ -35,27 +35,41 @@ export const Logout = () => {
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
           <div
             ref={modalRef}
-            className="bg-gray-100 rounded-2xl shadow-lg w-[270px] p-6 text-center animate-fadeIn"
+            className="lg:w-[400px] w-[90%] rounded-2xl bg-white p-6 shadow-xl animate-[fadeIn_.2s_ease]"
           >
-            <p className="text-gray-600 text-lg">
-              Do you want to exit app?
-            </p>
+            {/* Header with Icon */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-100 text-purple-600">
+                <FaSignOutAlt size={18} />
+              </div>
 
-            <div className="grid grid-cols-2 gap-2 mt-4">
+              <div>
+                <p className="text-lg font-semibold text-gray-800">
+                  Exit application?
+                </p>
+                <p className="text-sm text-gray-500">
+                  You'll be logged out of your account.
+                </p>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="mt-6 flex justify-end gap-3">
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 border border-purple-400 text-xs hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold"
+                className="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
               >
                 Cancel
               </button>
 
               <button
                 onClick={handleLogout}
-                className="p-2 bg-purple-600 text-xs hover:bg-purple-800 text-white rounded-lg font-semibold"
+                className="px-4 py-2 text-sm rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition flex items-center gap-2"
               >
+                <FaSignOutAlt size={16} />
                 Exit
               </button>
             </div>
