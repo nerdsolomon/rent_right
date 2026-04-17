@@ -59,7 +59,7 @@ const Notifications = () => {
         ) : (
           <div className="py-16 text-center">
             <FaBell size={40} className="text-gray-300 mx-auto mb-4" />
-            <p className="text-lg font-semibold text-gray-300">
+            <p className="text-[22px] font-bold text-gray-300">
               No notifications
             </p>
           </div>
