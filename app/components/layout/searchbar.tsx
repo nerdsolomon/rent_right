@@ -103,9 +103,11 @@ export const Searchbar = () => {
             </div>
 
             {filteredProperties.length > 0 ? (
-              filteredProperties.map((p, i) => (
-                <PropertyCard property={p} key={i} />
-              ))
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {filteredProperties.map((property: Property, index: number) => (
+                  <PropertyCard property={property} key={index} />
+                ))}
+              </div>
             ) : (
               <div className="p-3 text-sm text-gray-500">No results found</div>
             )}
