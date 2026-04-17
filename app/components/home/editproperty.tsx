@@ -43,34 +43,37 @@ export const EditProperty = ({ property }: Prop) => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const form = new FormData();
+  const form = new FormData();
 
-    // append text fields
-    Object.entries({
-      ...formData,
-      imageUrls: existingImages, 
-    }).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        form.append(key, String(value));
-      }
-    });
+  // ✅ append primitive fields safely
+  form.append("title", formData.title);
+  form.append("type", formData.type);
+  form.append("listingType", formData.listingType);
+  form.append("price", String(formData.price));
+  form.append("duration", formData.duration || "");
+  form.append("country", formData.country);
+  form.append("state", formData.state);
+  form.append("city", formData.city);
+  form.append("description", formData.description);
 
-    newImages.forEach((file) => {
-      form.append("images", file);
-    });
+  form.append("existingImages", JSON.stringify(existingImages));
 
-    updateProperty(
-      {
-        id: formData.id,
-        data: form,
-      },
-      {
-        onSuccess: () => setIsOpen(false),
-      },
-    );
-  };
+  newImages.forEach((file) => {
+    form.append("images", file);
+  });
+
+  updateProperty(
+    {
+      id: formData.id,
+      data: form,
+    },
+    {
+      onSuccess: () => setIsOpen(false),
+    }
+  );
+};
 
   const states = formData.country
     ? Object.keys(location[formData.country] || {})

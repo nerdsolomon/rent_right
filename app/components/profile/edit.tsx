@@ -15,8 +15,12 @@ export const Edit = () => {
   const { mutate: updateUser, error } = useUpdateUser();
 
   const [alert, setAlert] = useState(false);
-  const [prevImage, setPrevImage] = useState("");
-  const prevImageRef = useRef<HTMLInputElement | null>(null);
+
+  // ✅ NEW: store actual file + preview URL
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState("");
+
+  const fileRef = useRef<HTMLInputElement | null>(null);
 
   const [formData, setFormData] = useState(emptyUser);
 
@@ -29,12 +33,22 @@ export const Edit = () => {
   const editUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const form = new FormData();
+
+    form.append("firstName", formData.firstName);
+    form.append("lastName", formData.lastName);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);
+    form.append("company", formData.company || "");
+
+    // ✅ send actual file (NOT base64)
+    if (file) {
+      form.append("image", file);
+    }
+
     updateUser({
       id: currentUser.id,
-      data: {
-        ...formData,
-        imageUrl: prevImage || currentUser.imageUrl,
-      },
+      data: form,
     });
 
     setAlert(true);
@@ -79,9 +93,9 @@ export const Edit = () => {
               <div className="flex flex-col items-center md:w-[30%]">
                 <div className="relative inline-block">
                   <div className="w-28 h-28 flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold text-[40px] overflow-hidden">
-                    {prevImage || currentUser?.imageUrl ? (
+                    {preview || currentUser?.imageUrl ? (
                       <img
-                        src={prevImage || currentUser?.imageUrl}
+                        src={preview || currentUser?.imageUrl}
                         className="w-full h-full object-cover"
                       />
                     ) : currentUser?.company ? (
@@ -94,7 +108,7 @@ export const Edit = () => {
                   </div>
 
                   <div
-                    onClick={() => prevImageRef.current?.click()}
+                    onClick={() => fileRef.current?.click()}
                     className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 text-purple-600 cursor-pointer"
                   >
                     <FaCamera />
@@ -102,15 +116,15 @@ export const Edit = () => {
                       className="hidden"
                       type="file"
                       accept="image/*"
-                      ref={prevImageRef}
+                      ref={fileRef}
                       onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
+                        const selectedFile = e.target.files?.[0];
+                        if (!selectedFile) return;
 
-                        const reader = new FileReader();
-                        reader.onload = () =>
-                          setPrevImage(reader.result as string);
-                        reader.readAsDataURL(file);
+                        setFile(selectedFile);
+
+                        // ✅ preview without base64
+                        setPreview(URL.createObjectURL(selectedFile));
                       }}
                     />
                   </div>
@@ -140,11 +154,10 @@ export const Edit = () => {
                 )}
 
                 <div className="col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* First + Last Name */}
                   <div>
                     <label className="text-sm text-gray-600">First Name</label>
                     <input
-                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
                       type="text"
                       required
                       value={formData.firstName}
@@ -160,7 +173,7 @@ export const Edit = () => {
                   <div>
                     <label className="text-sm text-gray-600">Last Name</label>
                     <input
-                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
                       type="text"
                       required
                       value={formData.lastName}
@@ -174,13 +187,12 @@ export const Edit = () => {
                   </div>
                 </div>
 
-                {/* Company */}
                 <div className="col-span-2">
                   <label className="text-sm text-gray-600">
                     Company (Optional)
                   </label>
                   <input
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
                     type="text"
                     value={formData.company}
                     onChange={(e) =>
@@ -192,11 +204,10 @@ export const Edit = () => {
                   />
                 </div>
 
-                {/* Email */}
                 <div className="col-span-2">
                   <label className="text-sm text-gray-600">Email</label>
                   <input
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
                     type="email"
                     required
                     value={formData.email}
@@ -209,11 +220,12 @@ export const Edit = () => {
                   />
                 </div>
 
-                {/* Phone */}
                 <div className="col-span-2">
-                  <label className="text-sm text-gray-600">Phone Number</label>
+                  <label className="text-sm text-gray-600">
+                    Phone Number
+                  </label>
                   <input
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
                     type="tel"
                     required
                     value={formData.phone}
@@ -226,7 +238,6 @@ export const Edit = () => {
                   />
                 </div>
 
-                {/* Submit */}
                 <div className="col-span-2">
                   <button
                     className="bg-purple-600 px-4 py-2 text-white hover:bg-purple-800 rounded-lg"
