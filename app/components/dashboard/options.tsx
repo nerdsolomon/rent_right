@@ -31,7 +31,7 @@ export const Options = ({ user }: Prop) => {
       {isOpen && (
         <div className="absolute right-0 top-0 z-[9999] w-40 rounded-lg bg-white shadow-md">
           <div className="py-1 text-xs text-gray-700">
-            {user.id !== currentUser?.id && (
+            {user.id !== currentUser?.id && user.role !== "owner" && (
               <button
                 onClick={() => {
                   toggleRole(user.id);
