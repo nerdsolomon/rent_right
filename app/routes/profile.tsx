@@ -32,6 +32,8 @@ const Profile = () => {
   const initials = currentUser?.company
     ? currentUser?.company.charAt(0)
     : `${currentUser?.firstName?.[0] ?? ""}${currentUser?.lastName?.[0] ?? ""}`;
+
+  console.log(currentUser);
   return (
     <RequireAuth>
       <div className="py-4 px-6 space-y-4">
@@ -70,7 +72,7 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div className="flex items-center gap-5 mb-2">
               <FaEnvelope size={18} />
               <div className="items-center">
@@ -78,7 +80,17 @@ const Profile = () => {
                 <p>{currentUser?.email}</p>
               </div>
             </div>
-            <span className="text-xs text-green-500">verified</span>
+            <div>
+              {currentUser.isEmailVerified ? (
+                <span className="text-xs bg-green-500 font-semibold text-white px-2 py-0.5 rounded-full">
+                  Verified
+                </span>
+              ) : (
+                <span className="text-xs bg-red-500 font-semibold text-white px-2 py-0.5 rounded-full">
+                  Unverified
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-5 mb-2">
             <FaPhoneAlt size={18} />
