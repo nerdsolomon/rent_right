@@ -16,10 +16,26 @@ export const Owner = () => {
 
   const becomeOwner = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateUser({
-      ...currentUser,
-      verifyOwner: formData,
-    });
+
+    if (!currentUser?.id) return;
+
+    setFormData({ ...formData, status: "pending" });
+
+    updateUser(
+      {
+        id: currentUser.id,
+        data: {
+          verifyOwner: formData,
+        },
+      },
+      {
+        onSuccess: () => {
+          setAlert(true);
+          setFormData(emptyVerifyOwner);
+        },
+      },
+    );
+
     setAlert(true);
     setFormData(emptyVerifyOwner);
   };
@@ -144,10 +160,11 @@ export const Owner = () => {
 
                 <div className="col-span-2 mt-2">
                   <button
-                    className="bg-purple-600 px-4 py-2 text-white w-full hover:bg-purple-800 rounded-lg"
+                    disabled={isPending}
+                    className="bg-purple-600 px-4 py-2 text-white w-full hover:bg-purple-800 rounded-lg disabled:opacity-50"
                     type="submit"
                   >
-                    Submit
+                    {isPending ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </form>

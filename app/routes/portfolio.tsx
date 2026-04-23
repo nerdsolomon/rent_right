@@ -1,10 +1,13 @@
 import { useParams } from "react-router";
 import { PropertyCard } from "~/components/home/propertycard";
+import { usePageTitle } from "~/hooks/usePageTitle";
 import { useProperties } from "~/hooks/useProperties";
 import { useUsers } from "~/hooks/useUsers";
 import type { Property, User } from "~/types";
 
 const Portfolio = () => {
+  usePageTitle("RentRight - Portfolio");
+
   const { id } = useParams();
   const { data: users } = useUsers()
   const { data: properties} = useProperties()

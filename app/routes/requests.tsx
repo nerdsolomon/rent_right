@@ -18,7 +18,10 @@ const Requests = () => {
   const { mutate: updateUser } = useUpdateUser();
   const { mutate: createNotification } = useCreateNotification();
 
-  const filterUsers = users.filter((u: User) => u.verifyOwner != null);
+  const filteredUsers = users.filter((u: User) => {
+    const v = u.verifyOwner;
+    return v && (v.firstName || v.lastName || v.address || v.DoB);
+  });
 
   const handleApprove = (user: User) => {
     updateUser({
@@ -64,7 +67,7 @@ const Requests = () => {
   return (
     <RequireAuth>
       <div className="w-full mt-4">
-        {filterUsers.length > 0 ? (
+        {filteredUsers.length > 0 ? (
           <div className="border border-gray-200 rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
               <div className="min-w-[650px]">
@@ -77,7 +80,7 @@ const Requests = () => {
                 </div>
 
                 {/* Rows */}
-                {filterUsers.map((u: User, index: number) => (
+                {filteredUsers.map((u: User, index: number) => (
                   <div
                     key={index}
                     className="grid grid-cols-4 items-center p-3 text-sm hover:bg-gray-50 transition"

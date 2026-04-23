@@ -3,9 +3,12 @@ import { MdApartment, MdHome, MdLandscape } from "react-icons/md";
 import { Chart } from "~/components/dashboard/chart";
 import { Properties } from "~/components/dashboard/properties";
 import { Users } from "~/components/dashboard/users";
+import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 
 const Dashboard = () => {
+  usePageTitle("RentRight - Dashbord");
+  
   const usersFilter = [
     { label: "Admins", role: "admin", icon: FaUserCog },
     { label: "Owners", role: "owner", icon: FaUserTie },
