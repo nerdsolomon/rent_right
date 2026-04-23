@@ -15,7 +15,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
   const navigate = useNavigate();
 
   const { data, isLoading } = useMe();
-  const currentUser = data?.user
+  const currentUser = data?.user;
   const { data: notificationsData } = useNotifications();
 
   const notifications: Notification[] = Array.isArray(notificationsData)
@@ -25,23 +25,16 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
   const isAuthenticated = !!currentUser;
 
   const unreadNotifications = isAuthenticated
-    ? notifications.filter(
-        (n) => n.userId === currentUser.id && !n.isRead
-      )
+    ? notifications.filter((n) => n.userId === currentUser.id && !n.isRead)
     : [];
 
   // 🔄 Loading state (only for auth)
   if (isLoading) {
-    return (
-      <nav className="p-2 border-b bg-white">
-        Loading...
-      </nav>
-    );
+    return <nav className="p-2 border-b bg-white">Loading...</nav>;
   }
 
   return (
     <nav className="border-b border-gray-300 p-2 sticky top-0 z-50 grid grid-cols-2 lg:grid-cols-3 bg-white text-purple-600 font-bold">
-
       {/* LEFT */}
       <div className="flex items-center gap-4">
         <button
@@ -70,7 +63,6 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
 
       {/* RIGHT */}
       <div className="flex justify-end gap-2 items-center">
-
         {/* MOBILE SEARCH + NOTIFICATIONS */}
         <div className="lg:hidden flex items-center gap-2">
           <Searchbar />
@@ -92,36 +84,29 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
         </div>
 
         {/* PROFILE */}
-        {isAuthenticated ? (
-          <div
-            className="flex items-center gap-2 hover:bg-gray-100 rounded-full px-2 py-2 cursor-pointer"
-            onClick={() => navigate("/profile")}
-          >
-            <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center overflow-hidden text-purple-600 font-semibold">
-              {currentUser.imageUrl ? (
-                <img
-                  src={currentUser.imageUrl}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                `${currentUser.firstName?.[0] ?? ""}${currentUser.lastName?.[0] ?? ""}`
-              )}
-            </div>
-
-            <span className="hidden lg:block">
-              {currentUser.company
-                ? currentUser.company
-                : `${currentUser.firstName ?? ""} ${currentUser.lastName ?? ""}`}
-            </span>
+        <div
+          className="flex items-center gap-2 hover:bg-gray-100 rounded-full px-2 py-2 cursor-pointer"
+          onClick={() => navigate("/profile")}
+        >
+          <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center overflow-hidden text-purple-600 font-semibold">
+            {currentUser.imageUrl ? (
+              <img
+                src={currentUser.imageUrl}
+                className="w-full h-full object-cover"
+              />
+            ) : currentUser.company ? (
+              currentUser.company?.[0]
+            ) : (
+              `${currentUser.firstName?.[0] ?? ""} ${currentUser.lastName?.[0] ?? ""}`
+            )}
           </div>
-        ) : (
-          <button
-            onClick={() => navigate("/")}
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-          >
-            Login
-          </button>
-        )}
+
+          <span className="hidden lg:block">
+            {currentUser.company
+              ? currentUser.company
+              : `${currentUser.firstName ?? ""} ${currentUser.lastName ?? ""}`}
+          </span>
+        </div>
       </div>
     </nav>
   );

@@ -15,7 +15,6 @@ import {
   NOTIFICATION_KEY
 } from "~/services";
 import {
-  adminUser,
   emptyUser,
   type Booking,
   type Feedback,
@@ -96,7 +95,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (users.length === 0) setUsers([adminUser]);
     setCurrentUser((prev) => syncCurrentUser(users, prev));
 
     if (currentUser?.id) saveToStorage(CURRENT_USER_KEY, currentUser);
