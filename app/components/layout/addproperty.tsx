@@ -139,115 +139,138 @@ export const AddProperty = () => {
 
               {/* Type + Listing */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <select
-                  required
-                  value={formData.type}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      type: e.target.value as Property["type"],
-                    })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="">Select Type</option>
-                  <option value="apartment">Apartment</option>
-                  <option value="building">Building</option>
-                  <option value="land">Land</option>
-                </select>
+                <div>
+                  <label className="text-sm text-gray-600">
+                    Property type*
+                  </label>
+                  <select
+                    required
+                    value={formData.type}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        type: e.target.value as Property["type"],
+                      })
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">Select Type</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="building">Building</option>
+                    <option value="land">Land</option>
+                  </select>
+                </div>
 
-                <select
-                  required
-                  value={formData.listingType}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      listingType: e.target.value as Property["listingType"],
-                    })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="">Listing Type</option>
-                  <option value="rental">Rental</option>
-                  <option value="sale">Sale</option>
-                </select>
+                <div>
+                  <label className="text-sm text-gray-600">Listing type*</label>
+                  <select
+                    required
+                    value={formData.listingType}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        listingType: e.target.value as Property["listingType"],
+                      })
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">Listing Type</option>
+                    <option value="rental">Rental</option>
+                    <option value="sale">Sale</option>
+                  </select>
+                </div>
               </div>
 
               {/* Price + Duration */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  type="number"
-                  required
-                  placeholder="Price"
-                  value={formData.price}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      price: Number(e.target.value),
-                    })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
+                <div>
+                  <label className="text-sm text-gray-600">Price*</label>
+                  <input
+                    type="number"
+                    required
+                    placeholder="Price"
+                    value={formData.price}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        price: Number(e.target.value),
+                      })
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                </div>
 
-                <select
-                  value={formData.duration}
-                  disabled={formData.listingType !== "rental"}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      duration: e.target.value as Property["duration"],
-                    })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="">Duration</option>
-                  <option value="daily">Daily</option>
-                  <option value="weekly">Weekly</option>
-                  <option value="monthly">Monthly</option>
-                  <option value="yearly">Yearly</option>
-                </select>
+                <div>
+                  <label className="text-sm text-gray-600">
+                    Duration ( only for rental )
+                  </label>
+                  <select
+                    value={formData.duration}
+                    disabled={formData.listingType !== "rental"}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        duration: e.target.value as Property["duration"],
+                      })
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">Duration</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                  </select>
+                </div>
               </div>
 
               {/* Location */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <select
-                  required
-                  value={formData.state}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      state: e.target.value,
-                      city: "",
-                    })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="">State</option>
-                  {states.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
+                <div>
+                  <label className="text-sm text-gray-600">State*</label>
+                  <select
+                    required
+                    value={formData.state}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        state: e.target.value,
+                        city: "",
+                      })
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">State</option>
+                    {states.map((state) => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-                <select
-                  required
-                  value={formData.city}
-                  onChange={(e) =>
-                    setFormData({ ...formData, city: e.target.value })
-                  }
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="">City</option>
-                  {cities.map((city: string) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
+                <div>
+                  <label className="text-sm text-gray-600">City*</label>
+                  <select
+                    required
+                    value={formData.city}
+                    onChange={(e) =>
+                      setFormData({ ...formData, city: e.target.value })
+                    }
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">City</option>
+                    {cities.map((city: string) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               {/* Description */}
+              <label className="text-sm text-gray-600">Description*</label>
               <textarea
                 required
                 placeholder="Description"
