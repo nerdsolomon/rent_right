@@ -8,8 +8,10 @@ interface Prop {
 }
 
 export const Reviews = ({ property }: Prop) => {
-  const { data: currentUser } = useMe();
-  const { data: reviews} = useReviews()
+  const { data } = useMe();
+  const currentUser = data?.user
+  const { data: rData} = useReviews()
+  const reviews = rData?.reviews ?? []
   return (
     <>
       <div className="flex justify-between p-4 mt-4 border-t border-gray-300">

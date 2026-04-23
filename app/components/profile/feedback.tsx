@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaBug } from "react-icons/fa";
 import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useCreateFeedback, useFeedbacks } from "~/hooks/useFeedbacks";
+import { useCreateFeedback } from "~/hooks/useFeedbacks";
 import { emptyFeedback } from "~/types";
 
 export const Feedback = () => {
@@ -12,11 +12,7 @@ export const Feedback = () => {
   const { data } = useMe();
   const currentUser = data?.user;
 
-  const { data: fData } = useFeedbacks();
-  const feedbacks = fData?.feedbacks ?? [];
-
   const { mutate: createFeedback } = useCreateFeedback();
-
   const [formData, setFormData] = useState(emptyFeedback);
 
   const sendFeedback = (e: React.FormEvent<HTMLFormElement>) => {

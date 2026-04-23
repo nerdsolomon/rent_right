@@ -1,23 +1,29 @@
 import { useState } from "react";
+import { useMe } from "~/hooks/useAuth";
+import { useBookings, useCreateBooking } from "~/hooks/useBookings";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
-import { emptyBooking, type Property } from "~/types";
+import { useCreateNotification } from "~/hooks/useNotifications";
+import { emptyBooking, type Booking, type Property } from "~/types";
 
 interface Props {
   property: Property;
 }
 
-export const Booking = ({ property }: Props) => {
+export const Book = ({ property }: Props) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
+
   const [formData, setFormData] = useState(emptyBooking);
-  const {
-    currentUser,
-    bookings,
-    setBookings,
-    notifications,
-    setNotifications,
-  } = useData();
+
+  const { data } = useMe()
+  const currentUser = data.user
+
+  const { data: bData } = useBookings()
+  const bookings = bData?.bookings ?? []
+
+  const { mutate: createNotification } = useCreateNotification()
+  const { mutate: createBooking } = useCreateBooking()
+  
 
   const getCurrentWeekDays = () => {
     const today = new Date();
@@ -69,18 +75,15 @@ export const Booking = ({ property }: Props) => {
       user: currentUser,
     };
 
-    setBookings([...bookings, bookingData]);
+    createBooking( bookingData );
 
-    setNotifications([
-      ...notifications,
-      {
-        id: Math.random(),
+    createNotification({
         datetime: new Date().toISOString(),
         isRead: false,
         userId: property.owner.id,
         message: `${currentUser.firstName} just booked a date and time for property inspection, go to Bookings to view details.`,
       },
-    ]);
+    );
 
     alert("Booking successful");
     setFormData(emptyBooking);
@@ -95,7 +98,7 @@ export const Booking = ({ property }: Props) => {
 
   const isTimeBooked = (day: string, time: string) => {
     return bookings.some(
-      (booking) =>
+      (booking: Booking) =>
         booking.property.id === property.id &&
         booking.day === day &&
         booking.time === time,

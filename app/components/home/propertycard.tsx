@@ -14,7 +14,8 @@ interface Prop {
 export const PropertyCard = ({ property }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<Property>();
-  const { data: currentUser } = useMe()
+  const { data } = useMe();
+  const currentUser = data?.user
 
   return (
     <>

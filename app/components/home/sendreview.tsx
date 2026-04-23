@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
+import { useCreateReview, useReviews } from "~/hooks/useReviews";
 import { emptyReview } from "~/types";
 
 interface Prop {
@@ -10,14 +11,18 @@ interface Prop {
 export const SendReview = ({ propertyId }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { reviews, setReviews, currentUser } = useData();
+  const { data } = useMe();
+  const currentUser = data?.user;
+  const { data: rData } = useReviews();
+  const reviews = rData?.reviews ?? [];
   const [formData, setFormData] = useState(emptyReview);
+  const { mutate: createReview } = useCreateReview()
 
   const sendReview = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setReviews([...reviews, formData]);
-    setFormData(emptyReview)
-    onClose(false)
+    createReview( formData );
+    setFormData(emptyReview);
+    onClose(false);
   };
 
   return (

@@ -21,7 +21,7 @@ interface Prop {
 const Leftbar = ({ isOpen, onClose }: Prop) => {
   const modalRef = useClickOutside({ isOpen, onClose });
   const { data: notifications = [] } = useNotifications()
-  const { data, isLoading } = useMe();
+  const { data } = useMe();
   const currentUser = data?.user
   const navLinks = [
     { title: "Home", path: "/home", icon: FaHome, always: true },

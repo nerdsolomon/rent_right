@@ -11,7 +11,8 @@ interface Prop {
 export const ProfileInfo = ({ user }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
-  const { data: currentUser } = useMe();
+  const { data } = useMe();
+  const currentUser = data?.user
   const navigate = useNavigate()
 
   return (

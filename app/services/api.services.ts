@@ -232,7 +232,7 @@ export const propertyService = {
     return handleResponse(res);
   },
 
-  create: async (data: Property) => {
+  create: async (data: FormData) => {
     const res = await fetch(`${BASE_URL}/properties`, {
       method: "POST",
       headers: authHeaders(),

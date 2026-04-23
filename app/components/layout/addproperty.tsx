@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaImage, FaPlus } from "react-icons/fa";
 import useClickOutside from "~/hooks/useClickOutside";
 import { emptyProperty, type Property } from "~/types";
@@ -7,20 +7,24 @@ import { useCreateProperty } from "~/hooks/useProperties";
 import { useMe } from "~/hooks/useAuth";
 
 export const AddProperty = () => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+
+  const modalRef = useClickOutside({
+    isOpen,
+    onClose: () => setIsOpen(false),
+  });
 
   const { data } = useMe();
   const currentUser = data?.user;
 
-  const { mutate: register, error } = useCreateProperty();
+  const { mutate: createProperty, isPending, error } =
+    useCreateProperty();
 
   const [formData, setFormData] = useState<Property>({
     ...emptyProperty,
     country: "Nigeria",
   });
 
-  // ✅ store actual files
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
@@ -59,32 +63,42 @@ export const AddProperty = () => {
     form.append("state", formData.state);
     form.append("city", formData.city);
     form.append("description", formData.description);
-    form.append("owner", JSON.stringify(currentUser)); // depends on backend
+    form.append("ownerId", currentUser?.id || "");
 
-    // ✅ append multiple files
     files.forEach((file) => {
       form.append("images", file);
     });
 
-    register(form);
-
-    setFormData({ ...emptyProperty, country: "Nigeria" });
-    setFiles([]);
-    setPreviews([]);
-    onClose(false);
+    createProperty(form, {
+      onSuccess: () => {
+        setFormData({ ...emptyProperty, country: "Nigeria" });
+        setFiles([]);
+        previews.forEach((url) => URL.revokeObjectURL(url));
+        setPreviews([]);
+        setIsOpen(false);
+      },
+    });
   };
 
   const removeImage = (index: number) => {
+    URL.revokeObjectURL(previews[index]);
+
     setFiles((prev) => prev.filter((_, i) => i !== index));
     setPreviews((prev) => prev.filter((_, i) => i !== index));
   };
+
+  useEffect(() => {
+    return () => {
+      previews.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previews]);
 
   return (
     <>
       {currentUser?.role === "owner" && (
         <button
-          onClick={() => onClose(true)}
-          className="fixed bottom-8 right-8 border-4 border-white bg-purple-600 text-white hover:bg-purple-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center p-1 transition"
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-8 right-8 border-4 border-white bg-purple-600 text-white hover:bg-purple-800 px-4 py-4 lg:px-6 lg:py-3 rounded-full shadow-lg flex items-center gap-2 transition"
         >
           <FaPlus />
           <span className="hidden lg:inline">Add Property</span>
@@ -98,20 +112,158 @@ export const AddProperty = () => {
             className="bg-white rounded-2xl shadow-lg w-[95%] md:w-[700px] p-6 max-h-[90vh] overflow-y-auto"
           >
             <form onSubmit={addProperty} className="space-y-4">
-              {/* inputs unchanged... */}
+              {/* Title */}
+              <div>
+                <label className="text-sm text-gray-600">Title*</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
+                  className="w-full w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
 
+              {/* Type + Listing */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <select
+                  required
+                  value={formData.type}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      type: e.target.value as Property["type"],
+                    })
+                  }
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">Select Type</option>
+                  <option value="apartment">Apartment</option>
+                  <option value="building">Building</option>
+                  <option value="land">Land</option>
+                </select>
+
+                <select
+                  required
+                  value={formData.listingType}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      listingType:
+                        e.target.value as Property["listingType"],
+                    })
+                  }
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">Listing Type</option>
+                  <option value="rental">Rental</option>
+                  <option value="sale">Sale</option>
+                </select>
+              </div>
+
+              {/* Price + Duration */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  type="number"
+                  required
+                  placeholder="Price"
+                  value={formData.price}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      price: Number(e.target.value),
+                    })
+                  }
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+
+                <select
+                  value={formData.duration}
+                  disabled={formData.listingType !== "rental"}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      duration:
+                        e.target.value as Property["duration"],
+                    })
+                  }
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">Duration</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+
+              {/* Location */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <select
+                  required
+                  value={formData.state}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      state: e.target.value,
+                      city: "",
+                    })
+                  }
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">State</option>
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  required
+                  value={formData.city}
+                  onChange={(e) =>
+                    setFormData({ ...formData, city: e.target.value })
+                  }
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="">City</option>
+                  {cities.map((city: string) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Description */}
+              <textarea
+                required
+                placeholder="Description"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    description: e.target.value,
+                  })
+                }
+                className="w-full w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+
+              {/* Image Upload */}
               <div
                 onClick={() => fileRef.current?.click()}
-                className="flex gap-2 items-center cursor-pointer pb-3"
+                className="flex items-center gap-2 cursor-pointer"
               >
                 <FaImage className="text-purple-600" />
                 <span>Upload photos *</span>
-
                 <input
+                  ref={fileRef}
                   type="file"
                   multiple
                   accept="image/*"
-                  ref={fileRef}
                   className="hidden"
                   onChange={(e) => {
                     const selected = e.target.files;
@@ -126,10 +278,13 @@ export const AddProperty = () => {
                     );
 
                     setPreviews((prev) => [...prev, ...previewUrls]);
+
+                    e.target.value = "";
                   }}
                 />
               </div>
 
+              {/* Preview */}
               {previews.length > 0 && (
                 <div className="flex flex-wrap gap-3">
                   {previews.map((img, index) => (
@@ -138,7 +293,6 @@ export const AddProperty = () => {
                         src={img}
                         className="w-24 h-24 object-cover rounded-lg"
                       />
-
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
@@ -151,12 +305,13 @@ export const AddProperty = () => {
                 </div>
               )}
 
+              {/* Submit */}
               <button
                 type="submit"
-                disabled={files.length === 0}
+                disabled={files.length === 0 || isPending}
                 className="bg-purple-600 text-white w-full py-2 rounded-lg"
               >
-                Upload
+                {isPending ? "Uploading..." : "Upload"}
               </button>
 
               {error && (
