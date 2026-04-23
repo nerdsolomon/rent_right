@@ -19,9 +19,11 @@ import { termAndPolicy } from "~/services/asset.services";
 import { useMe } from "~/hooks/useAuth";
 
 const Profile = () => {
-  const { data, isLoading } = useMe();
-  const currentUser = data?.user
-  usePageTitle(`RentRight - ${currentUser?.firstName} ${currentUser?.lastName}`);
+  const { data } = useMe();
+  const currentUser = data?.user;
+  usePageTitle(
+    `RentRight - ${currentUser?.firstName} ${currentUser?.lastName}`,
+  );
 
   const displayName = currentUser?.company
     ? currentUser?.company
@@ -34,18 +36,18 @@ const Profile = () => {
     <RequireAuth>
       <div className="py-4 px-6 space-y-4">
         <div className="flex flex-col items-center gap-4">
-        <div className="relative w-30 h-30 md:w-40 md:h-40 rounded-full overflow-hidden bg-purple-100 text-purple-600 flex items-center justify-center text-3xl md:text-4xl font-semibold">
-          {currentUser?.imageUrl ? (
-            <img
-              src={currentUser?.imageUrl}
-              alt={displayName}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            initials
-          )}
+          <div className="relative w-30 h-30 md:w-40 md:h-40 rounded-full overflow-hidden bg-purple-100 text-purple-600 flex items-center justify-center text-3xl md:text-4xl font-semibold">
+            {currentUser?.imageUrl ? (
+              <img
+                src={currentUser?.imageUrl}
+                alt={displayName}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              initials
+            )}
+          </div>
         </div>
-      </div>
 
         <Edit />
 
@@ -68,12 +70,15 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-5 mb-2">
-            <FaEnvelope size={18} />
-            <div className="items-center">
-              <span className="font-bold text-xs">Email</span>
-              <p>{currentUser?.email}</p>
+          <div className="flex justify-between">
+            <div className="flex items-center gap-5 mb-2">
+              <FaEnvelope size={18} />
+              <div className="items-center">
+                <span className="font-bold text-xs">Email</span>
+                <p>{currentUser?.email}</p>
+              </div>
             </div>
+            <span className="text-xs text-green-500">verified</span>
           </div>
           <div className="flex items-center gap-5 mb-2">
             <FaPhoneAlt size={18} />
@@ -89,7 +94,9 @@ const Profile = () => {
           {currentUser?.role === "owner" && <Qrcode />}
           <ChangePassword />
           <Logout />
-          {currentUser?.role !== "admin" && <Delete userId={currentUser?.id || 0} />}
+          {currentUser?.role !== "admin" && (
+            <Delete userId={currentUser?.id || 0} />
+          )}
         </div>
 
         <div className="space-y-4">
@@ -98,7 +105,10 @@ const Profile = () => {
             <FaQuestionCircle size={18} />
             <p>Help center</p>
           </div>
-          <a href={termAndPolicy} className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer">
+          <a
+            href={termAndPolicy}
+            className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer"
+          >
             <FaFileContract size={18} />
             <p>Terms of Service and Privacy Policy</p>
           </a>

@@ -81,7 +81,7 @@ export const authService = {
     return handleResponse(res);
   },
 
-  me: async (): Promise<User | null> => {
+  me: async () => {
     const token = getToken();
     if (!token) return null;
 
