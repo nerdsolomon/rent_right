@@ -17,8 +17,7 @@ export const AddProperty = () => {
   const { data } = useMe();
   const currentUser = data?.user;
 
-  const { mutate: createProperty, isPending, error } =
-    useCreateProperty();
+  const { mutate: createProperty, isPending, error } = useCreateProperty();
 
   const [formData, setFormData] = useState<Property>({
     ...emptyProperty,
@@ -111,6 +110,18 @@ export const AddProperty = () => {
             ref={modalRef}
             className="bg-white rounded-2xl shadow-lg w-[95%] md:w-[700px] p-6 max-h-[90vh] overflow-y-auto"
           >
+            <div className="flex justify-between mb-6">
+              <div>
+                <p className="font-bold text-lg text-purple-600">
+                  Upload Property
+                </p>
+                <p className="text-xs text-gray-400">
+                  Upload your personal details
+                </p>
+              </div>
+
+              <button onClick={() => setIsOpen(false)}>✕</button>
+            </div>
             <form onSubmit={addProperty} className="space-y-4">
               {/* Title */}
               <div>
@@ -151,8 +162,7 @@ export const AddProperty = () => {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      listingType:
-                        e.target.value as Property["listingType"],
+                      listingType: e.target.value as Property["listingType"],
                     })
                   }
                   className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -185,8 +195,7 @@ export const AddProperty = () => {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      duration:
-                        e.target.value as Property["duration"],
+                      duration: e.target.value as Property["duration"],
                     })
                   }
                   className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -274,7 +283,7 @@ export const AddProperty = () => {
                     setFiles((prev) => [...prev, ...fileArray]);
 
                     const previewUrls = fileArray.map((file) =>
-                      URL.createObjectURL(file)
+                      URL.createObjectURL(file),
                     );
 
                     setPreviews((prev) => [...prev, ...previewUrls]);
