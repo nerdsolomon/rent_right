@@ -62,7 +62,7 @@ export interface Booking {
 };
 
 export interface Notification {
-  id: number
+  id?: number
   userId: number
   datetime: string
   message: string
