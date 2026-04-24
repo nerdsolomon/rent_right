@@ -3,6 +3,9 @@ import { propertyService } from "~/services";
 
 export const propertyKeys = {
   all: ["properties"] as const,
+  detail: (id: number | string) => ["properties", "detail", id] as const,
+  owner: (userId: number | string) =>
+    ["properties", "owner", userId] as const,
 };
 
 // ================= GET ALL =================
@@ -14,15 +17,34 @@ export const useProperties = () =>
     staleTime: 2 * 60 * 1000,
   });
 
+// ================= GET BY ID =================
+export const useProperty = (id: number) =>
+  useQuery({
+    queryKey: propertyKeys.detail(id),
+    queryFn: () => propertyService.getById(id),
+    enabled: !!id,
+    retry: false,
+    staleTime: 2 * 60 * 1000,
+  });
+
+// ================= GET BY OWNER =================
+export const usePropertiesByOwner = (userId: number) =>
+  useQuery({
+    queryKey: propertyKeys.owner(userId),
+    queryFn: () => propertyService.getByOwner(userId),
+    enabled: !!userId,
+    retry: false,
+    staleTime: 2 * 60 * 1000,
+  });
+
 // ================= CREATE =================
 export const useCreateProperty = () => {
   const qc = useQueryClient();
 
   return useMutation({
     mutationFn: propertyService.create,
-
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: propertyKeys.all });
+      qc.invalidateQueries({ queryKey: ["properties"] });
     },
   });
 };
@@ -36,7 +58,7 @@ export const useUpdateProperty = () => {
       propertyService.update(params.id, params.data),
 
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: propertyKeys.all });
+      qc.invalidateQueries({ queryKey: ["properties"] });
     },
   });
 };
@@ -49,7 +71,7 @@ export const useDeleteProperty = () => {
     mutationFn: (id: number) => propertyService.delete(id),
 
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: propertyKeys.all });
+      qc.invalidateQueries({ queryKey: ["properties"] });
     },
   });
 };

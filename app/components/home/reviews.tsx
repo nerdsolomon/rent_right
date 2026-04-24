@@ -16,7 +16,7 @@ export const Reviews = ({ property }: Prop) => {
     <>
       <div className="flex justify-between p-4 mt-4 border-t border-gray-300">
         <p className="font-bold text-sm">Reviews</p>
-        {currentUser?.id !== property.owner.id && <SendReview propertyId={property.id} />}
+        {currentUser?.id !== property.owner.id && currentUser.role !== 'admin' && <SendReview propertyId={property.id} />}
       </div>
       <div className="px-4">
         {reviews.length > 0 ? (

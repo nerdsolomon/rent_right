@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id?: number;
   firstName: string;
   lastName: string;
   company: string;
@@ -8,11 +8,11 @@ export interface User {
   password: string;
   role: string;
   verifyOwner?: VerifyOwner
-  imageUrls?: string;
+  imageUrl?: string;
 }
 
 export interface VerifyOwner {
-  NIN?: number;
+  NIN: number;
   firstName: string;
   lastName: string;
   DoB: string;
@@ -22,43 +22,43 @@ export interface VerifyOwner {
 }
 
 export interface Property {
-  id: number;
+  id?: number;
   title: string;
   price: number;
   description: string;
   country: string;
   state: string;
   city: string;
-  imageUrls?: string[];
+  imageUrls: string[];
   type: string
   listingType: string
   duration?: string
-  owner: User
   isAvailable?: boolean
+  userId: number
 }
 
 export interface Review {
-  id: number
+  id?: number
   text: string
-  user: User
+  userId: number
   propertyId: number
 }
 
 export interface Feedback {
-  id: number
+  id?: number
   text: string
-  user: User
   imageUrl?: string
   isViewed: boolean
+  userId: number
 }
 
 export interface Booking {
-  id: number
+  id?: number
   day: string
   time: string
-  property: Property
-  user: User
   status: string
+  propertyId: number
+  userId: number
 };
 
 export interface Notification {
@@ -103,21 +103,21 @@ export const emptyProperty: Property = {
   type: "",
   listingType: "",
   duration: "",
-  owner: emptyUser,
+  userId: NaN,
   isAvailable: true
 };
 
 export const emptyReview: Review = {
   id: NaN,
   text: "",
-  user: emptyUser,
+  userId: NaN,
   propertyId: NaN
 }
 
 export const emptyFeedback: Feedback = {
   id: NaN,
   text: "",
-  user: emptyUser,
+  userId: NaN,
   imageUrl: "",
   isViewed: false
 }
@@ -126,8 +126,8 @@ export const emptyBooking: Booking = {
   id: NaN,
   day: "",
   time: "",
-  property: emptyProperty,
-  user: emptyUser,
+  propertyId: NaN,
+  userId: NaN,
   status: ""
 };
 

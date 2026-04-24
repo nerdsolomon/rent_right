@@ -15,7 +15,7 @@ interface Props {
 export const Details = ({ isOpen, onClose, property }: Props) => {
   const modalRef = useClickOutside({ isOpen, onClose });
   const { data } = useMe();
-  const currentUser = data?.user
+  const currentUser = data?.user;
   return (
     <>
       {isOpen && (
@@ -36,7 +36,14 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
 
             <div className="flex p-1 overflow-x-auto space-x-4 mb-2">
               {(property.imageUrls?.length ? property.imageUrls : images).map(
-                (image, index) => <img key={index} src={image} className="w-100" />
+                (image, index) => (
+                  <div key={index} className="w-100 h-100 flex-shrink-0">
+                    <img
+                      src={image}
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                  </div>
+                ),
               )}
             </div>
 
@@ -49,17 +56,18 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
                 <FaMapMarkerAlt />
                 {`${property.city}, ${property.state}, ${property.country}.`}
               </p>
-              
+
               <div className="flex gap-1 items-center mt-2">
                 <p className="text-purple-600 font-bold text-lg">
                   ₦{property.price}
                 </p>
-                {property.listingType === 'rental' && <p className="text-xs text-gray-400">{`/${property.duration}`}</p>}
+                {property.listingType === "rental" && (
+                  <p className="text-xs text-gray-400">{`/${property.duration}`}</p>
+                )}
               </div>
               {currentUser?.id !== property.owner.id &&
-                property.isAvailable != false && (
-                  <Book property={property} />
-                )}
+                currentUser.role !== "admin" &&
+                property.isAvailable != false && <Book property={property} />}
               <p
                 className="text-gray-500 mt-2"
                 style={{ whiteSpace: "pre-wrap" }}

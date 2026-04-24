@@ -13,6 +13,7 @@ const Bookings = () => {
 
   const { data: bData } = useMyBookings();
   const bookings = bData?.bookings ?? []
+
   const { data: uData } = useMe();
   const currentUser = uData?.user 
 
@@ -31,8 +32,8 @@ const Bookings = () => {
     });
 
     createNotification({
-      userId: booking.user.id,
-      message: `Your booking to inspect '${booking.property.title}' has been accepted.`,
+      userId: booking.user,
+      message: `Your booking to inspect '${booking.property}' has been accepted.`,
       datetime: new Date().toISOString(),
       isRead: false,
     });
@@ -45,12 +46,14 @@ const Bookings = () => {
     });
 
     createNotification({
-      userId: booking.user.id,
-      message: `Your booking to inspect '${booking.property.title}' was cancelled.`,
+      userId: booking.user,
+      message: `Your booking to inspect '${booking.property}' was cancelled.`,
       datetime: new Date().toISOString(),
       isRead: false,
     });
   };
+
+  console.log(bookings)
 
   const filteredBookings = bookings.filter((booking: Booking) => {
     if (currentUser.role === "owner") {
@@ -58,7 +61,7 @@ const Bookings = () => {
     }
 
     if (currentUser.role === "user") {
-      return booking.user.id === currentUser.id;
+      return booking.user === currentUser.id;
     }
 
     return false;
@@ -102,7 +105,7 @@ const Bookings = () => {
                         onClose(true);
                       }}
                     >
-                      {b.property.title}
+                      {b.property}
                     </span>
 
                     <span>{b.day}</span>

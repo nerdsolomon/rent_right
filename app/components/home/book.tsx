@@ -15,15 +15,14 @@ export const Book = ({ property }: Props) => {
 
   const [formData, setFormData] = useState(emptyBooking);
 
-  const { data } = useMe()
-  const currentUser = data.user
+  const { data } = useMe();
+  const currentUser = data.user;
 
-  const { data: bData } = useBookings()
-  const bookings = bData?.bookings ?? []
+  const { data: bData } = useBookings();
+  const bookings = bData?.bookings ?? [];
 
-  const { mutate: createNotification } = useCreateNotification()
-  const { mutate: createBooking } = useCreateBooking()
-  
+  const { mutate: createNotification } = useCreateNotification();
+  const { mutateAsync: createBooking } = useCreateBooking();
 
   const getCurrentWeekDays = () => {
     const today = new Date();
@@ -57,37 +56,40 @@ export const Book = ({ property }: Props) => {
     "4:00 pm",
   ];
 
-  const handleSubmit = () => {
-    if (!formData.day || !formData.time) {
-      alert("Please select both day and time");
-      return;
-    }
+  const handleSubmit = async () => {
+    try {
+      if (!formData.day || !formData.time) {
+        alert("Please select both day and time");
+        return;
+      }
 
-    if (isTimeBooked(formData.day, formData.time)) {
-      alert("This time is already booked");
-      return;
-    }
+      if (isTimeBooked(formData.day, formData.time)) {
+        alert("This time is already booked");
+        return;
+      }
 
-    const bookingData = {
-      ...formData,
-      id: Math.random(),
-      property: property,
-      user: currentUser,
-    };
+      const bookingData = {
+        ...formData,
+        property: property.id,
+        user: currentUser.id,
+      };
 
-    createBooking( bookingData );
+      await createBooking(bookingData);
 
-    createNotification({
+      await createNotification({
         datetime: new Date().toISOString(),
         isRead: false,
         userId: property.owner.id,
-        message: `${currentUser.firstName} just booked a date and time for property inspection, go to Bookings to view details.`,
-      },
-    );
+        message: `${currentUser.firstName} just booked a date and time for property inspection.`,
+      });
 
-    alert("Booking successful");
-    setFormData(emptyBooking);
-    onClose(false);
+      alert("Booking successful");
+      setFormData(emptyBooking);
+      onClose(false);
+    } catch (err) {
+      console.error(err);
+      alert("Booking failed");
+    }
   };
 
   const today = new Date().toISOString().split("T")[0];
@@ -99,7 +101,7 @@ export const Book = ({ property }: Props) => {
   const isTimeBooked = (day: string, time: string) => {
     return bookings.some(
       (booking: Booking) =>
-        booking.property.id === property.id &&
+        booking.property === property.id &&
         booking.day === day &&
         booking.time === time,
     );
