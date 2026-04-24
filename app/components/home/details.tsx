@@ -1,12 +1,11 @@
 import useClickOutside from "~/hooks/useClickOutside";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Reviews } from "./reviews";
-import type { Property } from "~/types";
 import { images } from "~/services/asset.services";
 import { Book } from "./book";
 import { useMe } from "~/hooks/useAuth";
-import { useProperty } from "~/hooks/useProperties";
-import type { Key } from "react";
+import { useProperties } from "~/hooks/useProperties";
+import type { Property } from "~/types";
 
 interface Props {
   isOpen: boolean;
@@ -20,8 +19,10 @@ export const Details = ({ isOpen, onClose, propertyId }: Props) => {
   const { data } = useMe();
   const currentUser = data.user;
 
-  const { data: pData } = useProperty(propertyId)
-  const property = pData.property
+  const { data: pData } = useProperties()
+  const properties = pData?.properties
+  const property = properties.filter((p: Property) => p.id === propertyId)[0]
+
   return (
     <>
       {isOpen && (

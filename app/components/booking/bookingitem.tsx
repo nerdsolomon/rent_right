@@ -1,5 +1,5 @@
-import { useProperty } from "~/hooks/useProperties";
-import type { Booking } from "~/types";
+import { useProperties, useProperty } from "~/hooks/useProperties";
+import type { Booking, Property } from "~/types";
 
 type Props = {
   booking: Booking;
@@ -16,8 +16,11 @@ const BookingItem = ({
   onCancel,
   onSelect,
 }: Props) => {
-  const { data } = useProperty(booking.propertyId);
-  const property = data?.property; // adjust if API shape differs
+  const { data: pData } = useProperties();
+  const properties = pData?.properties;
+  const property = properties.filter(
+    (p: Property) => p.id === booking.propertyId,
+  )[0];
 
   return (
     <div
