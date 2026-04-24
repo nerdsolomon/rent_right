@@ -143,11 +143,11 @@ export const userService = {
     return handleResponse(res);
   },
 
-  update: async (id: number, data: Partial<User>) => {
+  update: async (id: number, data: FormData) => {
     const res = await fetch(`${BASE_URL}/users/${id}`, {
       method: "PUT",
-      headers: authHeaders(),
-      body: JSON.stringify(data),
+      headers: authHeaders(true),
+      body: data,
     });
 
     return handleResponse(res);
@@ -235,8 +235,8 @@ export const propertyService = {
   create: async (data: FormData) => {
     const res = await fetch(`${BASE_URL}/properties`, {
       method: "POST",
-      headers: authHeaders(),
-      body: JSON.stringify(data),
+      headers: authHeaders(true),
+      body: data,
     });
 
     return handleResponse(res);
@@ -314,11 +314,11 @@ export const feedbackService = {
     return handleResponse(res);
   },
 
-  create: async (data: Feedback) => {
+  create: async (data: FormData) => {
     const res = await fetch(`${BASE_URL}/feedbacks`, {
       method: "POST",
-      headers: authHeaders(),
-      body: JSON.stringify(data),
+      headers: authHeaders(true),
+      body: data,
     });
 
     return handleResponse(res);
