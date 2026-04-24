@@ -19,14 +19,19 @@ export const Owner = () => {
 
     if (!currentUser?.id) return;
 
-    setFormData({ ...formData, status: "pending" });
+    const fd = new FormData();
+
+    fd.append("verifyOwner[NIN]", String(formData.NIN));
+    fd.append("verifyOwner[firstName]", formData.firstName);
+    fd.append("verifyOwner[lastName]", formData.lastName);
+    fd.append("verifyOwner[DoB]", formData.DoB);
+    fd.append("verifyOwner[address]", formData.address);
+    fd.append("verifyOwner[status]", "pending");
 
     updateUser(
       {
         id: currentUser.id,
-        data: {
-          verifyOwner: formData,
-        },
+        data: fd,
       },
       {
         onSuccess: () => {
@@ -35,9 +40,6 @@ export const Owner = () => {
         },
       },
     );
-
-    setAlert(true);
-    setFormData(emptyVerifyOwner);
   };
 
   return (

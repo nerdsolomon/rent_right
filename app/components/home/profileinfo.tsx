@@ -2,17 +2,22 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { type User } from "~/types";
+import { useUser } from "~/hooks/useUsers";
 
 interface Prop {
-  user: User;
+  userId: number;
 }
 
-export const ProfileInfo = ({ user }: Prop) => {
+export const ProfileInfo = ({ userId }: Prop) => {
   const [isOpen, onClose] = useState(false);
   const modalRef = useClickOutside({ isOpen, onClose });
+
   const { data } = useMe();
   const currentUser = data?.user
+
+  const { data: uData } = useUser(userId)
+  const user = uData.user
+
   const navigate = useNavigate()
 
   return (

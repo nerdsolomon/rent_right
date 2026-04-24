@@ -1,39 +1,40 @@
-import { useState } from "react";
+import { useState, type SetStateAction } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
+import BookingItem from "~/components/booking/bookingitem";
 import { Details } from "~/components/home/details";
 import { useMe } from "~/hooks/useAuth";
 import { useMyBookings, useUpdateBooking } from "~/hooks/useBookings";
 import { useCreateNotification } from "~/hooks/useNotifications";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
-import type { Booking, Property } from "~/types";
+import type { Booking } from "~/types";
 
 const Bookings = () => {
   usePageTitle("RentRight - Bookings");
 
   const { data: bData } = useMyBookings();
-  const bookings = bData?.bookings ?? []
+  const bookings = bData?.bookings ?? [];
 
   const { data: uData } = useMe();
-  const currentUser = uData?.user 
+  const currentUser = uData?.user;
 
   const { mutate: updateBooking } = useUpdateBooking();
   const { mutate: createNotification } = useCreateNotification();
 
   const [isOpen, onClose] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState<Property>();
+  const [selectedPropertyId, setSelectedPropertyId] = useState<number>();
 
   if (!currentUser) return null;
 
   const handleAccept = (booking: Booking) => {
     updateBooking({
-      id: booking.id,
+      id: booking.id!,
       data: { status: "accepted" },
     });
 
     createNotification({
-      userId: booking.user,
-      message: `Your booking to inspect '${booking.property}' has been accepted.`,
+      userId: booking.userId,
+      message: `Your booking to inspect '${booking.propertyId}' has been accepted.`,
       datetime: new Date().toISOString(),
       isRead: false,
     });
@@ -41,27 +42,25 @@ const Bookings = () => {
 
   const handleCancel = (booking: Booking) => {
     updateBooking({
-      id: booking.id,
+      id: booking.id!,
       data: { status: "cancelled" },
     });
 
     createNotification({
-      userId: booking.user,
-      message: `Your booking to inspect '${booking.property}' was cancelled.`,
+      userId: booking.userId,
+      message: `Your booking to inspect '${booking.propertyId}' was cancelled.`,
       datetime: new Date().toISOString(),
       isRead: false,
     });
   };
 
-  console.log(bookings)
-
   const filteredBookings = bookings.filter((booking: Booking) => {
     if (currentUser.role === "owner") {
-      return booking.property.owner.id === currentUser.id;
+      return booking.propertyId === currentUser.id;
     }
 
     if (currentUser.role === "user") {
-      return booking.user === currentUser.id;
+      return booking.userId === currentUser.id;
     }
 
     return false;
@@ -90,73 +89,17 @@ const Bookings = () => {
 
                 {/* Rows */}
                 {filteredBookings.map((b: Booking) => (
-                  <div
+                  <BookingItem
                     key={b.id}
-                    className={`grid items-center p-3 text-sm hover:bg-gray-50 transition ${
-                      currentUser.role === "owner"
-                        ? "grid-cols-6"
-                        : "grid-cols-5"
-                    }`}
-                  >
-                    <span
-                      className="font-medium capitalize cursor-pointer hover:underline text-purple-500"
-                      onClick={() => {
-                        setSelectedProperty(b.property);
-                        onClose(true);
-                      }}
-                    >
-                      {b.property}
-                    </span>
-
-                    <span>{b.day}</span>
-                    <span>{b.time}</span>
-
-                    {currentUser.role === "owner" && (
-                      <span className="capitalize">{b.user.firstName}</span>
-                    )}
-
-                    {/* Status */}
-                    <span>
-                      {b.status === "accepted" && (
-                        <span className="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">
-                          Accepted
-                        </span>
-                      )}
-                      {b.status === "cancelled" && (
-                        <span className="px-2 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
-                          Cancelled
-                        </span>
-                      )}
-                      {!b.status && (
-                        <span className="px-2 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">
-                          Pending
-                        </span>
-                      )}
-                    </span>
-
-                    {/* Actions */}
-                    <div className="flex justify-end gap-2">
-                      {!b.status && (
-                        <>
-                          {currentUser.role === "owner" && (
-                            <button
-                              onClick={() => handleAccept(b)}
-                              className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
-                            >
-                              Accept
-                            </button>
-                          )}
-
-                          <button
-                            onClick={() => handleCancel(b)}
-                            className="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
-                          >
-                            Cancel
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  </div>
+                    booking={b}
+                    currentUser={currentUser}
+                    onAccept={handleAccept}
+                    onCancel={handleCancel}
+                    onSelect={(propertyId: number) => {
+                      setSelectedPropertyId(propertyId);
+                      onClose(true);
+                    }}
+                  />
                 ))}
               </div>
             </div>
@@ -169,11 +112,11 @@ const Bookings = () => {
         )}
       </div>
 
-      {isOpen && selectedProperty && (
+      {isOpen && selectedPropertyId && (
         <Details
           isOpen={isOpen}
           onClose={() => onClose(false)}
-          property={selectedProperty}
+          propertyId={selectedPropertyId}
         />
       )}
     </RequireAuth>

@@ -17,6 +17,8 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 import { Owner } from "~/components/profile/owner";
 import { termAndPolicy } from "~/services/asset.services";
 import { useMe } from "~/hooks/useAuth";
+import { OtpModal } from "~/components/profile/otp";
+import { useState } from "react";
 
 const Profile = () => {
   const { data } = useMe();
@@ -33,7 +35,8 @@ const Profile = () => {
     ? currentUser?.company.charAt(0)
     : `${currentUser?.firstName?.[0] ?? ""}${currentUser?.lastName?.[0] ?? ""}`;
 
-  console.log(currentUser);
+  const [otpOpen, setOtpOpen] = useState(false)
+
   return (
     <RequireAuth>
       <div className="py-4 px-6 space-y-4">
@@ -81,14 +84,13 @@ const Profile = () => {
               </div>
             </div>
             <div>
-              {currentUser.isEmailVerified ? (
-                <span className="text-xs bg-green-500 font-semibold text-white px-2 py-0.5 rounded-full">
-                  Verified
-                </span>
-              ) : (
-                <span className="text-xs bg-red-500 font-semibold text-white px-2 py-0.5 rounded-full">
+              {!currentUser.isEmailVerified && (
+                <button
+                  onClick={() => setOtpOpen(true)}
+                  className="text-xs bg-red-500 font-semibold text-white px-2 py-0.5 rounded-full cursor-pointer"
+                >
                   Unverified
-                </span>
+                </button>
               )}
             </div>
           </div>
@@ -126,6 +128,12 @@ const Profile = () => {
           </a>
         </div>
       </div>
+
+      <OtpModal
+        isOpen={otpOpen}
+        onClose={() => setOtpOpen(false)}
+        email={currentUser.email}
+      />
     </RequireAuth>
   );
 };

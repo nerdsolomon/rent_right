@@ -1,3 +1,4 @@
+import type { Notification } from "~/types";
 import { api, authHeaders, handleResponse } from "./http.service";
 
 export const notificationService = {

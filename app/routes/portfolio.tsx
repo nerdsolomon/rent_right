@@ -2,30 +2,24 @@ import { useParams } from "react-router";
 import { PropertyCard } from "~/components/home/propertycard";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { useProperties } from "~/hooks/useProperties";
-import { useUsers } from "~/hooks/useUsers";
-import type { Property, User } from "~/types";
+import { useUser } from "~/hooks/useUsers";
+import type { Property } from "~/types";
 
 const Portfolio = () => {
   usePageTitle("RentRight - Portfolio");
 
   const { id } = useParams();
-  const { data: users } = useUsers()
-  const { data: properties} = useProperties()
+  const { data: uData } = useUser(Number(id));
+  const user = uData.user
 
-  const userId = Number(id);
-  const user = users.find((u: User) => u.id === userId);
+  const { data: pData } = useProperties();
+  const properties = pData.properties
 
   if (!user) {
-    return (
-      <div className="p-6 text-center text-gray-500">
-        User not found
-      </div>
-    );
+    return <div className="p-6 text-center text-gray-500">User not found</div>;
   }
 
-  const userProperties = properties.filter(
-    (p: Property) => p.owner?.id === user.id
-  );
+  const userProperties = properties.filter((p: Property) => p.userId === user.id);
 
   const displayName = user.company
     ? user.company
@@ -62,9 +56,7 @@ const Portfolio = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center text-gray-400">
-          No properties found
-        </div>
+        <div className="text-center text-gray-400">No properties to show</div>
       )}
     </div>
   );

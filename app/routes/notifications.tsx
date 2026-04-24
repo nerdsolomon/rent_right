@@ -9,13 +9,14 @@ import { type Notification } from "~/types";
 const Notifications = () => {
   usePageTitle("RentRight - Notifications");
   const { data } = useMe();
-  const currentUser = data?.user
-  
-  const { data: nData } = useNotifications()
-  const filteredNotifications = nData?.notifications ?? []
-    .filter((n: Notification) => n.userId === currentUser?.id)
-    .sort((a: { datetime: string | number | Date; }, b: { datetime: string | number | Date; }) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+  const currentUser = data?.user;
 
+  const { data: nData } = useNotifications();
+
+  const filteredNotifications = (nData ?? [])
+    .filter((n: Notification) => n.userId === currentUser?.id)
+    .sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+    
   const isToday = (date: string) => {
     const d = new Date(date);
     const today = new Date();

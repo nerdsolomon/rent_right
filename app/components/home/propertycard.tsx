@@ -13,7 +13,7 @@ interface Prop {
 
 export const PropertyCard = ({ property }: Prop) => {
   const [isOpen, onClose] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState<Property>();
+  const [selectedPropertyId, setSelectedPropertyId] = useState<number>();
   const { data } = useMe();
   const currentUser = data?.user
 
@@ -31,9 +31,9 @@ export const PropertyCard = ({ property }: Prop) => {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
 
-          {property.owner && <ProfileInfo user={property.owner} />}
+          {property.userId && <ProfileInfo userId={property.userId} />}
 
-          {currentUser?.id === property.owner?.id && !!currentUser && (
+          {currentUser?.id === property.userId && !!currentUser && (
             <div className="absolute top-3 right-3">
               <Actions property={property} />
             </div>
@@ -70,7 +70,7 @@ export const PropertyCard = ({ property }: Prop) => {
 
             <span
               onClick={() => {
-                setSelectedProperty(property);
+                setSelectedPropertyId(property.id);
                 if (currentUser) onClose(true);
               }}
               className="text-purple-600 cursor-pointer text-xs font-semibold border border-purple-600 px-3 py-2 rounded-full group-hover:bg-purple-50 transition"
@@ -81,11 +81,11 @@ export const PropertyCard = ({ property }: Prop) => {
         </div>
       </a>
 
-      {isOpen && selectedProperty && !!currentUser && (
+      {isOpen && selectedPropertyId && !!currentUser && (
         <Details
           isOpen={isOpen}
           onClose={() => onClose(false)}
-          property={selectedProperty}
+          propertyId={selectedPropertyId}
         />
       )}
     </>

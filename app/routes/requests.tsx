@@ -24,43 +24,42 @@ const Requests = () => {
   });
 
   const handleApprove = (user: User) => {
-    updateUser({
-      id: user.id,
-      data: {
-        role: "owner",
-        verifyOwner: user.verifyOwner
-          ? {
-              ...user.verifyOwner,
-              verifiedAt: new Date().toISOString(),
-              status: "approved",
-            }
-          : undefined,
-      },
-    });
+    if (!user.id || !user.verifyOwner) return;
+
+    const fd = new FormData();
+
+    fd.append("role", "owner");
+    fd.append("verifyOwner[firstName]", user.verifyOwner.firstName);
+    fd.append("verifyOwner[lastName]", user.verifyOwner.lastName);
+    fd.append("verifyOwner[address]", user.verifyOwner.address);
+    fd.append("verifyOwner[DoB]", user.verifyOwner.DoB);
+    fd.append("verifyOwner[status]", "approved");
+    fd.append("verifyOwner[verifiedAt]", new Date().toISOString());
+
+    updateUser({ id: user.id, data: fd });
 
     createNotification({
       datetime: new Date().toISOString(),
       isRead: false,
       userId: user.id,
-      message: `Hello, ${user.firstName}.\nCongratulations, you've been approved as an owner. You can now post your properties for rental or sale.`,
+      message: `Hello, ${user.firstName}. Congratulations, you've been approved as an owner.`,
     });
   };
 
   const handleReject = (user: User) => {
-    updateUser({
-      id: user.id,
-      data: {
-        verifyOwner: user.verifyOwner
-          ? { ...user.verifyOwner, status: "rejected" }
-          : undefined,
-      },
-    });
+    if (!user.id || !user.verifyOwner) return;
+
+    const fd = new FormData();
+
+    fd.append("verifyOwner[status]", "rejected");
+
+    updateUser({ id: user.id, data: fd });
 
     createNotification({
       datetime: new Date().toISOString(),
       isRead: false,
       userId: user.id,
-      message: `Hello, ${user.firstName}.\nWe regret to inform you that your request to be verified as an owner was rejected.`,
+      message: `Hello, ${user.firstName}. Your request was rejected.`,
     });
   };
 

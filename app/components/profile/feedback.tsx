@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FaBug } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { FaBug, FaImage } from "react-icons/fa";
 import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
 import { useCreateFeedback } from "~/hooks/useFeedbacks";
@@ -10,17 +10,48 @@ export const Feedback = () => {
   const modalRef = useClickOutside({ isOpen, onClose });
 
   const { data } = useMe();
-  const currentUser = data?.user;
+  const currentUser = data.user;
 
   const { mutate: createFeedback } = useCreateFeedback();
   const [formData, setFormData] = useState(emptyFeedback);
 
+  const [files, setFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+
+  const fileRef = useRef<HTMLInputElement | null>(null);
+
   const sendFeedback = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createFeedback(formData);
+
+    if (!currentUser?.id) return;
+    const fd = new FormData();
+    fd.append("text", formData.text);
+    fd.append("isViewed", "false");
+    fd.append("userId", String(currentUser.id));
+
+    files.forEach((file) => {
+      fd.append("imageUrls", file);
+    });
+
+    createFeedback(fd);
     setFormData(emptyFeedback);
+    setFiles([]);
+    setPreviews([]);
     onClose(false);
   };
+
+  const removeImage = (index: number) => {
+    URL.revokeObjectURL(previews[index]);
+
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setPreviews((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  useEffect(() => {
+    return () => {
+      previews.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previews]);
 
   return (
     <div>
@@ -63,13 +94,64 @@ export const Feedback = () => {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    id: Math.random(),
                     text: e.target.value,
-                    user: currentUser,
-                    isViewed: false,
                   })
                 }
               />
+
+              {/* Image Upload */}
+              <div
+                onClick={() => fileRef.current?.click()}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <FaImage className="text-purple-600" />
+                <span>Upload photos *</span>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const selected = e.target.files;
+                    if (!selected) return;
+
+                    const fileArray = Array.from(selected);
+
+                    setFiles((prev) => [...prev, ...fileArray]);
+
+                    const previewUrls = fileArray.map((file) =>
+                      URL.createObjectURL(file),
+                    );
+
+                    setPreviews((prev) => [...prev, ...previewUrls]);
+
+                    e.target.value = "";
+                  }}
+                />
+              </div>
+
+              {/* Preview */}
+              {previews.length > 0 && (
+                <div className="flex flex-wrap gap-3">
+                  {previews.map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={img}
+                        className="w-24 h-24 object-cover rounded-lg"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <button
                 type="submit"
                 className="bg-purple-600 w-full hover:bg-purple-800 text-white font-bold py-2 text-sm rounded-lg"

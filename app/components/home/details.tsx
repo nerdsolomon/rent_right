@@ -5,17 +5,23 @@ import type { Property } from "~/types";
 import { images } from "~/services/asset.services";
 import { Book } from "./book";
 import { useMe } from "~/hooks/useAuth";
+import { useProperty } from "~/hooks/useProperties";
+import type { Key } from "react";
 
 interface Props {
   isOpen: boolean;
   onClose: (value: boolean) => void;
-  property: Property;
+  propertyId: number;
 }
 
-export const Details = ({ isOpen, onClose, property }: Props) => {
+export const Details = ({ isOpen, onClose, propertyId }: Props) => {
   const modalRef = useClickOutside({ isOpen, onClose });
+
   const { data } = useMe();
-  const currentUser = data?.user;
+  const currentUser = data.user;
+
+  const { data: pData } = useProperty(propertyId)
+  const property = pData.property
   return (
     <>
       {isOpen && (
@@ -36,7 +42,7 @@ export const Details = ({ isOpen, onClose, property }: Props) => {
 
             <div className="flex p-1 overflow-x-auto space-x-4 mb-2">
               {(property.imageUrls?.length ? property.imageUrls : images).map(
-                (image, index) => (
+                (image: string, index: number) => (
                   <div key={index} className="w-100 h-100 flex-shrink-0">
                     <img
                       src={image}
