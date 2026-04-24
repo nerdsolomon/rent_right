@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaCopy, FaQrcode } from "react-icons/fa";
 import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useData } from "~/hooks/useData";
 import { useQrCode } from "~/hooks/useQrCode";
 
 export const Qrcode = () => {

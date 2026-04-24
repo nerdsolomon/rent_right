@@ -8,7 +8,7 @@ export interface User {
   password: string;
   role: string;
   verifyOwner?: VerifyOwner
-  imageUrl?: string;
+  imageUrls?: string;
 }
 
 export interface VerifyOwner {

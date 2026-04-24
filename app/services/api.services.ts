@@ -1,11 +1,9 @@
 import {
   type User,
-  type Property,
   type Review,
   type Feedback,
   type Booking,
   type Notification,
-  emptyUser,
 } from "~/types";
 
 const BASE_URL = "https://rental-app-backend-b4lj.onrender.com/api";

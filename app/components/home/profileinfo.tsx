@@ -19,13 +19,13 @@ export const ProfileInfo = ({ user }: Prop) => {
     <>
       <span
         onClick={() => {
-          if (!!currentUser) onClose(true);
+          if (currentUser) onClose(true);
         }}
         className="absolute top-3 left-3 w-8 h-8 cursor-pointer aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold"
       >
-        {user?.imageUrl ? (
+        {user?.imageUrls ? (
           <img
-            src={user.imageUrl}
+            src={user.imageUrls}
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : user.company ? (
@@ -52,9 +52,9 @@ export const ProfileInfo = ({ user }: Prop) => {
 
             <div className="flex justify-center">
               <div className="w-[25%] aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold text-[40px] lg:text-[50px]">
-                {user?.imageUrl ? (
+                {user?.imageUrls ? (
                   <img
-                    src={user.imageUrl}
+                    src={user.imageUrls}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 ) : user.company ? (

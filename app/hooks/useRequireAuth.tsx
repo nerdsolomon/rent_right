@@ -3,6 +3,7 @@ import { useMe } from "~/hooks/useAuth";
 
 export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   const { data, isLoading } = useMe();
+  const isAuthenticated = data?.user
 
   if (isLoading) {
     return (
@@ -12,7 +13,7 @@ export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (!data) {
+  if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
