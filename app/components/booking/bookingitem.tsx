@@ -1,26 +1,51 @@
-import { useProperties, useProperty } from "~/hooks/useProperties";
+import { useUpdateBooking } from "~/hooks/useBookings";
+import { useCreateNotification } from "~/hooks/useNotifications";
+import { useProperties } from "~/hooks/useProperties";
 import type { Booking, Property } from "~/types";
 
 type Props = {
   booking: Booking;
   currentUser: any;
-  onAccept: (b: Booking) => void;
-  onCancel: (b: Booking) => void;
   onSelect: (propertyId: number) => void;
 };
 
-const BookingItem = ({
-  booking,
-  currentUser,
-  onAccept,
-  onCancel,
-  onSelect,
-}: Props) => {
+const BookingItem = ({ booking, currentUser, onSelect }: Props) => {
   const { data: pData } = useProperties();
   const properties = pData?.properties;
   const property = properties.filter(
     (p: Property) => p.id === booking.propertyId,
   )[0];
+
+  const { mutate: updateBooking } = useUpdateBooking();
+  const { mutate: createNotification } = useCreateNotification();
+
+  const handleAccept = (booking: Booking) => {
+    updateBooking({
+      id: booking.id!,
+      data: { status: "accepted" },
+    });
+
+    createNotification({
+      userId: booking.userId,
+      message: `Your booking to inspect '${booking.propertyId}' has been accepted.`,
+      datetime: new Date().toISOString(),
+      isRead: false,
+    });
+  };
+
+  const handleCancel = (booking: Booking) => {
+    updateBooking({
+      id: booking.id!,
+      data: { status: "cancelled" },
+    });
+
+    createNotification({
+      userId: booking.userId,
+      message: `Your booking to inspect '${booking.propertyId}' was cancelled.`,
+      datetime: new Date().toISOString(),
+      isRead: false,
+    });
+  };
 
   return (
     <div
@@ -53,7 +78,7 @@ const BookingItem = ({
             Cancelled
           </span>
         )}
-        {!booking.status && (
+        {booking.status !== "accepted" && booking.status !== "cancelled" && (
           <span className="px-2 py-1 text-xs font-medium text-yellow-700 bg-yellow-100 rounded-full">
             Pending
           </span>
@@ -65,7 +90,7 @@ const BookingItem = ({
           <>
             {currentUser.role === "owner" && (
               <button
-                onClick={() => onAccept(booking)}
+                onClick={() => handleAccept(booking)}
                 className="px-3 py-1 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
               >
                 Accept
@@ -73,7 +98,7 @@ const BookingItem = ({
             )}
 
             <button
-              onClick={() => onCancel(booking)}
+              onClick={() => handleCancel(booking)}
               className="px-3 py-1 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
             >
               Cancel

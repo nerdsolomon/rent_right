@@ -29,7 +29,7 @@ export const bookingService = {
   },
 
   update: async (id: number, data: Partial<Booking>) => {
-    const res = await fetch(api('/bookings/${id}'), {
+    const res = await fetch(api(`/bookings/${id}`), {
       method: "PUT",
       headers: authHeaders(),
       body: JSON.stringify(data), 
@@ -39,7 +39,7 @@ export const bookingService = {
   },
 
   delete: async (id: number) => {
-    const res = await fetch(api('/bookings/${id}'), {
+    const res = await fetch(api(`/bookings/${id}`), {
       method: "DELETE",
       headers: authHeaders(),
     });

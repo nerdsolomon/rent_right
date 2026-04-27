@@ -21,7 +21,7 @@ export const feedbackService = {
   },
 
   markViewed: async (id: number) => {
-    const res = await fetch(api('/feedbacks/${id}/view'), {
+    const res = await fetch(api(`/feedbacks/${id}/view`), {
       method: "PATCH",
       headers: authHeaders(),
     });
@@ -30,7 +30,7 @@ export const feedbackService = {
   },
 
   update: async (id: number, data: Partial<Feedback>) => {
-    const res = await fetch(api('/feedbacks/${id}'), {
+    const res = await fetch(api(`/feedbacks/${id}`), {
       method: "PUT",
       headers: authHeaders(),
       body: JSON.stringify(data), 
@@ -40,7 +40,7 @@ export const feedbackService = {
   },
 
   delete: async (id: number) => {
-    const res = await fetch(api('/feedbacks/${id}'), {
+    const res = await fetch(api(`/feedbacks/${id}`), {
       method: "DELETE",
       headers: authHeaders(),
     });

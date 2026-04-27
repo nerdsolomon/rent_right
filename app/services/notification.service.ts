@@ -21,7 +21,7 @@ export const notificationService = {
   },
 
   update: async (id: number, data: Notification) => {
-    const res = await fetch(api('/notifications/${id}'), {
+    const res = await fetch(api(`/notifications/${id}`), {
       method: "PUT",
       headers: authHeaders(),
       body: JSON.stringify(data),
@@ -31,7 +31,7 @@ export const notificationService = {
   },
 
   delete: async (id: number) => {
-    const res = await fetch(api('/notifications/${id}'), {
+    const res = await fetch(api(`/notifications/${id}`), {
       method: "DELETE",
       headers: authHeaders(),
     });

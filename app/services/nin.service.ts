@@ -21,7 +21,7 @@ export const ninService = {
 
   adminGetAll: async (status?: string) => {
     const res = await fetch(
-      api('/nin-verification/admin/ll${status ? `?status=${status}` : ""}'),
+      api(`/nin-verification/admin/ll${status ? `?status=${status}` : ""}`),
       { headers: authHeaders() }
     );
 
@@ -30,7 +30,7 @@ export const ninService = {
 
   review: async (id: number, data: { status: "approved" | "rejected" }) => {
     const res = await fetch(
-      api('/nin-verification/admin/{id}/review'),
+      api(`/nin-verification/admin/${id}/review`),
       {
         method: "PATCH",
         headers: authHeaders(),

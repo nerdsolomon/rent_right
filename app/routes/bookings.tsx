@@ -3,8 +3,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import BookingItem from "~/components/booking/bookingitem";
 import { Details } from "~/components/home/details";
 import { useMe } from "~/hooks/useAuth";
-import { useMyBookings, useUpdateBooking } from "~/hooks/useBookings";
-import { useCreateNotification } from "~/hooks/useNotifications";
+import { useMyBookings } from "~/hooks/useBookings";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 import type { Booking } from "~/types";
@@ -18,41 +17,10 @@ const Bookings = () => {
   const { data: uData } = useMe();
   const currentUser = uData?.user;
 
-  const { mutate: updateBooking } = useUpdateBooking();
-  const { mutate: createNotification } = useCreateNotification();
-
   const [isOpen, onClose] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<number>();
 
   if (!currentUser) return null;
-
-  const handleAccept = (booking: Booking) => {
-    updateBooking({
-      id: booking.id!,
-      data: { status: "accepted" },
-    });
-
-    createNotification({
-      userId: booking.userId,
-      message: `Your booking to inspect '${booking.propertyId}' has been accepted.`,
-      datetime: new Date().toISOString(),
-      isRead: false,
-    });
-  };
-
-  const handleCancel = (booking: Booking) => {
-    updateBooking({
-      id: booking.id!,
-      data: { status: "cancelled" },
-    });
-
-    createNotification({
-      userId: booking.userId,
-      message: `Your booking to inspect '${booking.propertyId}' was cancelled.`,
-      datetime: new Date().toISOString(),
-      isRead: false,
-    });
-  };
 
   const filteredBookings = bookings.filter((booking: Booking) => {
     if (currentUser.role === "owner") {
@@ -93,8 +61,6 @@ const Bookings = () => {
                     key={b.id}
                     booking={b}
                     currentUser={currentUser}
-                    onAccept={handleAccept}
-                    onCancel={handleCancel}
                     onSelect={(propertyId: number) => {
                       setSelectedPropertyId(propertyId);
                       onClose(true);

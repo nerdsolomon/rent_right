@@ -7,12 +7,12 @@ export const propertyService = {
   },
 
   getById: async (id: number) => {
-    const res = await fetch(api('/properties/${id}'));
+    const res = await fetch(api(`/properties/${id}`));
     return handleResponse(res);
   },
 
   getByOwner: async (userId: number) => {
-    const res = await fetch(api('/properties/owner/${userId}'));
+    const res = await fetch(api(`/properties/owner/${userId}`));
     return handleResponse(res);
   },
 
@@ -27,7 +27,7 @@ export const propertyService = {
   },
 
   update: async (id: number, data: FormData) => {
-    const res = await fetch(api('/properties/${id}'), {
+    const res = await fetch(api(`/properties/${id}`), {
       method: "PUT",
       headers: authHeaders(true),
       body: data,
@@ -37,7 +37,7 @@ export const propertyService = {
   },
 
   delete: async (id: number) => {
-    const res = await fetch(api('/properties/${id}'), {
+    const res = await fetch(api(`/properties/${id}`), {
       method: "DELETE",
       headers: authHeaders(),
     });

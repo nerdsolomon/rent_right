@@ -8,7 +8,7 @@ export const reviewService = {
   },
 
   getByProperty: async (propertyId: number) => {
-    const res = await fetch(api('/reviews/property/${propertyId}'));
+    const res = await fetch(api(`/reviews/property/${propertyId}`));
     return handleResponse(res);
   },
 
@@ -23,7 +23,7 @@ export const reviewService = {
   },
 
   update: async (id: number, data: Partial<Review>) => {
-    const res = await fetch(api('/reviews/${id}'), {
+    const res = await fetch(api(`/reviews/${id}`), {
       method: "PUT",
       headers: authHeaders(),
       body: JSON.stringify(data), 
@@ -33,7 +33,7 @@ export const reviewService = {
   },
 
   delete: async (id: number) => {
-    const res = await fetch(api('/reviews/${id}'), {
+    const res = await fetch(api(`/reviews/${id}`), {
       method: "DELETE",
       headers: authHeaders(),
     });
