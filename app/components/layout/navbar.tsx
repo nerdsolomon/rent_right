@@ -97,7 +97,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
             ) : currentUser.company ? (
               currentUser.company?.[0]
             ) : (
-              `${currentUser.firstName?.[0] ?? ""} ${currentUser.lastName?.[0] ?? ""}`
+              `${currentUser.firstName?.[0]}${currentUser.lastName?.[0]}`
             )}
           </div>
 

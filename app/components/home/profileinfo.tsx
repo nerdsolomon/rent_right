@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useMe } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
-import { useUser } from "~/hooks/useUsers";
+import { useUser, useUsers } from "~/hooks/useUsers";
+import type { User } from "~/types";
 
 interface Prop {
   userId: number;
@@ -15,8 +16,9 @@ export const ProfileInfo = ({ userId }: Prop) => {
   const { data } = useMe();
   const currentUser = data?.user
 
-  const { data: uData } = useUser(userId)
-  const user = uData.user
+  const { data: uData } = useUsers()
+  const users = uData?.users
+  const user = users?.find((u: User) => u.id === userId)
 
   const navigate = useNavigate()
 
@@ -30,13 +32,13 @@ export const ProfileInfo = ({ userId }: Prop) => {
       >
         {user?.imageUrls ? (
           <img
-            src={user.imageUrls}
+            src={user?.imageUrls}
             className="absolute inset-0 w-full h-full object-cover"
           />
-        ) : user.company ? (
-          user.company.charAt(0)
+        ) : user?.company ? (
+          user?.company.charAt(0)
         ) : (
-          `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`
+          `${user?.firstName?.charAt(0)}${user?.lastName?.charAt(0)}`
         )}
       </span>
 
@@ -62,18 +64,18 @@ export const ProfileInfo = ({ userId }: Prop) => {
                     src={user.imageUrls}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
-                ) : user.company ? (
-                  user.company.charAt(0)
+                ) : user?.company ? (
+                  user?.company?.charAt(0)
                 ) : (
-                  `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`
+                  `${user?.firstName?.charAt(0) ?? ""}${user?.lastName?.charAt(0) ?? ""}`
                 )}
               </div>
             </div>
 
             <span className="flex justify-center text-lg font-bold text-purple-600 p-2">
-              {user.company
-                ? user.company
-                : `${user.firstName} ${user.lastName}`}
+              {user?.company
+                ? user?.company
+                : `${user?.firstName} ${user?.lastName}`}
             </span>
 
             <div className="grid grid-cols-2 gap-2 items-center mt-4">
