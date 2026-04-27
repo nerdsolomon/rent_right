@@ -18,7 +18,7 @@ export const bookingService = {
     return handleResponse(res);
   },
 
-  create: async (data: Booking) => {
+  create: async (data: Partial<Booking>) => {
     const res = await fetch(api('/bookings'), {
       method: "POST",
       headers: authHeaders(),

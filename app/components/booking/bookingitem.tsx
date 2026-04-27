@@ -86,7 +86,7 @@ const BookingItem = ({ booking, currentUser, onSelect }: Props) => {
       </span>
 
       <div className="flex justify-end gap-2">
-        {!booking.status && (
+        {booking.status !== "accepted" && booking.status !== "cancelled" && (
           <>
             {currentUser.role === "owner" && (
               <button

@@ -70,8 +70,8 @@ export const Book = ({ property }: Props) => {
 
       const bookingData = {
         ...formData,
-        property: property.id,
-        user: currentUser.id,
+        propertyId: property.id,
+        userId: currentUser.id,
       };
 
       await createBooking(bookingData);
@@ -79,7 +79,7 @@ export const Book = ({ property }: Props) => {
       await createNotification({
         datetime: new Date().toISOString(),
         isRead: false,
-        userId: property.owner.id,
+        userId: property.userId,
         message: `${currentUser.firstName} just booked a date and time for property inspection.`,
       });
 
@@ -101,7 +101,7 @@ export const Book = ({ property }: Props) => {
   const isTimeBooked = (day: string, time: string) => {
     return bookings.some(
       (booking: Booking) =>
-        booking.property === property.id &&
+        booking.propertyId === property.id &&
         booking.day === day &&
         booking.time === time,
     );
