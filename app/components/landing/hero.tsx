@@ -25,7 +25,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-xl mb-8 leading-relaxed">
-            RentRight connects tenants and landlords seamlessly. Browse
+            Axterra connects tenants and landlords seamlessly. Browse
             thousands of verified listings, message owners directly, and manage
             payments all in one place.
           </p>

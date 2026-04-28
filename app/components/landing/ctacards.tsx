@@ -37,7 +37,7 @@ export default function CTACards() {
 
             <p className="text-white/90 text-sm leading-relaxed mb-8 max-w-sm">
               List your property for free, screen qualified tenants, and collect
-              rent seamlessly. Join thousands of landlords who trust RentRight
+              rent seamlessly. Join thousands of landlords who trust Axterra
               to manage their rentals.
             </p>
 
@@ -50,7 +50,7 @@ export default function CTACards() {
         {/* Users Section */}
         <div className="text-center">
           <p className="text-white/90 text-sm mb-4">
-            Join over 100,000 happy users on RentRight
+            Join over 100,000 happy users on Axterra
           </p>
 
           <div className="flex items-center justify-center gap-3">

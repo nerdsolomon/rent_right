@@ -90,9 +90,7 @@ const Profile = () => {
           {currentUser?.role === "owner" && <Qrcode />}
           <ChangePassword />
           <Logout />
-          {currentUser?.role !== "admin" && (
-            <Delete userId={currentUser?.id || 0} />
-          )}
+          <Delete userId={currentUser?.id} />
         </div>
 
         <div className="space-y-4">

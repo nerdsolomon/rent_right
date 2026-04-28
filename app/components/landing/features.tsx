@@ -61,7 +61,7 @@ export default function Features() {
           </h2>
 
           <p className="text-gray-600 text-sm sm:text-base md:text-lg">
-            RentRight provides all the tools you need for a seamless rental
+            Axterra provides all the tools you need for a seamless rental
             experience, whether you're a tenant or a landlord.
           </p>
         </div>

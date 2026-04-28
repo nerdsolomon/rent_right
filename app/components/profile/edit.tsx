@@ -207,9 +207,10 @@ export const Edit = () => {
                 <div className="col-span-2">
                   <label className="text-sm text-gray-600">Email</label>
                   <input
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                    className="p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center w-full"
                     type="email"
                     required
+                    disabled
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({
@@ -221,21 +222,25 @@ export const Edit = () => {
                 </div>
 
                 <div className="col-span-2">
-                  <label className="text-sm text-gray-600">
-                    Phone Number
-                  </label>
-                  <input
-                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        phone: e.target.value,
-                      })
-                    }
-                  />
+                  <label className="text-sm text-gray-600">Phone Number</label>
+                  <div className="flex gap-2">
+                    <div className="w-1/5 p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center">
+                      +234
+                    </div>
+
+                    <input
+                      className="w-2/2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          phone: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
                 </div>
 
                 <div className="col-span-2">

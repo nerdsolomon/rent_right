@@ -11,13 +11,13 @@ export default function Footer() {
               <span className="text-[25px] font-bold sm:inline">xterra</span>
             </div>
             <p className="text-gray-400 text-sm mb-4">
-              Find your perfect rental home with ease. RentRight connects
+              Find your perfect rental home with ease. Axterra connects
               tenants and landlords for seamless rental experiences.
             </p>
             <div className="space-y-2 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <FaEnvelope />
-                <span>admin@rentright.com</span>
+                <span>admin@axterra.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaPhoneAlt />
@@ -111,7 +111,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 pt-5">
           <p className="text-gray-500 text-sm text-center">
-            © 2026 RentRight. All rights reserved.
+            © 2026 Axterra. All rights reserved.
           </p>
         </div>
       </div>

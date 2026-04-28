@@ -175,8 +175,7 @@ const Signup = () => {
                   />
 
                   <input
-                    className="w-full p-2 border border-gray-300 disabled rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600
-"
+                    className="p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center w-full"
                     type="email"
                     placeholder="Email"
                     required

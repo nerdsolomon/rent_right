@@ -63,7 +63,7 @@ export default function HowItWorks() {
 
         <p className="text-gray-600 max-w-2xl mx-auto mb-10">
           Whether you're looking for a place to rent or want to list your
-          property, RentRight makes it easy.
+          property, Axterra makes it easy.
         </p>
 
         <div className="inline-flex bg-purple-50 rounded-full p-1 mb-16">
