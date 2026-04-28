@@ -34,7 +34,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
   }
 
   return (
-    <nav className="border-b border-gray-300 p-2 sticky top-0 z-50 grid grid-cols-2 lg:grid-cols-3 bg-white text-purple-600 font-bold">
+    <nav className="border-b border-gray-300 px-4 sticky top-0 z-50 grid grid-cols-2 lg:grid-cols-3 bg-white text-purple-600 font-bold">
       {/* LEFT */}
       <div className="flex items-center gap-4">
         <button
@@ -45,14 +45,11 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
         </button>
 
         <div
-          className="flex items-center gap-2 cursor-pointer"
           onClick={() => navigate("/home")}
+          className="text-purple-600 flex items-center cursor-pointer"
         >
-          <div className="hidden lg:flex bg-purple-600 text-white w-8 h-8 rounded-lg items-center justify-center">
-            <FaHome size={20} />
-          </div>
-
-          <span className="text-lg font-bold">RentRight</span>
+          <FaHome size={25} />
+          <span className="text-[25px] font-bold sm:inline">xterra</span>
         </div>
       </div>
 

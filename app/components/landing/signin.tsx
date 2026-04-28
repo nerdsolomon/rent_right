@@ -59,12 +59,10 @@ const Signin = () => {
                 </div>
                 <div className="relative flex items-center justify-center">
                   {/* Logo */}
-                  <div className="flex flex-col items-center m-4">
-                    <div className="bg-purple-600 text-white w-12 h-12 rounded-xl flex items-center justify-center mb-2">
-                      <FaHome size={22} />
-                    </div>
-                    <span className="text-lg font-bold text-purple-600">
-                      RentRight
+                  <div className="text-purple-600 flex items-center mb-4">
+                    <FaHome size={25} />
+                    <span className="text-[25px] font-bold sm:inline">
+                      xterra
                     </span>
                   </div>
                 </div>

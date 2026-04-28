@@ -6,14 +6,13 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 md:mb-12">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="bg-purple-600 text-white w-8 h-8 rounded-lg flex items-center justify-center">
-                <FaHome size={20}/>
-              </div>
-              <span className="text-lg font-bold">RentRight</span>
+            <div className="text-white flex items-center">
+              <FaHome size={25} />
+              <span className="text-[25px] font-bold sm:inline">xterra</span>
             </div>
             <p className="text-gray-400 text-sm mb-4">
-              Find your perfect rental home with ease. RentRight connects tenants and landlords for seamless rental experiences.
+              Find your perfect rental home with ease. RentRight connects
+              tenants and landlords for seamless rental experiences.
             </p>
             <div className="space-y-2 text-sm text-gray-400">
               <div className="flex items-center gap-2">
@@ -34,30 +33,78 @@ export default function Footer() {
           <div>
             <h4 className="font-bold mb-4">Product</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#" className="hover:text-white transition">Features</a></li>
-              <li><a href="#" className="hover:text-white transition">Pricing</a></li>
-              <li><a href="#" className="hover:text-white transition">For Tenants</a></li>
-              <li><a href="#" className="hover:text-white transition">For Landlords</a></li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Features
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Pricing
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  For Tenants
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  For Landlords
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#" className="hover:text-white transition">About Us</a></li>
-              <li><a href="#" className="hover:text-white transition">Careers</a></li>
-              <li><a href="#" className="hover:text-white transition">Blog</a></li>
-              <li><a href="#" className="hover:text-white transition">Press</a></li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Press
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold mb-4">Support</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#" className="hover:text-white transition">Help Center</a></li>
-              <li><a href="#" className="hover:text-white transition">Contact Us</a></li>
-              <li><a href="#" className="hover:text-white transition">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition">Terms of Service</a></li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Help Center
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Terms of Service
+                </a>
+              </li>
             </ul>
           </div>
         </div>
