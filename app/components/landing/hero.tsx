@@ -20,7 +20,7 @@ export default function HeroSection() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4">
-            <span className="text-purple-600 block">Perfect Rental</span>
+            <span className="text-purple-600 block">Perfect</span>
             <span className="text-gray-900 block">Home Today</span>
           </h1>
 
