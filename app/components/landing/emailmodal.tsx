@@ -1,0 +1,68 @@
+import { useState } from "react";
+import { useResendOtp, useVerifyEmail } from "~/hooks/useAuth";
+import useClickOutside from "~/hooks/useClickOutside";
+
+type EmailModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess: (email: string) => void;
+};
+
+export const EmailModal = ({
+  isOpen,
+  onClose,
+  onSuccess,
+}: EmailModalProps) => {
+  const modalRef = useClickOutside({ isOpen, onClose });
+  const [email, setEmail] = useState("");
+
+  // const { mutate: sendOtp, isPending } = useVerifyEmail(); // or useSendOtp if separate
+  const { mutate: resendOtp, isPending } = useResendOtp();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    resendOtp(
+      { email },
+      {
+        onSuccess: () => {
+          onSuccess(email); // pass email upward
+        },
+      },
+    );
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div
+        ref={modalRef}
+        className="bg-white rounded-xl p-6 w-[90%] max-w-md"
+      >
+        <h2 className="text-lg font-semibold mb-2">Enter your email</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          We'll send you a verification code
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-2 border rounded-lg"
+            placeholder="Email address"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white py-2 rounded-lg"
+          >
+            {isPending ? "Sending..." : "Continue"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};

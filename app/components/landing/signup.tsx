@@ -5,6 +5,8 @@ import { emptyUser } from "~/types";
 import { images, termAndPolicy } from "~/services/asset.services";
 import { useGoogleLogin } from "~/hooks/useAuth";
 import { useCreateUser } from "~/hooks/useUsers";
+import { EmailModal } from "./emailmodal";
+import { OtpModal } from "./otp";
 
 const Signup = () => {
   const [isOpen, onClose] = useState(false);
@@ -17,6 +19,10 @@ const Signup = () => {
 
   const { mutate: register, isPending, isSuccess, error } = useCreateUser();
   const googleLogin = useGoogleLogin();
+
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [otpModalOpen, setOtpModalOpen] = useState(false);
+  const [verifiedEmail, setVerifiedEmail] = useState("");
 
   const addUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,11 +53,35 @@ const Signup = () => {
   return (
     <>
       <button
-        onClick={() => onClose(true)}
+        onClick={() => setEmailModalOpen(true)}
         className="px-6 py-2 rounded-full text-sm font-semibold bg-white text-purple-700 hover:bg-purple-600 hover:text-white shadow"
       >
         Sign Up
       </button>
+
+      <EmailModal
+        isOpen={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+        onSuccess={(email) => {
+          setVerifiedEmail(email);
+          setEmailModalOpen(false);
+          setOtpModalOpen(true);
+        }}
+      />
+
+      <OtpModal
+        isOpen={otpModalOpen}
+        onClose={() => setOtpModalOpen(false)}
+        email={verifiedEmail}
+        onVerified={() => {
+          setOtpModalOpen(false);
+          onClose(true); // open signup modal
+          setFormData((prev) => ({
+            ...prev,
+            email: verifiedEmail, // ✅ inject verified email
+          }));
+        }}
+      />
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -148,11 +178,12 @@ const Signup = () => {
                   />
 
                   <input
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600
+                    className="w-full p-2 border border-gray-300 disabled rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600
 "
                     type="email"
                     placeholder="Email"
                     required
+                    disabled
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
@@ -210,7 +241,12 @@ const Signup = () => {
                   )}
 
                   <label className="flex items-center gap-1 text-xs">
-                    <input className="accent-purple-600 w-4 h-4 cursor-pointer" type="checkbox" required />I agree to the{" "}
+                    <input
+                      className="accent-purple-600 w-4 h-4 cursor-pointer"
+                      type="checkbox"
+                      required
+                    />
+                    I agree to the{" "}
                     <a className="text-purple-600" href={termAndPolicy}>
                       Terms of Service and Privacy Policy
                     </a>

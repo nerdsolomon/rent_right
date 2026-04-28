@@ -17,7 +17,7 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 import { Owner } from "~/components/profile/owner";
 import { termAndPolicy } from "~/services/asset.services";
 import { useMe } from "~/hooks/useAuth";
-import { OtpModal } from "~/components/profile/otp";
+import { OtpModal } from "~/components/landing/otp";
 import { useState } from "react";
 
 const Profile = () => {

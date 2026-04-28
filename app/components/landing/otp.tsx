@@ -7,9 +7,10 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   email: string;
+  onVerified: () => void;
 };
 
-export const OtpModal = ({ isOpen, onClose, email }: Props) => {
+export const OtpModal = ({ isOpen, onClose, email, onVerified }: Props) => {
   const modalRef = useClickOutside({ isOpen, onClose });
 
   const { mutate: verifyEmail, isPending: verifying } = useVerifyEmail();
@@ -50,7 +51,7 @@ export const OtpModal = ({ isOpen, onClose, email }: Props) => {
       {
         onSuccess: () => {
           setOtp(["", "", "", "", "", ""]);
-          onClose();
+          onVerified();
         },
         onError: () => {
           setError("Invalid OTP");
