@@ -30,9 +30,11 @@ export const Actions = ({ property }: Prop) => {
             <EditProperty property={property} />
             <button
               onClick={() => {
+                const form = new FormData();
+                form.append("isAvailable", String(!property.isAvailable));
                 updateProperty({
-                  id: property.id,
-                  data: { isAvailable: !property.isAvailable },
+                  id: property.id!,
+                  data: form,
                 });
                 setIsOpen(false);
               }}
@@ -43,7 +45,7 @@ export const Actions = ({ property }: Prop) => {
 
             <button
               onClick={() => {
-                deleteProperty(property.id);
+                deleteProperty(property.id!);
                 setIsOpen(false);
               }}
               className="block w-full text-sm px-4 capitalize py-2 text-left rounded-lg hover:bg-gray-100 text-red-600"

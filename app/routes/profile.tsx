@@ -17,8 +17,6 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 import { Owner } from "~/components/profile/owner";
 import { termAndPolicy } from "~/services/asset.services";
 import { useMe } from "~/hooks/useAuth";
-import { OtpModal } from "~/components/landing/otp";
-import { useState } from "react";
 
 const Profile = () => {
   const { data } = useMe();
@@ -34,8 +32,6 @@ const Profile = () => {
   const initials = currentUser?.company
     ? currentUser?.company.charAt(0)
     : `${currentUser?.firstName?.[0] ?? ""}${currentUser?.lastName?.[0] ?? ""}`;
-
-  const [otpOpen, setOtpOpen] = useState(false)
 
   return (
     <RequireAuth>
@@ -86,7 +82,6 @@ const Profile = () => {
             <div>
               {!currentUser.isEmailVerified && (
                 <button
-                  onClick={() => setOtpOpen(true)}
                   className="text-xs bg-red-500 font-semibold text-white px-2 py-0.5 rounded-full cursor-pointer"
                 >
                   Unverified
@@ -128,12 +123,7 @@ const Profile = () => {
           </a>
         </div>
       </div>
-
-      <OtpModal
-        isOpen={otpOpen}
-        onClose={() => setOtpOpen(false)}
-        email={currentUser.email}
-      />
+      
     </RequireAuth>
   );
 };

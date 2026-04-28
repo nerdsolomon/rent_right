@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useResendOtp, useVerifyEmail } from "~/hooks/useAuth";
+import { useResendOtp } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
 
 type EmailModalProps = {
@@ -8,25 +8,21 @@ type EmailModalProps = {
   onSuccess: (email: string) => void;
 };
 
-export const EmailModal = ({
-  isOpen,
-  onClose,
-  onSuccess,
-}: EmailModalProps) => {
+export const EmailModal = ({ isOpen, onClose, onSuccess }: EmailModalProps) => {
   const modalRef = useClickOutside({ isOpen, onClose });
   const [email, setEmail] = useState("");
 
-  // const { mutate: sendOtp, isPending } = useVerifyEmail(); // or useSendOtp if separate
-  const { mutate: resendOtp, isPending } = useResendOtp();
+  const { mutate: sendOtp, isPending } = useResendOtp();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    resendOtp(
+    sendOtp(
       { email },
       {
         onSuccess: () => {
-          onSuccess(email); // pass email upward
+          onClose(); 
+          onSuccess(email); 
         },
       },
     );
@@ -36,10 +32,7 @@ export const EmailModal = ({
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div
-        ref={modalRef}
-        className="bg-white rounded-xl p-6 w-[90%] max-w-md"
-      >
+      <div ref={modalRef} className="bg-white rounded-xl p-6 w-[90%] max-w-md">
         <h2 className="text-lg font-semibold mb-2">Enter your email</h2>
         <p className="text-sm text-gray-500 mb-4">
           We'll send you a verification code
@@ -51,7 +44,7 @@ export const EmailModal = ({
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             placeholder="Email address"
           />
 

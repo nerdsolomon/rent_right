@@ -63,6 +63,7 @@ export const AddProperty = () => {
     form.append("city", formData.city);
     form.append("description", formData.description);
     form.append("ownerId", currentUser.id);
+    form.append("isAvailable", "true");
 
     files.forEach((file) => {
       form.append("images", file);

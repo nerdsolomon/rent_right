@@ -143,8 +143,7 @@ const Signup = () => {
                   )}
 
                   <input
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600
-"
+                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                     type="text"
                     placeholder="First Name"
                     required

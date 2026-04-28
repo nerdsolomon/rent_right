@@ -47,7 +47,6 @@ export const EditProperty = ({ property }: Prop) => {
 
   const form = new FormData();
 
-  // ✅ append primitive fields safely
   form.append("title", formData.title);
   form.append("type", formData.type);
   form.append("listingType", formData.listingType);
@@ -57,7 +56,7 @@ export const EditProperty = ({ property }: Prop) => {
   form.append("state", formData.state);
   form.append("city", formData.city);
   form.append("description", formData.description);
-
+  form.append("isAvailable", "true");
   form.append("existingImages", JSON.stringify(existingImages));
 
   newImages.forEach((file) => {
@@ -66,7 +65,7 @@ export const EditProperty = ({ property }: Prop) => {
 
   updateProperty(
     {
-      id: formData.id,
+      id: formData.id!,
       data: form,
     },
     {
