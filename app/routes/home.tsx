@@ -9,7 +9,7 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 import type { Property } from "~/types";
 
 const Home = () => {
-  usePageTitle("RentRight - Home");
+  usePageTitle("Axterra - Home");
   const { data } = useProperties();
   const properties = data?.properties ?? [];
 

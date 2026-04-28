@@ -7,7 +7,7 @@ import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
 
 const Dashboard = () => {
-  usePageTitle("RentRight - Dashbord");
+  usePageTitle("Axterra - Dashbord");
   
   const usersFilter = [
     { label: "Admins", role: "admin", icon: FaUserCog },

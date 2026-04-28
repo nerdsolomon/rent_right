@@ -6,7 +6,7 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 import type { Feedback } from "~/types";
 
 const Feedbacks = () => {
-  usePageTitle("RentRight - Feedbacks");
+  usePageTitle("Axterra- Feedbacks");
 
   const { data } = useFeedbacks()
   const feedbacks = data?.feedbacks ?? []

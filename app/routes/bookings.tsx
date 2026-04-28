@@ -9,7 +9,7 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 import type { Booking } from "~/types";
 
 const Bookings = () => {
-  usePageTitle("RentRight - Bookings");
+  usePageTitle("Axterra - Bookings");
 
   const { data: bData } = useMyBookings();
   const bookings = bData?.bookings ?? [];

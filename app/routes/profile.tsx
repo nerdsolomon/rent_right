@@ -22,7 +22,7 @@ const Profile = () => {
   const { data } = useMe();
   const currentUser = data?.user;
   usePageTitle(
-    `RentRight - ${currentUser?.firstName} ${currentUser?.lastName}`,
+    `Axterra - ${currentUser?.firstName} ${currentUser?.lastName}`,
   );
 
   const displayName = currentUser?.company

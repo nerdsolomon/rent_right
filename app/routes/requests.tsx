@@ -8,7 +8,7 @@ import { useUpdateUser, useUsers } from "~/hooks/useUsers";
 import type { User } from "~/types";
 
 const Requests = () => {
-  usePageTitle("RentRight - Requests");
+  usePageTitle("Axterra - Requests");
   const [isOpen, onClose] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
 
