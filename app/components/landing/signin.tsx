@@ -34,6 +34,7 @@ const Signin = () => {
     <>
       <button
         onClick={() => onClose(true)}
+        id="sign-in"
         className="text-gray-700 border border-purple-600 text-purple-600 px-3 py-2 rounded-full text-sm font-medium hover:bg-purple-500 hover:text-white transition flex items-center gap-2"
       >
         Sign In

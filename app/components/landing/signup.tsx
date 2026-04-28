@@ -260,12 +260,13 @@ const Signup = () => {
 
                 <p className="text-sm text-gray-500 mt-6 text-center">
                   Already have an account?{" "}
-                  <span
+                  <a
                     onClick={() => onClose(false)}
+                    href="#sign-in"
                     className="text-purple-600 cursor-pointer"
                   >
                     Sign In
-                  </span>
+                  </a>
                 </p>
               </div>
             </div>

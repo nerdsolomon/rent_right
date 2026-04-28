@@ -21,9 +21,7 @@ import { useMe } from "~/hooks/useAuth";
 const Profile = () => {
   const { data } = useMe();
   const currentUser = data?.user;
-  usePageTitle(
-    `Axterra - ${currentUser?.firstName} ${currentUser?.lastName}`,
-  );
+  usePageTitle(`Axterra - ${currentUser?.firstName} ${currentUser?.lastName}`);
 
   const displayName = currentUser?.company
     ? currentUser?.company
@@ -71,22 +69,11 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-5 mb-2">
-              <FaEnvelope size={18} />
-              <div className="items-center">
-                <span className="font-bold text-xs">Email</span>
-                <p>{currentUser?.email}</p>
-              </div>
-            </div>
-            <div>
-              {!currentUser.isEmailVerified && (
-                <button
-                  className="text-xs bg-red-500 font-semibold text-white px-2 py-0.5 rounded-full cursor-pointer"
-                >
-                  Unverified
-                </button>
-              )}
+          <div className="flex items-center gap-5 mb-2">
+            <FaEnvelope size={18} />
+            <div className="items-center">
+              <span className="font-bold text-xs">Email</span>
+              <p>{currentUser?.email}</p>
             </div>
           </div>
           <div className="flex items-center gap-5 mb-2">
@@ -123,7 +110,6 @@ const Profile = () => {
           </a>
         </div>
       </div>
-      
     </RequireAuth>
   );
 };
