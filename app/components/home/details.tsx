@@ -19,9 +19,11 @@ export const Details = ({ isOpen, onClose, propertyId }: Props) => {
   const { data } = useMe();
   const currentUser = data.user;
 
-  const { data: pData } = useProperties()
-  const properties = pData?.properties
-  const property = properties.filter((p: Property) => p.id === propertyId)[0]
+  const { data: pData } = useProperties();
+  const properties = pData?.properties;
+  const property = properties?.find((p: Property) => p?.id === propertyId);
+
+  if (!property) return null;
 
   return (
     <>
@@ -42,7 +44,7 @@ export const Details = ({ isOpen, onClose, propertyId }: Props) => {
             </div>
 
             <div className="flex p-1 overflow-x-auto space-x-4 mb-2">
-              {(property.imageUrls?.length ? property.imageUrls : images).map(
+              {(property?.imageUrls?.length ? property?.imageUrls : images).map(
                 (image: string, index: number) => (
                   <div key={index} className="w-100 h-100 flex-shrink-0">
                     <img
@@ -55,30 +57,30 @@ export const Details = ({ isOpen, onClose, propertyId }: Props) => {
             </div>
 
             <div className="px-4 space-y-1">
-              <p className="capitalize font-bold text-lg">{property.title}</p>
+              <p className="capitalize font-bold text-lg">{property?.title}</p>
               <p className="text-green-500 mb-2 flex items-center text-sm font-bold capitalize">
-                For {property.listingType}
+                For {property?.listingType}
               </p>
               <p className="flex gap-1 items-center text-sm text-gray-500 capitalize">
                 <FaMapMarkerAlt />
-                {`${property.city}, ${property.state}, ${property.country}.`}
+                {`${property?.city}, ${property?.state}, ${property?.country}.`}
               </p>
 
               <div className="flex gap-1 items-center mt-2">
                 <p className="text-purple-600 font-bold text-lg">
-                  ₦{property.price}
+                  ₦{property?.price}
                 </p>
-                {property.listingType === "rental" && (
-                  <p className="text-xs text-gray-400">{`/${property.duration}`}</p>
+                {property?.listingType === "rental" && (
+                  <p className="text-xs text-gray-400">{`/${property?.duration}`}</p>
                 )}
               </div>
-              {currentUser?.id !== property.owner.id &&
+              {currentUser?.id !== property?.owner.id &&
                 currentUser.role !== "admin" &&
-                property.isAvailable != false && <Book property={property} />}
+                property?.isAvailable != false && <Book property={property} />}
               <p
                 className="text-gray-500 mt-2"
                 style={{ whiteSpace: "pre-wrap" }}
-                dangerouslySetInnerHTML={{ __html: property.description }}
+                dangerouslySetInnerHTML={{ __html: property?.description }}
               />
             </div>
 
