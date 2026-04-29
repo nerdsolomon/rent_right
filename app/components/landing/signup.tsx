@@ -101,11 +101,13 @@ const Signup = () => {
                     ✕
                   </button>
                 </div>
-                <div className="text-purple-600 flex items-center mb-4">
-                  <FaHome size={25} />
-                  <span className="text-[25px] font-bold sm:inline">
-                    xterra
-                  </span>
+                <div className="flex justify-center mb-4">
+                  <div className="text-purple-600 flex items-center">
+                    <FaHome size={27} />
+                    <span className="text-[25px] font-bold">
+                      xterra
+                    </span>
+                  </div>
                 </div>
 
                 <h2 className="text-2xl font-bold mb-2">Create your account</h2>

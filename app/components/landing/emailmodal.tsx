@@ -12,7 +12,7 @@ export const EmailModal = ({ isOpen, onClose, onSuccess }: EmailModalProps) => {
   const modalRef = useClickOutside({ isOpen, onClose });
   const [email, setEmail] = useState("");
 
-  const { mutate: sendOtp, isPending } = useResendOtp();
+  const { mutate: sendOtp, isPending, error } = useResendOtp();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,8 +21,8 @@ export const EmailModal = ({ isOpen, onClose, onSuccess }: EmailModalProps) => {
       { email },
       {
         onSuccess: () => {
-          onClose(); 
-          onSuccess(email); 
+          onClose();
+          onSuccess(email);
         },
       },
     );
@@ -39,6 +39,11 @@ export const EmailModal = ({ isOpen, onClose, onSuccess }: EmailModalProps) => {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="bg-red-100 rounded-lg text-sm text-red-600 p-2">
+              {(error as Error).message}
+            </div>
+          )}
           <input
             type="email"
             required

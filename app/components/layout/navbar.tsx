@@ -49,7 +49,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
           className="text-purple-600 flex items-center cursor-pointer"
         >
           <FaHome size={25} />
-          <span className="text-[25px] font-bold sm:inline">xterra</span>
+          <span className="text-[25px] font-bold">xterra</span>
         </div>
       </div>
 

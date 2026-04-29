@@ -44,7 +44,7 @@ const Signin = () => {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div
             ref={modalRef}
-            className="bg-white rounded-2xl shadow-lg w-full max-w-5xl h-[90vh] flex overflow-hidden animate-fadeIn"
+            className="bg-white rounded-2xl shadow-lg w-full max-w-5xl lg:h-[90vh] h-auto flex overflow-hidden animate-fadeIn"
           >
             {/* LEFT SIDE */}
             <div className="w-full md:w-1/2 flex items-center justify-center px-6 overflow-y-auto scrollbar-hidden">
@@ -53,16 +53,15 @@ const Signin = () => {
                   <div></div>
                   <button
                     onClick={() => onClose(false)}
-                    className="text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-black pt-4"
                   >
                     ✕
                   </button>
                 </div>
-                <div className="relative flex items-center justify-center">
-                  {/* Logo */}
-                  <div className="text-purple-600 flex items-center mb-4">
-                    <FaHome size={25} />
-                    <span className="text-[25px] font-bold sm:inline">
+                <div className="flex justify-center mb-4">
+                  <div className="text-purple-600 flex items-center">
+                    <FaHome size={27} />
+                    <span className="text-[25px] font-bold">
                       xterra
                     </span>
                   </div>
@@ -162,7 +161,7 @@ const Signin = () => {
                 </form>
 
                 {/* Footer */}
-                <p className="text-sm text-gray-500 mt-6 text-center">
+                <p className="text-sm text-gray-500 mt-6 text-center pb-4">
                   Don't have an account?{" "}
                   <a
                     onClick={() => onClose(false)}

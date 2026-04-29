@@ -8,7 +8,7 @@ export default function Footer() {
           <div>
             <div className="text-white flex items-center">
               <FaHome size={25} />
-              <span className="text-[25px] font-bold sm:inline">xterra</span>
+              <span className="text-[25px] font-bold">xterra</span>
             </div>
             <p className="text-gray-400 text-sm mb-4">
               Find your perfect rental home with ease. Axterra connects
@@ -17,7 +17,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm text-gray-400">
               <div className="flex items-center gap-2">
                 <FaEnvelope />
-                <span>admin@axterra.com</span>
+                <span>admin@axterra.ng</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaPhoneAlt />
