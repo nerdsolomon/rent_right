@@ -57,6 +57,16 @@ export const authService = {
     window.location.href = api("/auth/facebook");
   },
 
+  requestOtp: async (data: { email: string }) => { 
+    const res = await fetch(api('/auth/request-email-otp'), { 
+      method: "POST", 
+      headers: authHeaders(), 
+      body: JSON.stringify(data), 
+    }); 
+    
+    return handleResponse(res); 
+  },
+
   verifyEmail: async (data: { email: string; otp: string }) => { 
     const res = await fetch(api('/auth/verify-email'), { 
       method: "POST", 

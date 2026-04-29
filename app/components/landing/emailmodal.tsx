@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useResendOtp } from "~/hooks/useAuth";
+import { useRequestOtp } from "~/hooks/useAuth";
 import useClickOutside from "~/hooks/useClickOutside";
 
 type EmailModalProps = {
@@ -12,12 +12,12 @@ export const EmailModal = ({ isOpen, onClose, onSuccess }: EmailModalProps) => {
   const modalRef = useClickOutside({ isOpen, onClose });
   const [email, setEmail] = useState("");
 
-  const { mutate: sendOtp, isPending, error } = useResendOtp();
+  const { mutate: requestOtp, isPending, error } = useRequestOtp();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    sendOtp(
+    requestOtp(
       { email },
       {
         onSuccess: () => {

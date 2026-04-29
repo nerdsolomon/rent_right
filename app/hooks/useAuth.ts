@@ -38,6 +38,13 @@ export const useLogin = () => {
   });
 };
 
+// ================= REQUEST OTP =================
+export const useRequestOtp = () =>
+  useMutation({
+    mutationFn: authService.requestOtp,
+    onError: (err) => console.error("REQUEST OTP ERROR:", err),
+  });
+
 // ================= VERIFY EMAIL =================
 export const useVerifyEmail = () =>
   useMutation({
