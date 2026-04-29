@@ -23,10 +23,6 @@ export default function CTACards() {
               directly, and find your perfect place to call home. Your dream
               rental is just a few clicks away.
             </p>
-
-            <button className="inline-flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-semibold text-sm hover:bg-gray-100 transition">
-              Find Rentals List <span className="text-lg">→</span>
-            </button>
           </div>
 
           <div className="relative rounded-[28px] border border-white/30 bg-white/15 hover:bg-white/20 transition p-8 md:p-10">
@@ -43,10 +39,6 @@ export default function CTACards() {
               rent seamlessly. Join thousands of landlords who trust Axterra to
               manage their rentals.
             </p>
-
-            <button className="inline-flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-semibold text-sm hover:bg-gray-100 transition">
-              Property <span className="text-lg">→</span>
-            </button>
           </div>
         </div>
 
