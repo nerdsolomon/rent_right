@@ -191,8 +191,8 @@ const Signin = () => {
                     Find Your Dream Home
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Join thousands of happy tenants who found their perfect
-                    rental through RentRight.
+                    Join thousands of happy people who found their perfect
+                    rental through Axterra.
                   </p>
                 </div>
               </div>
