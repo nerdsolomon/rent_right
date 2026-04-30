@@ -99,7 +99,7 @@ const Signin = () => {
                   )}
 
                   <input
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                     type="email"
                     placeholder="Enter your email"
                     required
@@ -112,7 +112,7 @@ const Signin = () => {
 
                   <div className="relative">
                     <input
-                      className="w-full p-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                      className="w-full p-3 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       required
