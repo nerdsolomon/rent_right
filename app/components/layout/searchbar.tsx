@@ -83,8 +83,8 @@ export const Searchbar = () => {
       </div>
 
       {isExpanded && query.trim() && (
-        <div className="fixed inset-0 z-[60] flex justify-center mt-20">
-          <div className="w-[95%] md:w-[700px] bg-white rounded-xl shadow-lg max-h-96 overflow-y-auto">
+        <div className="fixed inset-0 z-[60] flex justify-center mt-15">
+          <div className="w-[95%] md:w-[700px] bg-white rounded-xl shadow-lg h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between p-3 border-b border-gray-200 mb-3">
               <span className="text-sm font-medium text-gray-600">
                 Search results
@@ -103,7 +103,7 @@ export const Searchbar = () => {
             </div>
 
             {filteredProperties.length > 0 ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
                 {filteredProperties.map((property: Property, index: number) => (
                   <PropertyCard property={property} key={index} />
                 ))}
