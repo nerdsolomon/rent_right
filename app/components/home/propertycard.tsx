@@ -12,7 +12,7 @@ interface Prop {
 }
 
 export const PropertyCard = ({ property }: Prop) => {
-  const [isOpen, onClose] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<number>();
   const { data } = useMe();
   const currentUser = data?.user
@@ -71,7 +71,7 @@ export const PropertyCard = ({ property }: Prop) => {
             <span
               onClick={() => {
                 setSelectedPropertyId(property.id);
-                if (currentUser) onClose(true);
+                if (currentUser) setIsOpen(true);
               }}
               className="text-purple-600 cursor-pointer text-xs font-semibold border border-purple-600 px-3 py-2 rounded-full group-hover:bg-purple-50 transition"
             >
@@ -84,7 +84,7 @@ export const PropertyCard = ({ property }: Prop) => {
       {isOpen && selectedPropertyId && !!currentUser && (
         <Details
           isOpen={isOpen}
-          onClose={() => onClose(false)}
+          setIsOpen={() => setIsOpen(false)}
           propertyId={selectedPropertyId}
         />
       )}
