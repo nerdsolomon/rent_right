@@ -3,7 +3,7 @@ import { api, authHeaders, handleResponse } from "./http.service";
 
 export const bookingService = {
   getAll: async () => {
-    const res = await fetch(api('/bookings'), {
+    const res = await fetch(api("/bookings"), {
       headers: authHeaders(),
     });
 
