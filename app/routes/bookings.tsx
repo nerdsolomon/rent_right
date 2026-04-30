@@ -3,7 +3,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import BookingItem from "~/components/booking/bookingitem";
 import { Details } from "~/components/home/details";
 import { useMe } from "~/hooks/useAuth";
-import { useMyBookings } from "~/hooks/useBookings";
+import { useBookings } from "~/hooks/useBookings";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { useProperties } from "~/hooks/useProperties";
 import { RequireAuth } from "~/hooks/useRequireAuth";
@@ -12,7 +12,7 @@ import type { Booking, Property } from "~/types";
 const Bookings = () => {
   usePageTitle("Axterra - Bookings");
 
-  const { data: bData } = useMyBookings();
+  const { data: bData } = useBookings();
   const bookings = bData?.bookings ?? [];
 
   const { data: uData } = useMe();
@@ -26,24 +26,24 @@ const Bookings = () => {
 
   if (!currentUser) return null;
 
-  // const filteredBookings = bookings.filter((booking: Booking) => {
-  //   if (currentUser.role === "owner") {
-  //     return properties?.some(
-  //       (p: Property) => p.id === booking.propertyId && p.userId === currentUser.id
-  //     );
-  //   }
+  const filteredBookings = bookings.filter((booking: Booking) => {
+    if (currentUser.role === "owner") {
+      return properties?.some(
+        (p: Property) => p.id === booking.propertyId && p.userId === currentUser.id
+      );
+    }
 
-  //   if (currentUser.role === "user") {
-  //     return booking.userId === currentUser.id;
-  //   }
+    if (currentUser.role === "user") {
+      return booking.userId === currentUser.id;
+    }
 
-  //   return false;
-  // });
+    return false;
+  });
 
   return (
     <RequireAuth>
       <div className="w-full mt-4">
-        {bookings.length > 0 ? (
+        {filteredBookings.length > 0 ? (
           <div className="border border-gray-200 rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
               <div className="min-w-[650px]">
@@ -62,7 +62,7 @@ const Bookings = () => {
                 </div>
 
                 {/* Rows */}
-                {bookings.map((b: Booking) => (
+                {filteredBookings.map((b: Booking) => (
                   <BookingItem
                     key={b.id}
                     booking={b}

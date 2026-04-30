@@ -7,7 +7,7 @@ export const notificationKeys = {
   mine: ["notifications", "mine"] as const,
 };
 
-// ================= MY NOTIFICATIONS =================
+// ================= All NOTIFICATIONS =================
 export const useNotifications = () =>
   useQuery({
     queryKey: notificationKeys.mine,

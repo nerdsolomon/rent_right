@@ -10,14 +10,6 @@ export const bookingService = {
     return handleResponse(res);
   },
 
-  myBookings: async () => {
-    const res = await fetch(api('/bookings/my-bookings'), {
-      headers: authHeaders(),
-    });
-
-    return handleResponse(res);
-  },
-
   create: async (data: Partial<Booking>) => {
     const res = await fetch(api('/bookings'), {
       method: "POST",

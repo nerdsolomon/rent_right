@@ -16,15 +16,6 @@ export const useBookings = () =>
     staleTime: 2 * 60 * 1000,
   });
 
-// ================= MY BOOKINGS =================
-export const useMyBookings = () =>
-  useQuery({
-    queryKey: bookingKeys.mine,
-    queryFn: bookingService.myBookings,
-    retry: false,
-    staleTime: 2 * 60 * 1000,
-  });
-
 // ================= CREATE BOOKING =================
 export const useCreateBooking = () => {
   const qc = useQueryClient();
