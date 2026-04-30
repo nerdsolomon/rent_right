@@ -14,13 +14,13 @@ export const ProfileInfo = ({ userId }: Prop) => {
   const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useMe();
-  const currentUser = data?.user
+  const currentUser = data?.user;
 
-  const { data: uData } = useUsers()
-  const users = uData?.users
-  const user = users?.find((u: User) => u.id === userId)
+  const { data: uData, isLoading } = useUsers();
+  const users = uData?.users;
+  const user = users?.find((u: User) => u.id === userId);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <>
@@ -30,7 +30,9 @@ export const ProfileInfo = ({ userId }: Prop) => {
         }}
         className="absolute top-3 left-3 w-8 h-8 cursor-pointer aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold"
       >
-        {user?.imageUrls ? (
+        {isLoading ? (
+          <div className="h-6 w-6 animate-spin rounded-full border-4 border-purple-600/40 border-t-white" />
+        ) : user?.imageUrls ? (
           <img
             src={user?.imageUrls}
             className="absolute inset-0 w-full h-full object-cover"
@@ -82,7 +84,10 @@ export const ProfileInfo = ({ userId }: Prop) => {
               <button className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
                 Report
               </button>
-              <button onClick={() => navigate(`/portfolio/${user.id}`)} className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold">
+              <button
+                onClick={() => navigate(`/portfolio/${user.id}`)}
+                className="p-2 border border-purple-600 text-sm hover:bg-purple-600 hover:text-white text-purple-600 rounded-lg font-semibold"
+              >
                 Portfolio
               </button>
             </div>
