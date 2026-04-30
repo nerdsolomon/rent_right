@@ -78,7 +78,7 @@ const Signin = () => {
                 {/* Google Button */}
                 <button
                   onClick={googleLogin}
-                  className="w-full border border-purple-600 text-purple-600 py-3 rounded-full font-medium hover:bg-purple-50 transition"
+                  className="w-full border border-purple-600 text-purple-600 py-4 rounded-full font-medium hover:bg-purple-50 transition"
                 >
                   Continue with Google
                 </button>
@@ -99,7 +99,7 @@ const Signin = () => {
                   )}
 
                   <input
-                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                     type="email"
                     placeholder="Enter your email"
                     required
@@ -112,7 +112,7 @@ const Signin = () => {
 
                   <div className="relative">
                     <input
-                      className="w-full p-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                      className="w-full p-4 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       required
@@ -152,7 +152,7 @@ const Signin = () => {
 
                   {/* Submit */}
                   <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-full font-semibold hover:bg-purple-700 transition"
+                    className="w-full bg-purple-600 text-white py-4 rounded-full font-semibold hover:bg-purple-700 transition"
                     type="submit"
                     disabled={isPending}
                   >

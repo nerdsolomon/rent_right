@@ -5,8 +5,9 @@ import { Details } from "~/components/home/details";
 import { useMe } from "~/hooks/useAuth";
 import { useMyBookings } from "~/hooks/useBookings";
 import { usePageTitle } from "~/hooks/usePageTitle";
+import { useProperties } from "~/hooks/useProperties";
 import { RequireAuth } from "~/hooks/useRequireAuth";
-import type { Booking } from "~/types";
+import type { Booking, Property } from "~/types";
 
 const Bookings = () => {
   usePageTitle("Axterra - Bookings");
@@ -17,6 +18,9 @@ const Bookings = () => {
   const { data: uData } = useMe();
   const currentUser = uData?.user;
 
+  const { data: pData } = useProperties();
+  const properties = pData?.properties;
+
   const [isOpen, onClose] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<number>();
 
@@ -24,7 +28,8 @@ const Bookings = () => {
 
   const filteredBookings = bookings.filter((booking: Booking) => {
     if (currentUser.role === "owner") {
-      return booking.propertyId === currentUser.id;
+      const property = properties?.find((p: Property) => p?.id === booking.propertyId);
+      return property.userId === currentUser.id;
     }
 
     if (currentUser.role === "user") {

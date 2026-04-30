@@ -85,7 +85,7 @@ export const Searchbar = () => {
       {isExpanded && query.trim() && (
         <div className="fixed inset-0 z-[60] flex justify-center mt-20">
           <div className="w-[95%] md:w-[700px] bg-white rounded-xl shadow-lg max-h-96 overflow-y-auto">
-            <div className="flex items-center justify-between p-3 border-b">
+            <div className="flex items-center justify-between p-3 border-b border-gray-200 mb-3">
               <span className="text-sm font-medium text-gray-600">
                 Search results
               </span>
