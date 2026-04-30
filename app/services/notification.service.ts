@@ -20,7 +20,7 @@ export const notificationService = {
     return handleResponse(res);
   },
 
-  update: async (id: number, data: Notification) => {
+  update: async (id: number, data: Partial<Notification>) => {
     const res = await fetch(api(`/notifications/${id}`), {
       method: "PUT",
       headers: authHeaders(),

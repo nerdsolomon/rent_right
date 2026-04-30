@@ -140,9 +140,8 @@ export const Book = ({ property }: Props) => {
                   const disabled = isPastDay(day.formatted);
 
                   return (
-                    <div className="flex justify-center">
+                    <div className="flex justify-center" key={index}>
                       <button
-                        key={index}
                         disabled={disabled}
                         onClick={() =>
                           !disabled &&
@@ -176,9 +175,8 @@ export const Book = ({ property }: Props) => {
                     !formData.day || isTimeBooked(formData.day, hour);
 
                   return (
-                    <div className="flex justify-center">
+                    <div className="flex justify-center" key={index}>
                       <button
-                        key={index}
                         disabled={disabled}
                         onClick={() =>
                           !disabled &&

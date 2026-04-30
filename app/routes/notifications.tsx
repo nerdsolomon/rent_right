@@ -11,11 +11,12 @@ const Notifications = () => {
   const { data } = useMe();
   const currentUser = data?.user;
 
-  const { data: nData } = useNotifications();
+  const { data: nData } = useNotifications()
+  const notifications = nData?.notifications ?? []
 
-  const filteredNotifications = (nData ?? [])
+  const filteredNotifications = (notifications)
     .filter((n: Notification) => n.userId === currentUser?.id)
-    .sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+    .sort((a:any, b:any) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
     
   const isToday = (date: string) => {
     const d = new Date(date);
