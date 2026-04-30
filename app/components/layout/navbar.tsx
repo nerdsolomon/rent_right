@@ -34,7 +34,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
   }
 
   return (
-    <nav className="border-b border-gray-300 px-4 sticky top-0 z-50 grid grid-cols-2 lg:grid-cols-3 bg-white text-purple-600 font-bold">
+    <nav className="border-b border-gray-300 lg:px-4 px-2 sticky top-0 z-50 grid grid-cols-2 lg:grid-cols-3 bg-white text-purple-600 font-bold">
       {/* LEFT */}
       <div className="flex items-center gap-4">
         <button
