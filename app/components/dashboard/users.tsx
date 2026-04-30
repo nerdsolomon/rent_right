@@ -12,15 +12,15 @@ interface Props {
 }
 
 export const Users = ({ role, label, icon: Icon }: Props) => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useUsers()
   const users = data?.users ?? []
   return (
     <>
       <button
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
         className="p-4 text-gray-500 text-sm text-start font-semibold border border-gray-300 shadow hover:shadow-md transition rounded-lg h-30"
       >
         <Icon className="text-xl" />
@@ -42,7 +42,7 @@ export const Users = ({ role, label, icon: Icon }: Props) => {
               <h2 className="text-lg font-semibold text-gray-800">{label}</h2>
 
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition"
               >
                 ✕

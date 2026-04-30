@@ -3,12 +3,12 @@ import type { User } from "~/types";
 
 interface Props {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
   user: User;
 }
 
-export const VerifyInfo = ({ isOpen, onClose, user }: Props) => {
-  const modalRef = useClickOutside({ isOpen, onClose });
+export const VerifyInfo = ({ isOpen, setIsOpen, user }: Props) => {
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center overflow-y-auto">
@@ -27,7 +27,7 @@ export const VerifyInfo = ({ isOpen, onClose, user }: Props) => {
           </div>
 
           <button
-            onClick={() => onClose(false)}
+            onClick={() => setIsOpen(false)}
             className="text-gray-400 hover:text-black"
           >
             ✕

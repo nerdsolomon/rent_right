@@ -9,12 +9,12 @@ interface Prop {
 }
 
 const Dropdown = ({ label, value, list, onSelect }: Prop) => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
   return (
     <div ref={modalRef} className="relative inline-block text-left">
       <button
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
         className="border text-xs capitalize px-2 py-1 rounded-full text-gray-400 hover:bg-purple-400 hover:text-white"
       >
         {value || label}
@@ -27,7 +27,7 @@ const Dropdown = ({ label, value, list, onSelect }: Prop) => {
               key="all"
               onClick={() => {
                 onSelect("");
-                onClose(false);
+                setIsOpen(false);
               }}
               className="block w-full px-4 py-2 capitalize text-left hover:bg-gray-100"
             >
@@ -38,7 +38,7 @@ const Dropdown = ({ label, value, list, onSelect }: Prop) => {
                 key={item}
                 onClick={() => {
                   onSelect(item);
-                  onClose(false);
+                  setIsOpen(false);
                 }}
                 className="block w-full px-4 py-2 capitalize text-left hover:bg-gray-100"
               >

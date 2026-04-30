@@ -9,7 +9,7 @@ import type { User } from "~/types";
 
 const Requests = () => {
   usePageTitle("Axterra - Requests");
-  const [isOpen, onClose] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
 
   const { data: usersData } = useUsers();
@@ -88,7 +88,7 @@ const Requests = () => {
                       className="font-medium capitalize cursor-pointer hover:underline text-purple-500"
                       onClick={() => {
                         setSelectedUser(u);
-                        onClose(true);
+                        setIsOpen(true);
                       }}
                     >
                       {u.firstName} {u.lastName}
@@ -155,7 +155,7 @@ const Requests = () => {
       </div>
 
       {isOpen && selectedUser && (
-        <VerifyInfo isOpen={isOpen} onClose={onClose} user={selectedUser} />
+        <VerifyInfo isOpen={isOpen} setIsOpen={setIsOpen} user={selectedUser} />
       )}
     </RequireAuth>
   );

@@ -9,8 +9,8 @@ interface Prop {
 }
 
 export const SendReview = ({ propertyId }: Prop) => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
   const { data } = useMe();
   const currentUser = data?.user;
   const { data: rData } = useReviews();
@@ -22,13 +22,13 @@ export const SendReview = ({ propertyId }: Prop) => {
     e.preventDefault();
     createReview( formData );
     setFormData(emptyReview);
-    onClose(false);
+    setIsOpen(false);
   };
 
   return (
     <div>
       <button
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
         className="border border-purple-600 text-xs text-purple-600 px-2 py-1 rounded-full hover:bg-purple-600 hover:text-white"
       >
         Send Review
@@ -43,7 +43,7 @@ export const SendReview = ({ propertyId }: Prop) => {
             <div className="flex justify-between mb-6">
               <p className="font-semibold">Send Review</p>
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-black"
               >
                 ✕
@@ -62,7 +62,7 @@ export const SendReview = ({ propertyId }: Prop) => {
                     ...formData,
                     id: Math.random(),
                     text: e.target.value,
-                    user: currentUser,
+                    userId: currentUser.id,
                     propertyId: propertyId,
                   })
                 }

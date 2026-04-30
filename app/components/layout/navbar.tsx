@@ -8,10 +8,10 @@ import type { Notification } from "~/types";
 
 interface Prop {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
 }
 
-export const Navbar = ({ isOpen, onClose }: Prop) => {
+export const Navbar = ({ isOpen, setIsOpen }: Prop) => {
   const navigate = useNavigate();
 
   const { data, isLoading } = useMe();
@@ -39,7 +39,7 @@ export const Navbar = ({ isOpen, onClose }: Prop) => {
       <div className="flex items-center gap-4">
         <button
           className="lg:hidden ml-2 cursor-pointer hover:text-purple-800 text-lg"
-          onClick={() => onClose(!isOpen)}
+          onClick={() => setIsOpen(!isOpen)}
         >
           <MdMenu />
         </button>

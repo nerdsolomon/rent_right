@@ -21,7 +21,7 @@ const Bookings = () => {
   const { data: pData } = useProperties();
   const properties = pData?.properties;
 
-  const [isOpen, onClose] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedPropertyId, setSelectedPropertyId] = useState<number>();
 
   if (!currentUser) return null;
@@ -69,7 +69,7 @@ const Bookings = () => {
                     currentUser={currentUser}
                     onSelect={(propertyId: number) => {
                       setSelectedPropertyId(propertyId);
-                      onClose(true);
+                      setIsOpen(true);
                     }}
                   />
                 ))}
@@ -87,7 +87,7 @@ const Bookings = () => {
       {isOpen && selectedPropertyId && (
         <Details
           isOpen={isOpen}
-          onClose={() => onClose(false)}
+          setIsOpen={() => setIsOpen(false)}
           propertyId={selectedPropertyId}
         />
       )}

@@ -9,10 +9,7 @@ import { useMe } from "~/hooks/useAuth";
 export const AddProperty = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const modalRef = useClickOutside({
-    isOpen,
-    onClose: () => setIsOpen(false),
-  });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useMe();
   const currentUser = data?.user;

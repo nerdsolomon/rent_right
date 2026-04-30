@@ -11,7 +11,7 @@ interface Prop {
 
 export const Options = ({ user }: Prop) => {
   const [isOpen, setIsOpen] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose: setIsOpen });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useMe();
   const currentUser = data?.user;
@@ -34,7 +34,7 @@ export const Options = ({ user }: Prop) => {
             {user.id !== currentUser?.id && user.role !== "owner" && (
               <button
                 onClick={() => {
-                  toggleRole(user.id);
+                  toggleRole(user.id!);
                   setIsOpen(false);
                 }}
                 className="block w-full px-4 py-2 text-left rounded-lg hover:bg-gray-100"
@@ -45,7 +45,7 @@ export const Options = ({ user }: Prop) => {
 
             <button
               onClick={() => {
-                deleteUser(user.id);
+                deleteUser(user.id!);
                 setIsOpen(false);
               }}
               className="block w-full px-4 capitalize py-2 text-left rounded-lg hover:bg-gray-100 text-red-600"

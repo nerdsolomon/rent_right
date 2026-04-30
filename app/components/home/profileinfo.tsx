@@ -10,8 +10,8 @@ interface Prop {
 }
 
 export const ProfileInfo = ({ userId }: Prop) => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useMe();
   const currentUser = data?.user
@@ -26,7 +26,7 @@ export const ProfileInfo = ({ userId }: Prop) => {
     <>
       <span
         onClick={() => {
-          if (currentUser) onClose(true);
+          if (currentUser) setIsOpen(true);
         }}
         className="absolute top-3 left-3 w-8 h-8 cursor-pointer aspect-square flex items-center justify-center rounded-full bg-purple-100 text-purple-600 font-semibold"
       >
@@ -50,7 +50,7 @@ export const ProfileInfo = ({ userId }: Prop) => {
           >
             <div className="flex justify-end mb-2 px-2">
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-black"
               >
                 ✕

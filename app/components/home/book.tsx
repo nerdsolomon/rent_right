@@ -10,8 +10,8 @@ interface Props {
 }
 
 export const Book = ({ property }: Props) => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const [formData, setFormData] = useState(emptyBooking);
 
@@ -85,7 +85,7 @@ export const Book = ({ property }: Props) => {
 
       alert("Booking successful");
       setFormData(emptyBooking);
-      onClose(false);
+      setIsOpen(false);
     } catch (err) {
       console.error(err);
       alert("Booking failed");
@@ -110,7 +110,7 @@ export const Book = ({ property }: Props) => {
   return (
     <>
       <button
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
         className="p-2 border border-purple-600 mt-2 text-xs cursor-pointer hover:bg-purple-600 hover:text-white text-purple-600 rounded-xl font-semibold"
       >
         Apply to inspect
@@ -125,7 +125,7 @@ export const Book = ({ property }: Props) => {
             <div className="flex px-4 pt-4 pb-2 justify-between border-b border-gray-300">
               <p className="font-bold text-lg">Book inspection for this week</p>
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-black"
               >
                 ✕

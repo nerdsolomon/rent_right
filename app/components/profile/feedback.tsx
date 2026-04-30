@@ -6,8 +6,8 @@ import { useCreateFeedback } from "~/hooks/useFeedbacks";
 import { emptyFeedback } from "~/types";
 
 export const Feedback = () => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useMe();
   const currentUser = data.user;
@@ -37,7 +37,7 @@ export const Feedback = () => {
     setFormData(emptyFeedback);
     setFiles([]);
     setPreviews([]);
-    onClose(false);
+    setIsOpen(false);
   };
 
   const removeImage = (index: number) => {
@@ -57,7 +57,7 @@ export const Feedback = () => {
     <div>
       <div
         className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer"
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
       >
         <FaBug size={18} />
         <p>Send feedback</p>
@@ -77,7 +77,7 @@ export const Feedback = () => {
                 </p>
               </div>
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-black"
               >
                 ✕

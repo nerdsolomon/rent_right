@@ -2,16 +2,16 @@ import { useEffect, useRef } from "react";
 
 interface Prop {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
 }
 
-const useClickOutside = ({ isOpen, onClose }: Prop) => {
+const useClickOutside = ({ isOpen, setIsOpen }: Prop) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (modalRef.current && !modalRef.current.contains(event.target))
-        onClose(false);
+        setIsOpen(false);
     };
     if (isOpen) document.addEventListener("mousedown", handleClickOutside);
     else document.removeEventListener("mousedown", handleClickOutside);

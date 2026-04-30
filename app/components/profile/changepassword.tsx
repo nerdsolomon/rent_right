@@ -7,10 +7,7 @@ import { useUpdateUser } from "~/hooks/useUsers";
 export const ChangePassword = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const modalRef = useClickOutside({
-    isOpen,
-    onClose: setIsOpen,
-  });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const [formData, setFormData] = useState({
     old: "",

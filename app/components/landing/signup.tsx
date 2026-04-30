@@ -9,8 +9,8 @@ import { EmailModal } from "./emailmodal";
 import { OtpModal } from "./otp";
 
 const Signup = () => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const [alert, setAlert] = useState(false);
   const [formData, setFormData] = useState(emptyUser);
@@ -61,7 +61,7 @@ const Signup = () => {
 
       <EmailModal
         isOpen={emailModalOpen}
-        onClose={() => setEmailModalOpen(false)}
+        setIsOpen={() => setEmailModalOpen(false)}
         onSuccess={(email) => {
           setVerifiedEmail(email);
           setEmailModalOpen(false);
@@ -71,11 +71,11 @@ const Signup = () => {
 
       <OtpModal
         isOpen={otpModalOpen}
-        onClose={() => setOtpModalOpen(false)}
+        setIsOpen={() => setOtpModalOpen(false)}
         email={verifiedEmail}
         onVerified={() => {
           setOtpModalOpen(false);
-          onClose(true); // open signup modal
+          setIsOpen(true); // open signup modal
           setFormData((prev) => ({
             ...prev,
             email: verifiedEmail, // ✅ inject verified email
@@ -95,7 +95,7 @@ const Signup = () => {
                 <div className="lg:hidden flex justify-between">
                   <div></div>
                   <button
-                    onClick={() => onClose(false)}
+                    onClick={() => setIsOpen(false)}
                     className="text-gray-400 hover:text-black"
                   >
                     ✕
@@ -262,7 +262,7 @@ const Signup = () => {
                 <p className="text-sm text-gray-500 mt-6 text-center">
                   Already have an account?{" "}
                   <a
-                    onClick={() => onClose(false)}
+                    onClick={() => setIsOpen(false)}
                     href="#sign-in"
                     className="text-purple-600 cursor-pointer"
                   >

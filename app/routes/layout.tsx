@@ -8,7 +8,7 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 
 const Layout = () => {
   const location = useLocation();
-  const [isOpen, onClose] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -19,9 +19,9 @@ const Layout = () => {
       ) : (
         <RequireAuth>
           <div className="flex flex-col h-screen">
-            <Navbar isOpen={isOpen} onClose={onClose} />
+            <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
             <div className="flex">
-              <Leftbar isOpen={isOpen} onClose={onClose} />
+              <Leftbar isOpen={isOpen} setIsOpen={setIsOpen} />
               <main className="h-screen w-full lg:ml-20 lg:mr-20 lg:pb-20 flex-1 overflow-y-auto scrollbar-hidden">
                 <Outlet />
               </main>

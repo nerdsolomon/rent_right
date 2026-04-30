@@ -15,11 +15,11 @@ import type { Notification } from "~/types";
 
 interface Prop {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
 }
 
-const Leftbar = ({ isOpen, onClose }: Prop) => {
-  const modalRef = useClickOutside({ isOpen, onClose });
+const Leftbar = ({ isOpen, setIsOpen }: Prop) => {
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
   const { data: nData } = useNotifications()
   const notifications = nData?.notifications ?? []
 
@@ -58,7 +58,7 @@ const Leftbar = ({ isOpen, onClose }: Prop) => {
           return true;
         })
         .map((link, index) => (
-          <NavLink key={index} to={link.path} onClick={() => onClose(false)}>
+          <NavLink key={index} to={link.path} onClick={() => setIsOpen(false)}>
             {({ isActive }) => (
               <div
                 className={`relative flex items-center justify-between p-4 transition ${

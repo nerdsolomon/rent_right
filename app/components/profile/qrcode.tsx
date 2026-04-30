@@ -5,8 +5,8 @@ import useClickOutside from "~/hooks/useClickOutside";
 import { useQrCode } from "~/hooks/useQrCode";
 
 export const Qrcode = () => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
   const { data } = useMe();
   const currentUser = data?.user;
   const profileUrl = `${window.location.origin}/portfolio/${currentUser.id}`;
@@ -15,7 +15,7 @@ export const Qrcode = () => {
     <>
       <div
         className="flex items-center gap-5 text-gray-400 hover:text-gray-600 cursor-pointer"
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
       >
         <FaQrcode size={18} />
         <p>Share portfolio</p>

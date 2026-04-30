@@ -4,12 +4,12 @@ import useClickOutside from "~/hooks/useClickOutside";
 
 type EmailModalProps = {
   isOpen: boolean;
-  onClose: () => void;
+  setIsOpen: () => void;
   onSuccess: (email: string) => void;
 };
 
-export const EmailModal = ({ isOpen, onClose, onSuccess }: EmailModalProps) => {
-  const modalRef = useClickOutside({ isOpen, onClose });
+export const EmailModal = ({ isOpen, setIsOpen, onSuccess }: EmailModalProps) => {
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
   const [email, setEmail] = useState("");
 
   const { mutate: requestOtp, isPending, error } = useRequestOtp();
@@ -21,7 +21,7 @@ export const EmailModal = ({ isOpen, onClose, onSuccess }: EmailModalProps) => {
       { email },
       {
         onSuccess: () => {
-          onClose();
+          setIsOpen();
           onSuccess(email);
         },
       },

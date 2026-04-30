@@ -7,7 +7,7 @@ import { emptyUser } from "~/types";
 
 export const Edit = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose: () => setIsOpen(false) });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useMe();
   const currentUser = data?.user;

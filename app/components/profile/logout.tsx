@@ -6,11 +6,7 @@ import { useNavigate } from "react-router";
 
 export const Logout = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const modalRef = useClickOutside({
-    isOpen,
-    onClose: setIsOpen,
-  });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { mutate: logout } = useLogout();
   const navigate = useNavigate();

@@ -11,7 +11,7 @@ interface Prop {
 
 export const Actions = ({ property }: Prop) => {
   const [isOpen, setIsOpen] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose: setIsOpen });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
   const { mutate: updateProperty } = useUpdateProperty();
   const { mutate: deleteProperty } = useDeleteProperty();
 

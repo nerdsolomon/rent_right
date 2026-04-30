@@ -6,10 +6,10 @@ import { images } from "~/services/asset.services";
 import { useLogin, useGoogleLogin } from "~/hooks/useAuth";
 
 const Signin = () => {
-  const [isOpen, onClose] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState(emptyUser);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { mutate: loginUser, isPending, error, isSuccess } = useLogin();
   const googleLogin = useGoogleLogin();
@@ -26,14 +26,14 @@ const Signin = () => {
   useEffect(() => {
     if (isSuccess) {
       setFormData(emptyUser);
-      onClose(false);
+      setIsOpen(false);
     }
   }, [isSuccess]);
 
   return (
     <>
       <button
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
         id="sign-in"
         className="text-gray-700 border border-purple-600 text-purple-600 px-3 py-2 rounded-full text-sm font-medium hover:bg-purple-500 hover:text-white transition flex items-center gap-2"
       >
@@ -52,7 +52,7 @@ const Signin = () => {
                 <div className="lg:hidden flex justify-between">
                   <div></div>
                   <button
-                    onClick={() => onClose(false)}
+                    onClick={() => setIsOpen(false)}
                     className="text-gray-400 hover:text-black pt-4"
                   >
                     ✕
@@ -164,7 +164,7 @@ const Signin = () => {
                 <p className="text-sm text-gray-500 mt-6 text-center pb-4">
                   Don't have an account?{" "}
                   <a
-                    onClick={() => onClose(false)}
+                    onClick={() => setIsOpen(false)}
                     href="#get-started"
                     className="text-purple-600 cursor-pointer hover:underline"
                   >

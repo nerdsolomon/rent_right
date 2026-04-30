@@ -11,7 +11,7 @@ interface Prop {
 
 export const EditProperty = ({ property }: Prop) => {
   const [isOpen, setIsOpen] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose: () => setIsOpen(false) });
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const [formData, setFormData] = useState<Property>(property);
   const [existingImages, setExistingImages] = useState<string[]>([]);

@@ -5,13 +5,13 @@ import { useVerifyEmail, useResendOtp } from "~/hooks/useAuth";
 
 type Props = {
   isOpen: boolean;
-  onClose: () => void;
+  setIsOpen: () => void;
   email: string;
   onVerified: () => void;
 };
 
-export const OtpModal = ({ isOpen, onClose, email, onVerified }: Props) => {
-  const modalRef = useClickOutside({ isOpen, onClose });
+export const OtpModal = ({ isOpen, setIsOpen, email, onVerified }: Props) => {
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { mutate: verifyEmail, isPending: verifying } = useVerifyEmail();
   const { mutate: resendOtp, isPending: resending } = useResendOtp();
@@ -179,7 +179,7 @@ export const OtpModal = ({ isOpen, onClose, email, onVerified }: Props) => {
           </button>
 
           <button
-            onClick={onClose}
+            onClick={setIsOpen}
             className="text-sm text-gray-500 hover:text-gray-700"
           >
             Cancel

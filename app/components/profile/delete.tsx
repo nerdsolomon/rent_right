@@ -8,14 +8,14 @@ interface Prop {
 }
 
 export const Delete = ({ userId }: Prop) => {
-  const [isOpen, onClose] = useState(false);
-  const modalRef = useClickOutside({ isOpen, onClose });
+  const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
   const { mutate: deleteUser } = useDeleteUser();
   return (
     <div>
       <div
         className="flex items-center gap-5 text-red-400 hover:text-red-900 cursor-pointer"
-        onClick={() => onClose(true)}
+        onClick={() => setIsOpen(true)}
       >
         <FaTrash size={18} />
         <p>Delete account</p>
@@ -34,7 +34,7 @@ export const Delete = ({ userId }: Prop) => {
               </div>
 
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-black text-lg"
                 aria-label="Close"
               >
@@ -53,7 +53,7 @@ export const Delete = ({ userId }: Prop) => {
 
             <div className="flex justify-end gap-3 text-sm px-6 py-4 border-t border-gray-300">
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
               >
                 Cancel
@@ -62,7 +62,7 @@ export const Delete = ({ userId }: Prop) => {
               <button
                 onClick={() => {
                   deleteUser(userId);
-                  onClose(false);
+                  setIsOpen(false);
                 }}
                 className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition flex items-center gap-2"
               >

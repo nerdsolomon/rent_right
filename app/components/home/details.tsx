@@ -9,12 +9,12 @@ import type { Property } from "~/types";
 
 interface Props {
   isOpen: boolean;
-  onClose: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
   propertyId: number;
 }
 
-export const Details = ({ isOpen, onClose, propertyId }: Props) => {
-  const modalRef = useClickOutside({ isOpen, onClose });
+export const Details = ({ isOpen, setIsOpen, propertyId }: Props) => {
+  const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { data } = useMe();
   const currentUser = data.user;
@@ -36,7 +36,7 @@ export const Details = ({ isOpen, onClose, propertyId }: Props) => {
             <div className="flex px-4 pt-4 pb-2 justify-between sticky top-0 bg-gray-100 z-10">
               <p className="font-bold text-lg">Details</p>
               <button
-                onClick={() => onClose(false)}
+                onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-black"
               >
                 ✕
