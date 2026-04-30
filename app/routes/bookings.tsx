@@ -28,8 +28,9 @@ const Bookings = () => {
 
   const filteredBookings = bookings.filter((booking: Booking) => {
     if (currentUser.role === "owner") {
-      const property = properties?.find((p: Property) => p?.id === booking.propertyId);
-      return property.userId === currentUser.id;
+      return properties?.some(
+        (p: Property) => p.id === booking.propertyId && p.userId === currentUser.id
+      );
     }
 
     if (currentUser.role === "user") {
