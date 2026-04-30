@@ -2,24 +2,28 @@ import { useParams } from "react-router";
 import { PropertyCard } from "~/components/home/propertycard";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { useProperties } from "~/hooks/useProperties";
-import { useUser } from "~/hooks/useUsers";
-import type { Property } from "~/types";
+import { useUsers } from "~/hooks/useUsers";
+import type { Property, User } from "~/types";
 
 const Portfolio = () => {
   usePageTitle("Axterra - Portfolio");
 
+  const { data: uData } = useUsers();
+  const users = uData?.users ?? [];
+
   const { id } = useParams();
-  const { data: uData } = useUser(Number(id));
-  const user = uData.user
+  const user = users.find((u: User) => u.id === id);
 
   const { data: pData } = useProperties();
-  const properties = pData.properties
+  const properties = pData.properties;
 
   if (!user) {
     return <div className="p-6 text-center text-gray-500">User not found</div>;
   }
 
-  const userProperties = properties.filter((p: Property) => p.userId === user.id);
+  const userProperties = properties.filter(
+    (p: Property) => p.userId === user.id,
+  );
 
   const displayName = user.company
     ? user.company
