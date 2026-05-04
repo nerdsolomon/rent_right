@@ -45,13 +45,7 @@ const Notifications = () => {
 
   return (
     <RequireAuth>
-      <div className="max-w-2xl mx-auto py-6 px-4">
-        <div className="mb-4">
-          <h1 className="text-xl font-semibold text-purple-600">
-            Notifications
-          </h1>
-        </div>
-
+      <div className="max-w-2xl mx-auto py-6 px-4 pt-4">
         {filteredNotifications.length > 0 ? (
           <>
             <Section title="Today" items={grouped.today} />
