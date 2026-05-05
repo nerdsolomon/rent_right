@@ -8,7 +8,7 @@ import { Nav } from "~/components/landing/nav";
 import HeroSection from "~/components/landing/hero";
 
 const Landing = () => {
-  usePageTitle("Axterra");
+  usePageTitle("axterra");
 
   return (
     <>

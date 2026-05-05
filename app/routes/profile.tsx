@@ -21,7 +21,7 @@ import { useMe } from "~/hooks/useAuth";
 const Profile = () => {
   const { data } = useMe();
   const currentUser = data?.user;
-  usePageTitle(`Axterra - ${currentUser?.firstName} ${currentUser?.lastName}`);
+  usePageTitle(`axterra - ${currentUser?.firstName} ${currentUser?.lastName}`);
 
   const displayName = currentUser?.company
     ? currentUser?.company

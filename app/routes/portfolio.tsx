@@ -6,7 +6,7 @@ import { useUsers } from "~/hooks/useUsers";
 import type { Property, User } from "~/types";
 
 const Portfolio = () => {
-  usePageTitle("Axterra - Portfolio");
+  usePageTitle("axterra - Portfolio");
 
   const { data: uData } = useUsers();
   const users = uData?.users ?? [];

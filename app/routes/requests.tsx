@@ -8,7 +8,7 @@ import { useUpdateUser, useUsers } from "~/hooks/useUsers";
 import type { User } from "~/types";
 
 const Requests = () => {
-  usePageTitle("Axterra - Requests");
+  usePageTitle("axterra - Requests");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>();
 

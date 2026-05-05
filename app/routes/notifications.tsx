@@ -7,7 +7,7 @@ import { RequireAuth } from "~/hooks/useRequireAuth";
 import { type Notification } from "~/types";
 
 const Notifications = () => {
-  usePageTitle("Axterra - Notifications");
+  usePageTitle("axterra - Notifications");
   const { data } = useMe();
   const currentUser = data?.user;
 
