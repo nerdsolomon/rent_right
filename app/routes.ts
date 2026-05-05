@@ -10,6 +10,7 @@ export default [
     route("/feedbacks", "./routes/feedbacks.tsx"),
     route("/bookings", "./routes/bookings.tsx"),
     route("/portfolio/:id", "./routes/portfolio.tsx"),
-    route("/requests", "./routes/requests.tsx")
+    route("/requests", "./routes/requests.tsx"),
+    route("/auth/google/callback", "./routes/callback.tsx"),
   ]),
 ] satisfies RouteConfig;

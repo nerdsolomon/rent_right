@@ -87,7 +87,12 @@ export const useLogout = () => {
 
 // ================= SOCIAL LOGIN =================
 export const useGoogleLogin = () => {
-  return () => authService.googleLogin();
+  return useMutation({
+    mutationFn: async () => {
+      authService.googleLogin();
+      return null;
+    },
+  });
 };
 
 export const useFacebookLogin = () => {

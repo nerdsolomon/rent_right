@@ -12,7 +12,7 @@ const Signin = () => {
   const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { mutate: loginUser, isPending, error, isSuccess } = useLogin();
-  const googleLogin = useGoogleLogin();
+  const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleLogin();
 
   const authenticate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,9 +61,7 @@ const Signin = () => {
                 <div className="flex justify-center mb-4">
                   <div className="text-purple-600 flex items-center">
                     <FaHome size={27} />
-                    <span className="text-[25px] font-bold">
-                      xterra
-                    </span>
+                    <span className="text-[25px] font-bold">xterra</span>
                   </div>
                 </div>
 
@@ -77,7 +75,8 @@ const Signin = () => {
 
                 {/* Google Button */}
                 <button
-                  onClick={googleLogin}
+                  onClick={() => googleLogin()}
+                  disabled={isGoogleLoading}
                   className="w-full border border-purple-600 text-purple-600 py-4 rounded-full font-medium hover:bg-purple-50 transition"
                 >
                   Continue with Google
