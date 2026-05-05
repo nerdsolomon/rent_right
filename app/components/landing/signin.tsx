@@ -12,7 +12,7 @@ const Signin = () => {
   const modalRef = useClickOutside({ isOpen, setIsOpen });
 
   const { mutate: loginUser, isPending, error, isSuccess } = useLogin();
-  const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleLogin();
+  const googleLogin = useGoogleLogin();
 
   const authenticate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,7 +76,6 @@ const Signin = () => {
                 {/* Google Button */}
                 <button
                   onClick={() => googleLogin()}
-                  disabled={isGoogleLoading}
                   className="w-full border border-purple-600 text-purple-600 py-4 rounded-full font-medium hover:bg-purple-50 transition"
                 >
                   Continue with Google

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
+import { authService } from "~/services/auth.service";
 import { authKeys } from "~/hooks/useAuth";
 
 const GoogleCallback = () => {
@@ -9,9 +10,17 @@ const GoogleCallback = () => {
 
   useEffect(() => {
     const finishLogin = async () => {
-      await qc.invalidateQueries({ queryKey: authKeys.me });
+      // force fresh auth check
+      const user = await qc.fetchQuery({
+        queryKey: authKeys.me,
+        queryFn: authService.me,
+      });
 
-      navigate("/home", { replace: true });
+      if (user) {
+        navigate("/home", { replace: true });
+      } else {
+        navigate("/login", { replace: true });
+      }
     };
 
     finishLogin();

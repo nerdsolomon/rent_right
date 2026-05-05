@@ -27,16 +27,14 @@ export const authService = {
   },
 
   me: async () => {
-    const token = getToken();
-    if (!token) return null;
+  const res = await fetch(api("/auth/me"), {
+    credentials: "include", 
+    headers: authHeaders(),
+  });
 
-    const res = await fetch(api("/auth/me"), {
-      headers: authHeaders(),
-    });
-
-    if (!res.ok) return null;
-    return handleResponse(res);
-  },
+  if (!res.ok) return null;
+  return handleResponse(res);
+},
 
   logout: async () => {
     clearToken();
