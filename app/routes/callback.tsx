@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { authKeys } from "~/hooks/useAuth";
-import { setToken } from "~/services";
+// import { setToken } from "~/services";
 
 const GoogleCallback = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const GoogleCallback = () => {
     const token = params.get("token");
 
     if (token) {
-      setToken(token);
+      // setToken(token);
 
       await qc.invalidateQueries({
         queryKey: authKeys.me,

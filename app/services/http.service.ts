@@ -1,18 +1,18 @@
 const BASE_URL = "https://rental-app-backend-b4lj.onrender.com/api";
-const TOKEN_KEY = "auth_token";
+// const TOKEN_KEY = "auth_token";
 
-export const getToken = () => localStorage.getItem(TOKEN_KEY);
+// export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
-export const setToken = (token: string) =>
-  localStorage.setItem(TOKEN_KEY, token);
+// export const setToken = (token: string) =>
+//   localStorage.setItem(TOKEN_KEY, token);
 
-export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
+// export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
 export const authHeaders = (isFormData = false) => {
-  const token = getToken();
+  // const token = getToken();
 
   return {
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    // ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...(isFormData ? {} : { "Content-Type": "application/json" }),
   };
 };
