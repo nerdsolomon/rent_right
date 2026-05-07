@@ -1,5 +1,5 @@
 import type { User } from "~/types";
-import { api, authHeaders,  handleResponse,  } from "./http.service";
+import { api, authHeaders, clearToken, getToken, handleResponse, setToken } from "./http.service";
 
 export const authService = {
   create: async (data: Partial<User>) => {
@@ -17,12 +17,11 @@ export const authService = {
       method: "POST",
       headers: authHeaders(),
       body: JSON.stringify(data),
-      credentials: "include",
     });
 
     const result = await handleResponse(res);
 
-    // if (result.token) setToken(result.token);
+    if (result.token) setToken(result.token);
 
     return result;
   },
@@ -38,12 +37,11 @@ export const authService = {
 },
 
   logout: async () => {
-    // clearToken();
+    clearToken();
 
     const res = await fetch(api("/auth/logout"), {
       method: "POST",
       headers: authHeaders(),
-      credentials: "include",
     });
 
     return handleResponse(res);
