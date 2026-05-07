@@ -11,10 +11,11 @@ const GoogleCallback = () => {
   useEffect(() => {
     const finishLogin = async () => {
       try {
-        // get token from URL
         const params = new URLSearchParams(window.location.search);
 
         const token = params.get("token");
+
+        console.log(token)
 
         if (!token) {
           navigate("/", { replace: true });
