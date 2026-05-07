@@ -2,31 +2,45 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { authKeys } from "~/hooks/useAuth";
-import { setToken } from "~/services";
+import { authService, setToken } from "~/services";
 
 const GoogleCallback = () => {
   const navigate = useNavigate();
   const qc = useQueryClient();
 
   useEffect(() => {
-  const finishLogin = async () => {
-    const params = new URLSearchParams(window.location.search);
+    const finishLogin = async () => {
+      try {
+        // get token from URL
+        const params = new URLSearchParams(window.location.search);
 
-    const token = params.get("token");
+        const token = params.get("token");
 
-    if (token) {
-      setToken(token);
+        if (!token) {
+          navigate("/", { replace: true });
+          return;
+        }
 
-      await qc.invalidateQueries({
-        queryKey: authKeys.me,
-      });
+        // save token
+        setToken(token);
 
-      navigate("/home", { replace: true });
-    } 
-  };
+        // fetch authenticated user
+        await qc.fetchQuery({
+          queryKey: authKeys.me,
+          queryFn: authService.me,
+        });
 
-  finishLogin();
-}, []);
+        // redirect
+        navigate("/home", { replace: true });
+      } catch (err) {
+        console.error(err);
+        navigate("/", { replace: true });
+      }
+    };
+
+    finishLogin();
+  }, [navigate, qc]);
+
   return <p>Signing you in...</p>;
 };
 
