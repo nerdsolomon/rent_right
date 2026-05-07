@@ -40,7 +40,7 @@ export const useAdminNins = (status?: string) =>
   });
 
 // ================= REVIEW NIN =================
-export const useReviewNin = () => {
+export const useOwnerRequest = () => {
   const qc = useQueryClient();
 
   return useMutation({

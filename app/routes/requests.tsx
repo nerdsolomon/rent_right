@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { FaUserCheck } from "react-icons/fa";
 import { VerifyInfo } from "~/components/requests/verifyinfo";
+import { useOwnerRequest } from "~/hooks/useNin";
 import { useCreateNotification } from "~/hooks/useNotifications";
 import { usePageTitle } from "~/hooks/usePageTitle";
 import { RequireAuth } from "~/hooks/useRequireAuth";
-import { useUpdateUser, useUsers } from "~/hooks/useUsers";
+import { useUsers } from "~/hooks/useUsers";
 import type { User } from "~/types";
 
 const Requests = () => {
@@ -15,7 +16,7 @@ const Requests = () => {
   const { data: usersData } = useUsers();
   const users = usersData?.users ?? [];
 
-  const { mutate: updateUser } = useUpdateUser();
+  const { mutate: setOwnerRequest } = useOwnerRequest();
   const { mutate: createNotification } = useCreateNotification();
 
   const filteredUsers = users.filter((u: User) => {
@@ -26,17 +27,7 @@ const Requests = () => {
   const handleApprove = (user: User) => {
     if (!user.id || !user.verifyOwner) return;
 
-    const fd = new FormData();
-
-    fd.append("role", "owner");
-    fd.append("verifyOwner[firstName]", user.verifyOwner.firstName);
-    fd.append("verifyOwner[lastName]", user.verifyOwner.lastName);
-    fd.append("verifyOwner[address]", user.verifyOwner.address);
-    fd.append("verifyOwner[DoB]", user.verifyOwner.DoB);
-    fd.append("verifyOwner[status]", "approved");
-    fd.append("verifyOwner[verifiedAt]", new Date().toISOString());
-
-    updateUser({ id: user.id, data: fd });
+    setOwnerRequest({ id: user.id, status: "approved" });
 
     createNotification({
       datetime: new Date().toISOString(),
@@ -49,11 +40,7 @@ const Requests = () => {
   const handleReject = (user: User) => {
     if (!user.id || !user.verifyOwner) return;
 
-    const fd = new FormData();
-
-    fd.append("verifyOwner[status]", "rejected");
-
-    updateUser({ id: user.id, data: fd });
+    setOwnerRequest({ id: user.id, status: "rejected" });
 
     createNotification({
       datetime: new Date().toISOString(),

@@ -11,6 +11,6 @@ export default [
     route("/bookings", "./routes/bookings.tsx"),
     route("/portfolio/:id", "./routes/portfolio.tsx"),
     route("/requests", "./routes/requests.tsx"),
-    route("/auth/google/callback", "./routes/callback.tsx"),
+    route("/callback", "./routes/callback.tsx"),
   ]),
 ] satisfies RouteConfig;

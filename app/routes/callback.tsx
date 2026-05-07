@@ -9,22 +9,27 @@ const GoogleCallback = () => {
   const qc = useQueryClient();
 
   useEffect(() => {
-    const finishLogin = async () => {
-      // force fresh auth check
+  const finishLogin = async () => {
+    try {
+      await qc.invalidateQueries({ queryKey: authKeys.me });
+
       const user = await qc.fetchQuery({
         queryKey: authKeys.me,
         queryFn: authService.me,
       });
 
-      if (user) {
+      if (user?.user) {
         navigate("/home", { replace: true });
       } else {
-        navigate("/login", { replace: true });
+        navigate("/");
       }
-    };
+    } catch {
+      navigate("/");
+    }
+  };
 
-    finishLogin();
-  }, [navigate, qc]);
+  finishLogin();
+}, []);
 
   return <p>Signing you in...</p>;
 };
