@@ -15,8 +15,6 @@ const GoogleCallback = () => {
 
         const token = params.get("token");
 
-        console.log(token)
-
         if (!token) {
           navigate("/", { replace: true });
           return;
